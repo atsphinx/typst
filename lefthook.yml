@@ -21,8 +21,7 @@ pre-commit:
           - name: lint
             run: '{run_python} ruff check --fix {staged_files}'
   commands:
-    mypy:
+    ty:
       glob: '*.py'
       exclude:
-        - '**/conf.py'
-      run: '{run_python} mypy {staged_files}'
+      run: '{run_python} ty check {staged_files}'

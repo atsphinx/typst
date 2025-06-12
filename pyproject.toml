@@ -48,9 +48,8 @@ dev = [
     {include-group = "docs"},
     "doc8",
     "esbonio",
-    "mypy",
     "ruff",
-    "types-docutils>=0.21.0.20241128",
+    "ty",
 ]
 docs = [
     "atsphinx-mini18n",
