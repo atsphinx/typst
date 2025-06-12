@@ -1,0 +1,44 @@
+name: 'Deploy document'
+
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+env:
+  UV_NO_SYNC: 1
+  TASK_X_REMOTE_TASKFILES: 1
+
+jobs:
+  deploy-doc:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+          aqua_version: v2.43.1
+      - name: 'Configure dependencies'
+        run: |
+          uv sync --all-extras --frozen
+      - name: 'Build document'
+        run: |
+          task --yes setup docs:build-mini18n-dirhtml
+      - name: 'Upload artifact'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_build/mini18n-dirhtml
+      - name: 'Deploy to GitHub Pages'
+        id: deployment
+        uses: actions/deploy-pages@v4

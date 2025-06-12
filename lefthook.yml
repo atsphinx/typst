@@ -1,0 +1,28 @@
+templates:
+  # This hooks require uv to run
+  run_python: 'uv run'
+
+remotes:
+  - git_url: 'https://github.com/attakei/workspace-configs'
+    ref: 'v0.4.0'
+    configs:
+      - 'projects/sphinx-doc/lefthook.yaml'
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: 'Ruff'
+      glob: '*.py'
+      group:
+        parallel: false
+        jobs:
+          - name: format
+            run: '{run_python} ruff format {staged_files}'
+          - name: lint
+            run: '{run_python} ruff check --fix {staged_files}'
+  commands:
+    mypy:
+      glob: '*.py'
+      exclude:
+        - '**/conf.py'
+      run: '{run_python} mypy {staged_files}'

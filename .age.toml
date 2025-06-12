@@ -1,0 +1,55 @@
+current_version = "0.0.0"
+
+[[files]]
+path = "pyproject.toml"
+
+search = "version = \"{{current_version}}\""
+replace = "version = \"{{new_version}}\""
+
+
+[[files]]
+path = "src/atsphinx/typst/__init__.py"
+
+search = "version = \"{{current_version}}\""
+replace = "version = \"{{new_version}}\""
+
+
+[[files]]
+path = "CHANGES.rst"
+
+search = """
+v{{current_version}}
+={% for _ in current_version %}={% endfor %}
+"""
+replace = """
+v{{new_version}}
+={% for _ in new_version %}={% endfor %}
+
+:Date: {{ now|date }} (Asia/Tokyo)
+
+Breaking changes
+----------------
+
+Features
+--------
+
+Fixes
+-----
+
+Others
+------
+
+v{{current_version}}
+={% for _ in current_version %}={% endfor %}
+"""
+
+
+[[files]]
+path = ".github/release-body.md"
+search = "Release atsphinx-typst v{{ current_version }}"
+replace = "Release atsphinx-typst v{{ new_version }}"
+
+[[files]]
+path = ".github/release-body.md"
+search = "- Changelog is https://github.com/atsphinx/typst/blob/v{{ current_version }}/CHANGES.rst"
+replace = "- Changelog is https://github.com/atsphinx/typst/blob/v{{ new_version }}/CHANGES.rst"

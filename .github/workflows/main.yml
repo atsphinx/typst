@@ -1,0 +1,85 @@
+name: 'Run CI jobs'
+
+on:
+  push:
+    branches:
+      - '**'
+    tags-ignore:
+      - '**'
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * 5'  # 18:00 on Friday Asia/Tokyo
+
+env:
+  UV_NO_SYNC: 1
+  TASK_X_REMOTE_TASKFILES: 1
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+          aqua_version: v2.43.1
+      - name: 'Configure dependencies'
+        run: |
+          uv sync --all-extras --frozen
+      - name: 'Run linters'
+        run: |
+          lefthook run pre-commit --all-files
+  source-test:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version:
+          - '3.9'
+          - '3.10'
+          - '3.11'
+          - '3.12'
+          - '3.13'
+        workspace: ['locked', 'latest']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+          aqua_version: v2.43.1
+      - name: 'Stand by python-version'
+        run: |
+          echo ${{ matrix.python-version }} > .python-version
+      - name: 'Configure env as locked deps by uv.lock'
+        run: |
+          uv sync --all-extras --frozen
+        if: ${{ matrix.workspace == 'locked'}}
+      - name: 'Configure env as latest deps on PyPI'
+        run: |
+          uv sync --all-extras --upgrade
+        if: ${{ matrix.workspace == 'latest'}}
+      - name: 'Run tests'
+        run: |
+          uv run pytest
+  docs-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+          aqua_version: v2.43.1
+      - name: 'Configure dependencies'
+        run: |
+          uv sync --all-extras --frozen
+      - name: 'Run tests'
+        run: |
+          task --yes setup docs:build-linkcheck docs:build-dirhtml
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@9ebf656952a20c45a5d66606f083ff34f58b8ce0 # v4.0.0
+        with:
+      - name: 'Try building as package'
+        run: |
+          uv build
+          ls -l dist

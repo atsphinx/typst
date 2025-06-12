@@ -1,0 +1,5 @@
+==========
+Changelogs
+==========
+
+.. include:: ../CHANGES.rst

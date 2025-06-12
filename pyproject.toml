@@ -1,0 +1,87 @@
+[project]
+name = "atsphinx-typst"
+version = "0.0.0"
+description = "Generate Typst sources and PDF from Sphinx document."
+authors = [{name = "Kazuya Takei", email = "myself@attakei.net"}]
+license = "Apache-2.0"
+requires-python = ">= 3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Sphinx",
+    "Framework :: Sphinx :: Extension",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Documentation",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Text Processing :: Markup :: reStructuredText",
+]
+readme = "README.rst"
+dependencies = [
+    "sphinx",
+]
+
+[project.urls]
+Home = "https://github.com/atsphinx/typst"
+Documentation = "https://atsphinx.github.io/typst"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    {include-group = "test"},
+    {include-group = "docs"},
+    "doc8",
+    "esbonio",
+    "mypy",
+    "ruff",
+    "types-docutils>=0.21.0.20241128",
+]
+docs = [
+    "atsphinx-mini18n",
+    "furo",
+    "sphinx-autobuild",
+    "sphinx-intl",
+]
+test = [
+    "pytest",
+]
+
+[tool.uv]
+managed = true
+
+[tool.ruff.lint]
+select = ["C90", "D", "E", "F", "I", "W"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/atsphinx"]
+only-includes = ["src/atsphinx"]
+
+[tool.mypy]
+python_version = "3.9"
+exclude = 'conf\.py$'
+
+[[tool.mypy.overrides]]
+module = ['docutils', 'docutils.*']
+ignore_missing_imports = true
