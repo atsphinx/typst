@@ -17,6 +17,7 @@ env:
 
 jobs:
   deploy-doc:
+    if: ${{ github.event.repository.visibility == 'public' }}
     runs-on: ubuntu-latest
     permissions:
       pages: write
