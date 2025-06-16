@@ -1,18 +1,16 @@
-"""Generate Typst sources and PDF from Sphinx document."""
+"""Core component for only Sphinx and docutils standard features."""
 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from .. import __version__
+
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
 
-__version__ = "0.0.0"
-
 
 def setup(app: Sphinx):  # noqa: D103
-    # Load sub extensions
-    app.setup_extension("atsphinx.typst.core")
     return {
         "version": __version__,
         "env_version": 1,
