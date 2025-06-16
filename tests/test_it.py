@@ -21,3 +21,10 @@ def test__it(app: SphinxTestApp):
     """Test to pass."""
     app.build()
     assert (app.outdir / "index.typ").exists()
+
+
+@pytest.mark.sphinx("typst", confoverrides={"extensions": []})
+def test__auto_adding_extension(app: SphinxTestApp):
+    """Test to pass."""
+    app.build()
+    assert (app.outdir / "index.typ").exists()

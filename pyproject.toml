@@ -38,6 +38,9 @@ dependencies = [
 Home = "https://github.com/atsphinx/typst"
 Documentation = "https://atsphinx.github.io/typst"
 
+[project.entry-points."sphinx.builders"]
+typst = "atsphinx.typst.core"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
