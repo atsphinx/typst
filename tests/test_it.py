@@ -11,6 +11,13 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.sphinx("html")
+def test__compatibility(app: SphinxTestApp):
+    """Test to pass."""
+    app.build()
+
+
+@pytest.mark.sphinx("typst")
 def test__it(app: SphinxTestApp):
     """Test to pass."""
     app.build()
+    assert (app.outdir / "index.typ").exists()

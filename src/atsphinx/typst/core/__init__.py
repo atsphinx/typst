@@ -5,12 +5,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from .. import __version__
+from . import builders
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
 
 
 def setup(app: Sphinx):  # noqa: D103
+    # Builders
+    app.add_builder(builders.TypstBuilder)
     return {
         "version": __version__,
         "env_version": 1,
