@@ -17,3 +17,9 @@ Getting started
        ...,  # Your extensions
        "atsphinx.typst",
    ]
+
+First goal (for v1.0.0)
+=======================
+
+* Use for PDF of sphinx-revealjs's documentation.
+* Publish my private tech ZINE.
