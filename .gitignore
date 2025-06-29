@@ -1,6 +1,7 @@
 ### GIGI version 0.1.0
 ### command with: python
 
+.nvim.lua
 .task
 
 ### Python ###
