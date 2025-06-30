@@ -102,6 +102,7 @@ dependencies = [
     { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "typst" },
 ]
 
 [package.dev-dependencies]
@@ -130,6 +131,7 @@ test = [
 requires-dist = [
     { name = "anytree", specifier = ">=2.12.1" },
     { name = "sphinx" },
+    { name = "typst", extras = ["pdf"], specifier = ">=0.13.2" },
 ]
 
 [package.metadata.requires-dev]
@@ -1020,6 +1022,30 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/d1/bc/51647cd02527e87d05cb083ccc402f93e441606ff1f01739a62c8ad09ba5/typing_extensions-4.14.0.tar.gz", hash = "sha256:8676b788e32f02ab42d9e7c61324048ae4c6d844a399eebace3d4979d75ceef4", size = 107423, upload-time = "2025-06-02T14:52:11.399Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/69/e0/552843e0d356fbb5256d21449fa957fa4eff3bbc135a74a691ee70c7c5da/typing_extensions-4.14.0-py3-none-any.whl", hash = "sha256:a1514509136dd0b477638fc68d6a91497af5076466ad0fa6c338e44e359944af", size = 43839, upload-time = "2025-06-02T14:52:10.026Z" },
+]
+
+[[package]]
+name = "typst"
+version = "0.13.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/90/84/e6c135449a9df3e1d5b81156db2decd84a089439212f2d0a1f754a558d3f/typst-0.13.2.tar.gz", hash = "sha256:ee84c54886bf1c1890dd064819d9d2e332e1ae1fff89a3615fae429b239305a4", size = 38968, upload-time = "2025-03-20T09:58:28.364Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fe/69/bb21498c2386ff2973620013452aba3316d36edd09028f19e7a8b92efe39/typst-0.13.2-cp313-cp313t-macosx_10_12_x86_64.whl", hash = "sha256:1bd26a9f51fb2cf72a071034642c2cd0aec0236ed5f379e4a0c3aa07fd40ef90", size = 18655258, upload-time = "2025-03-20T09:57:39.983Z" },
+    { url = "https://files.pythonhosted.org/packages/94/7a/393693dbe8e51b3aea0ba0247a21019900c6b537a579e84ec60cc17e5620/typst-0.13.2-cp313-cp313t-macosx_11_0_arm64.whl", hash = "sha256:81f201740cfe2e04dde3f69d7f08358b78be942c0e7c889abc6c6fe89c3a4f2c", size = 18177502, upload-time = "2025-03-20T09:57:43.136Z" },
+    { url = "https://files.pythonhosted.org/packages/01/2e/af7f9a7dbc98b79bee1011a745966fafd12a4fefb56c523e10d1082344c9/typst-0.13.2-cp313-cp313t-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:7845dcb07e1d1f569810db64d5efb5b657598a25f73b03dccad1034d0684c6f0", size = 21694339, upload-time = "2025-03-20T09:57:46.266Z" },
+    { url = "https://files.pythonhosted.org/packages/39/57/77bb34c270cfb1ec97a428fb2a7e3250bcc5110921187d7a14b946e4a113/typst-0.13.2-cp313-cp313t-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:3f360cd431e41477653c150da18a62474b20b5538d5082c120283b60bf2c896f", size = 21850319, upload-time = "2025-03-20T09:57:49.41Z" },
+    { url = "https://files.pythonhosted.org/packages/31/60/5a5beeb27d3b2cf9d0f8c90428805bf7cb941d2e90cad877fa0c7a1550c3/typst-0.13.2-cp313-cp313t-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:4980a85f9d2b6e0fea267cf337c2a88e905dad10996feb1617bbffa68bc26555", size = 22129592, upload-time = "2025-03-20T09:57:52.583Z" },
+    { url = "https://files.pythonhosted.org/packages/b0/41/1e0fb06ef071cd7cdade9bb5b708427fa7d4c100a08404b9a3a966f22a9d/typst-0.13.2-cp313-cp313t-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:dfa3f33592a3d156cf039510046f495cc41130ee5613998d641d5141e82d81e6", size = 23435078, upload-time = "2025-03-20T09:57:55.999Z" },
+    { url = "https://files.pythonhosted.org/packages/2e/c6/bad2e9e4198315d929f29e6f26ba93f3318d870f797109327d3e0328b97a/typst-0.13.2-cp313-cp313t-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:789138b066982abffdc8d360493499188d64d7ef59aea998dda606df9d452128", size = 21703895, upload-time = "2025-03-20T09:57:58.841Z" },
+    { url = "https://files.pythonhosted.org/packages/d3/91/e495f896cdf701470633bbf99056d48385b2e8e41290406e3e711aca15c2/typst-0.13.2-cp313-cp313t-win_amd64.whl", hash = "sha256:be1ae603d07c2f406778a3c3b80484b69ed68a33c67bd56ac930af5ec7243497", size = 17444943, upload-time = "2025-03-20T09:58:01.702Z" },
+    { url = "https://files.pythonhosted.org/packages/fe/0f/38514b1ac2f2194d1e10dd08bcfcf0f97918d0b742999399451811419c26/typst-0.13.2-cp38-abi3-macosx_10_12_x86_64.whl", hash = "sha256:6d3c5e9372fbfc4b8176fafb5cac35d29693e437b8e15f91cc00523ddd071569", size = 18668206, upload-time = "2025-03-20T09:58:04.461Z" },
+    { url = "https://files.pythonhosted.org/packages/a0/e2/fc210e0a1436c261f2fa442550054218c3318eeba40abd383c47b06b0c94/typst-0.13.2-cp38-abi3-macosx_11_0_arm64.whl", hash = "sha256:cd4d880e94b91028184cd167dda4e950264a8ea628841a48842d3e8453558a95", size = 18184589, upload-time = "2025-03-20T09:58:08.162Z" },
+    { url = "https://files.pythonhosted.org/packages/10/c9/0028a05bcaae0fbf6ef4e987784db5e23b0981a5d5fb5a89b1c95b7107b1/typst-0.13.2-cp38-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6abf9352540af30bcbb1687e4d00f0d0e7115db27db1b71b901df15abaf2086a", size = 21700856, upload-time = "2025-03-20T09:58:11.161Z" },
+    { url = "https://files.pythonhosted.org/packages/2a/64/c03db1f6824a2c7792d7ce5ede7e8e28db05dc63000cb748f84ac8539f94/typst-0.13.2-cp38-abi3-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:d558ee6fb449714955297b026cc2f567f44c991b6b7d32d8ba5262150f267603", size = 21852362, upload-time = "2025-03-20T09:58:14.593Z" },
+    { url = "https://files.pythonhosted.org/packages/43/d1/fe1170f1692fc9f4fcfd61b4447be75e7b1b8653b55cb80737919bcc0df7/typst-0.13.2-cp38-abi3-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:0b9e542d136741df846f15ed23e110475d4c82e1f0f29ab948cd3344bcc8181e", size = 22136479, upload-time = "2025-03-20T09:58:17.434Z" },
+    { url = "https://files.pythonhosted.org/packages/15/9f/9c056dbbff5a57e58a666cf576dd7053086f5826e5552796ad45d23202c5/typst-0.13.2-cp38-abi3-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:3939b7cc16abc0f753015c886f8173f3a0a289ebc828d886c0f2284415d20490", size = 23443993, upload-time = "2025-03-20T09:58:20.575Z" },
+    { url = "https://files.pythonhosted.org/packages/23/aa/4a774bb4b31ff5865e4aeafe26180c58d76ba6eebd688690b4bc63197bb1/typst-0.13.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5c2a78e01b897e3075b6bc01b0bf7738ae110550394d7be1ec51de178ccd5e8c", size = 21712749, upload-time = "2025-03-20T09:58:23.536Z" },
+    { url = "https://files.pythonhosted.org/packages/a6/81/3a2bb633622c81c03b1ab7de0b7dc82ed44f9f0e2d65699f3d0c357a043e/typst-0.13.2-cp38-abi3-win_amd64.whl", hash = "sha256:897829e5ddfad5ace94f3f378ce7c6d580b78402af92e66eed5b28cb98186b57", size = 17446971, upload-time = "2025-03-20T09:58:26.39Z" },
 ]
 
 [[package]]

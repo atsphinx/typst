@@ -14,6 +14,7 @@ if TYPE_CHECKING:
 def setup(app: Sphinx):  # noqa: D103
     # Builders
     app.add_builder(builders.TypstBuilder)
+    app.add_builder(builders.TypstPDFBuilder)
     return {
         "version": __version__,
         "env_version": 1,

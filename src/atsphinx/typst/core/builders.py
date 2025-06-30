@@ -33,3 +33,23 @@ class TypstBuilder(Builder):
         doctree.walkabout(visitor)
         out = Path(self.app.outdir) / f"{docname}.typ"
         out.write_text(visitor.dom.to_text())
+
+
+class TypstPDFBuilder(TypstBuilder):
+    """PDF creation builder from doctree.
+
+    This is similar to the relationship between
+    the latexpdf builder and the latex builder.
+    """
+
+    name = "typstpdf"
+    format = "typst"
+
+    def write_doc(self, docname: str, doctree: nodes.document) -> None:  # noqa: D102
+        # TODO: Implement it!
+        import typst
+
+        super().write_doc(docname, doctree)
+        src = Path(self.app.outdir) / f"{docname}.typ"
+        out = Path(self.app.outdir) / f"{docname}.pdf"
+        typst.compile(src, output=out)
