@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from sphinx.builders import Builder
+from sphinx.errors import SphinxError
 
 from . import writer
 
@@ -44,6 +45,13 @@ class TypstPDFBuilder(TypstBuilder):
 
     name = "typstpdf"
     format = "typst"
+
+    def init(self) -> None:
+        """Check that python env has typst package."""
+        try:
+            import typst  # noqa - Only try importing
+        except ImportError:
+            raise SphinxError("Require 'typst' to run 'typstpdf' builder.")
 
     def write_doc(self, docname: str, doctree: nodes.document) -> None:  # noqa: D102
         # TODO: Implement it!
