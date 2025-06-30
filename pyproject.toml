@@ -33,7 +33,6 @@ readme = "README.rst"
 dependencies = [
     "anytree>=2.12.1",
     "sphinx",
-    "typst[pdf]>=0.13.2",
 ]
 
 [project.urls]
@@ -43,6 +42,11 @@ Documentation = "https://atsphinx.github.io/typst"
 [project.entry-points."sphinx.builders"]
 typst = "atsphinx.typst.core"
 typstpdf = "atsphinx.typst.core"
+
+[project.optional-dependencies]
+pdf = [
+    "typst>=0.13.2",
+]
 
 [build-system]
 requires = ["hatchling"]

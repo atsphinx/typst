@@ -102,6 +102,10 @@ dependencies = [
     { name = "sphinx", version = "7.4.7", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.10.*'" },
     { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+
+[package.optional-dependencies]
+pdf = [
     { name = "typst" },
 ]
 
@@ -131,8 +135,9 @@ test = [
 requires-dist = [
     { name = "anytree", specifier = ">=2.12.1" },
     { name = "sphinx" },
-    { name = "typst", extras = ["pdf"], specifier = ">=0.13.2" },
+    { name = "typst", marker = "extra == 'pdf'", specifier = ">=0.13.2" },
 ]
+provides-extras = ["pdf"]
 
 [package.metadata.requires-dev]
 dev = [
