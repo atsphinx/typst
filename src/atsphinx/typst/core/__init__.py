@@ -1,4 +1,9 @@
-"""Core component for only Sphinx and docutils standard features."""
+"""Core features of Typst buider.
+
+This only provides builder with features for Sphinx and doctree components.
+This is registered standalone
+when call builder without register into ``extensions`` of ``conf.py``.
+"""
 
 from __future__ import annotations
 
