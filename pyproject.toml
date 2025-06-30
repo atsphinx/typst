@@ -31,6 +31,7 @@ classifiers = [
 ]
 readme = "README.rst"
 dependencies = [
+    "anytree>=2.12.1",
     "sphinx",
 ]
 
