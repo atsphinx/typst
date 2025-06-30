@@ -20,7 +20,9 @@ def test__compatibility(app: SphinxTestApp):
 def test__it(app: SphinxTestApp):
     """Test to pass."""
     app.build()
-    assert (app.outdir / "index.typ").exists()
+    out = app.outdir / "index.typ"
+    assert out.exists()
+    assert "= Test doc for atsphinx-typst" in out.read_text()
 
 
 @pytest.mark.sphinx("typst", confoverrides={"extensions": []})
