@@ -71,6 +71,9 @@ managed = true
 [tool.ruff.lint]
 select = ["C90", "D", "E", "F", "I", "W"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["atsphinx.typst"]
+
 [tool.ruff.lint.pydocstyle]
 convention = "pep257"
 

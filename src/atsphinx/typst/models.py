@@ -7,7 +7,7 @@ from anytree import Node
 
 class Text(Node):
     def to_text(self, indent: int = 0):
-        return self.name
+        return f"\n{' ' * indent}".join(self.name.split("\n"))
 
 
 class Element(Node):

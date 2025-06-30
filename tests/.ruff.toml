@@ -2,3 +2,6 @@ extend = "../pyproject.toml"
 
 [lint]
 ignore = ["D100", "D103"]
+
+[lint.isort]
+known-local-folder = ["../src"]
