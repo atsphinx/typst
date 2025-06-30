@@ -10,6 +10,15 @@ includes:
       SPHINX_OUTPUT_DIR: '_build'
       SPHINX_DEFAULT_BUILDER: 'dirhtml'
 
+  demo:
+    taskfile: 'https://github.com/attakei/workspace-configs.git//projects/sphinx-doc/Taskfile.yaml?tag=v0.4.0'
+    vars:
+      RUN_PYTHON: 'uv run'
+      SPHINX_ROOT_DIR: 'demo'
+      SPHINX_SOURCE_DIR: ''
+      SPHINX_OUTPUT_DIR: '_build'
+      SPHINX_DEFAULT_BUILDER: 'typst'
+
 tasks:
   setup:
     desc: 'Setup workspace'
