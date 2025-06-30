@@ -66,3 +66,20 @@ class TypstTranslator(SphinxTranslator):
 
     visit_list_item = _not_proc
     depart_list_item = _not_proc
+
+    def visit_field_list(self, node: nodes.field_list):
+        self._ptr = models.Table(parent=self._ptr)
+
+    depart_field_list = _move_ptr_to_parent
+
+    visit_field = _not_proc
+    depart_field = _not_proc
+    visit_field_name = _not_proc
+    depart_field_name = _not_proc
+    visit_field_body = _not_proc
+    depart_field_body = _not_proc
+
+    def visit_docinfo(self, node: nodes.docinfo):
+        self._ptr = models.Table(parent=self._ptr)
+
+    depart_docinfo = _move_ptr_to_parent

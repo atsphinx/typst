@@ -98,12 +98,51 @@ Paragraph
     """,
             id="Enumerated list",
         ),
+        pytest.param(
+            """
+:Language: Japanese
+:Language2: English
+:Description: Hello world
+              This is atsphinx-typst.
+""",
+            """
+#table(
+  columns: 2,
+  [Language],
+  [Japanese],
+  [Language2],
+  [English],
+  [Description],
+  [Hello world
+   This is atsphinx-typst.],
+)
+    """,
+            id="Docinfo",
+        ),
+        pytest.param(
+            """
+Paragraph
+
+:Language: Japanese
+""",
+            """
+Paragraph
+
+#table(
+  columns: 2,
+  [Language],
+  [Japanese],
+)
+    """,
+            id="Field list",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
     """Very simple test for syntax by Translator."""
     document = publish_doctree(src.strip())
     document.settings.strict_visitor = False
+    print(document)
     visitor = t.TypstTranslator(document, app.builder)
     document.walkabout(visitor)
     assert visitor.dom.to_text().strip() == dest.strip()

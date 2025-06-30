@@ -83,6 +83,20 @@ class NumberedList(Element):
         )
 
 
+class Table(Element):
+    LABEL = "table"
+
+    def to_text(self, indent: int = 0):
+        text = [
+            "#table(",
+            "  columns: 2,",
+        ]
+        for c in self.children:
+            text.append(f"  [{c.to_text(3)}],")
+        text.append(")")
+        return "\n".join(text)
+
+
 if __name__ == "__main__":
     from anytree import RenderTree
 
