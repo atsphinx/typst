@@ -1,4 +1,7 @@
-"""Data models for Typst elements."""
+"""Classes for Typst elements.
+
+Elements is tree style object and have ``to_text`` method to render document.
+"""
 # TODO: Write docstrings after.
 # ruff: noqa: D101, D102, D107
 
