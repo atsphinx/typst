@@ -1,4 +1,5 @@
 from atsphinx.mini18n import get_template_dir as get_mini18n_template_dir
+
 from atsphinx.typst import __version__ as version
 
 # -- Project information
