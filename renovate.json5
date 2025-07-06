@@ -5,21 +5,13 @@
     "github>attakei/workspace-configs//renovate/lefthook",
     "github>attakei/workspace-configs//renovate/taskfile",
   ],
-  "enabledManagers": [
-    "github-actions",
-    "custom.jsonata",
-  ],
+  "automerge": true,
   "packageRules": [
+    // NOTE: Require approve when it updates major version of deps
     {
-      "matchPackageNames": ["attakei/workspace-configs"],
-      "groupName": "workspace-configs",
-      "matchUpdateTypes": ["major", "minor"],
-      "enabled": true,
-    },
-    {
-      "matchPackageNames": ["attakei/workspace-configs"],
-      "matchUpdateTypes": ["patch"],
-      "enabled": false,
+      "matchDatasources": ["pypi"],
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
     },
   ],
 }
