@@ -7,6 +7,11 @@
   ],
   "automerge": true,
   "packageRules": [
+    // NOTE: Workflow's python version must be kept because it is minimum require-python version.
+    {
+      "matchFileNames": [".python-version"],
+      "enabled": false,
+    }
     // NOTE: Require approve when it updates major version of deps
     {
       "matchDatasources": ["pypi"],
