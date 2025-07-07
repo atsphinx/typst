@@ -25,3 +25,6 @@ pre-commit:
       glob: '*.py'
       exclude:
       run: '{run_python} ty check {staged_files}'
+    pytest:
+      glob: '*.py'
+      run: '{run_python} pytest'
