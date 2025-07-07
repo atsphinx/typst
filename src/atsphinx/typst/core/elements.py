@@ -65,10 +65,9 @@ class Paragraph(Element):
         return "\n".join([c.to_text() for c in self.children])
 
 
-class BulletList(Element):
-    LABEL = "list"
+class List(Element):
     TEMPLATE = """\
-        {{ prefix }}list(
+        {{ prefix }}{{ funcname }}(
           {%- for content, delimiter in contents %}
           {%- if not loop.first %}{{delimiter}}{% endif %}
           {{ content | indent(2, first=False) }}
@@ -77,10 +76,10 @@ class BulletList(Element):
     """
 
     def to_text(self):
-        prefix = "+" if isinstance(self.parent, self.__class__) else "#"
+        prefix = "+" if isinstance(self.parent, List) else "#"
         contents = []
         for c in self.children:
-            if isinstance(c, self.__class__):
+            if isinstance(c, List):
                 text = c.to_text()
                 delimiter = ""
             else:
@@ -93,25 +92,17 @@ class BulletList(Element):
                 ).render(c=c.to_text())
                 delimiter = ","
             contents.append((text, delimiter))
-        return self.get_template().render(prefix=prefix, contents=contents)
-
-
-class NumberedList(Element):
-    LABEL = "enum"
-    TEMPLATE = """\
-        #enum(
-          {%- for content in contents %}
-          {%- if not loop.first %},{% endif %}
-          [
-            {{ content | indent(4, first=False) }}
-          ]
-          {%- endfor %}
+        return self.get_template().render(
+            prefix=prefix, funcname=self.LABEL, contents=contents
         )
-    """
 
-    def to_text(self):
-        contents = [f"{c.to_text()}" for c in self.children]
-        return self.get_template().render(contents=contents)
+
+class BulletList(List):
+    LABEL = "list"
+
+
+class NumberedList(List):
+    LABEL = "enum"
 
 
 class Table(Element):

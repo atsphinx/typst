@@ -155,6 +155,35 @@ Paragraph
         ),
         pytest.param(
             """
+* Item A
+
+  #. Sub item A
+  #. Sub item B
+
+* Item B
+    """,
+            """
+#list(
+  [
+    Item A
+  ]
+  +enum(
+    [
+      Sub item A
+    ],
+    [
+      Sub item B
+    ]
+  ),
+  [
+    Item B
+  ]
+)
+    """,
+            id="Bullet list with nested numberd list",
+        ),
+        pytest.param(
+            """
 #. Item A
 #. Item B
     """,
