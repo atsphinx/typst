@@ -142,7 +142,6 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
     """Very simple test for syntax by Translator."""
     document = publish_doctree(src.strip())
     document.settings.strict_visitor = False
-    print(document)
     visitor = t.TypstTranslator(document, app.builder)
     document.walkabout(visitor)
     assert visitor.dom.to_text().strip() == dest.strip()
