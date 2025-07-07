@@ -19,11 +19,47 @@ if TYPE_CHECKING:
     [
         pytest.param(
             """
+Paragraph.
+""",
+            """
+Paragraph.
+""",
+            id="Single paragraph",
+        ),
+        pytest.param(
+            """
+This is paragraph 1.
+That is too.
+    """,
+            """
+This is paragraph 1.
+That is too.
+    """,
+            id="Multiline paragraph",
+        ),
+        pytest.param(
+            """
+This is paragraph 1.
+
+That is paragraph 2.
+    """,
+            """
+This is paragraph 1.
+
+That is paragraph 2.
+    """,
+            id="Multiple paragraph",
+        ),
+        pytest.param(
+            """
 Title
 =====
     """,
             """
-= Title
+#heading(
+  level: 1,
+  [Title]
+)
     """,
             id="Single heading",
         ),
@@ -38,11 +74,17 @@ Section 1
 ---------
     """,
             """
-= Title
+#heading(
+  level: 1,
+  [Title]
+)
 
 Paragraph
 
-== Section 1
+#heading(
+  level: 2,
+  [Section 1]
+)
     """,
             id="Heading with paragraph",
         ),
@@ -52,8 +94,14 @@ Paragraph
 * Item B
     """,
             """
-- Item A
-- Item B
+#list(
+  [
+    Item A
+  ],
+  [
+    Item B
+  ]
+)
     """,
             id="Bullet list",
         ),
@@ -64,9 +112,15 @@ Paragraph
 * Item B
     """,
             r"""
-- Item A
-  Next line
-- Item B
+#list(
+  [
+    Item A
+    Next line
+  ],
+  [
+    Item B
+  ]
+)
     """,
             id="Bullet list with line break",
         ),
@@ -80,10 +134,22 @@ Paragraph
 * Item B
     """,
             """
-- Item A
-  - Sub item A
-  - Sub item B
-- Item B
+#list(
+  [
+    Item A
+  ]
+  +list(
+    [
+      Sub item A
+    ],
+    [
+      Sub item B
+    ]
+  ),
+  [
+    Item B
+  ]
+)
     """,
             id="Bullet list with nested",
         ),
@@ -93,8 +159,14 @@ Paragraph
 #. Item B
     """,
             """
-+ Item A
-+ Item B
+#enum(
+  [
+    Item A
+  ],
+  [
+    Item B
+  ]
+)
     """,
             id="Enumerated list",
         ),
@@ -108,13 +180,25 @@ Paragraph
             """
 #table(
   columns: 2,
-  [Language],
-  [Japanese],
-  [Language2],
-  [English],
-  [Description],
-  [Hello world
-   This is atsphinx-typst.],
+  [
+    Language
+  ],
+  [
+    Japanese
+  ],
+  [
+    Language2
+  ],
+  [
+    English
+  ],
+  [
+    Description
+  ],
+  [
+    Hello world
+    This is atsphinx-typst.
+  ]
 )
     """,
             id="Docinfo",
@@ -130,8 +214,12 @@ Paragraph
 
 #table(
   columns: 2,
-  [Language],
-  [Japanese],
+  [
+    Language
+  ],
+  [
+    Japanese
+  ]
 )
     """,
             id="Field list",
@@ -139,9 +227,13 @@ Paragraph
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
+    from anytree import RenderTree
+
     """Very simple test for syntax by Translator."""
     document = publish_doctree(src.strip())
+    print(document)
     document.settings.strict_visitor = False
     visitor = t.TypstTranslator(document, app.builder)
     document.walkabout(visitor)
+    print(RenderTree(visitor.dom))
     assert visitor.dom.to_text().strip() == dest.strip()
