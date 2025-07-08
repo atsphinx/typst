@@ -19,7 +19,11 @@ class Text(Node):
 
 class Element(Node):
     LABEL: str = ""
-    TEMPLATE: str = ""
+    TEMPLATE: str = """\
+        {%- for content in contents %}
+        {{ content }}
+        {%- endfor %}
+    """
 
     def __init__(self, parent=None, children=None, **kwargs):
         super().__init__(self.LABEL, parent, children, **kwargs)
@@ -27,21 +31,28 @@ class Element(Node):
     @classmethod
     @lru_cache()
     def get_template(cls) -> jinja2.Template:
-        return jinja2.Template(textwrap.dedent(cls.TEMPLATE).rstrip("\n"))
+        return jinja2.Template(textwrap.dedent(cls.TEMPLATE).strip("\n"))
 
     def to_text(self):
-        return "\n".join([c.to_text() for c in self.children])
+        return self.get_template().render(contents=[c.to_text() for c in self.children])
 
 
 class Document(Element):
     LABEL = "document"
-
-    def to_text(self):
-        return "\n\n".join([c.to_text() for c in self.children])
+    TEMPLATE = """\
+        {% for content in contents %}
+        {{ content }}
+        {% endfor %}
+    """
 
 
 class Section(Element):
     LABEL = "section"
+    TEMPLATE: str = """\
+        {%- for content in contents -%}
+        {{ content }}
+        {%- endfor %}
+    """
 
 
 class Heading(Element):
@@ -54,15 +65,19 @@ class Heading(Element):
     """
 
     def to_text(self):
-        tmpl = self.get_template()
-        return tmpl.render(level=self.depth, content=super().to_text())
+        content = self.children[0].to_text() if self.children else ""
+        print(self.TEMPLATE)
+        print(self.get_template())
+        return self.get_template().render(level=self.depth, content=content)
 
 
 class Paragraph(Element):
     LABEL = "par"
-
-    def to_text(self):
-        return "\n".join([c.to_text() for c in self.children])
+    TEMPLATE: str = """\
+        {%- for content in contents -%}
+        {{ content }}
+        {%- endfor %}
+    """
 
 
 class List(Element):
