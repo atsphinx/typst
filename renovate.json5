@@ -11,7 +11,7 @@
     {
       "matchFileNames": [".python-version"],
       "enabled": false,
-    }
+    },
     // NOTE: Require approve when it updates major version of deps
     {
       "matchDatasources": ["pypi"],
