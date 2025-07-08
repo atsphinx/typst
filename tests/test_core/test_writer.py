@@ -256,6 +256,7 @@ Paragraph
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
+    # NOTE: Keep debugging print
     from anytree import RenderTree
 
     """Very simple test for syntax by Translator."""
