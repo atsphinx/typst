@@ -137,3 +137,28 @@ class Table(Element):
     def to_text(self):
         contents = [f"{c.to_text()}" for c in self.children]
         return self.get_template().render(contents=contents)
+
+
+class FunctionalText(Element):
+    """Element base-class to render decorated text."""
+
+    TEMPLATE = """\
+        #{{label}}[
+          {%- for content in contents %}
+          {{ content | indent(2, first=False) }}
+          {%- endfor %}
+        ]
+    """
+
+    def to_text(self):
+        return self.get_template().render(
+            label=self.LABEL, contents=[c.to_text() for c in self.children]
+        )
+
+
+class Emphasis(FunctionalText):
+    LABEL = "emph"
+
+
+class Strong(FunctionalText):
+    LABEL = "strong"

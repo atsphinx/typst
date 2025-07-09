@@ -12,11 +12,18 @@ from sphinx.util.docutils import SphinxTranslator
 from . import elements
 
 if TYPE_CHECKING:
+    from typing import Callable, Optional, Tuple
+
     from sphinx.builders import Builder
 
 
 class TypstTranslator(SphinxTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
+
+    ELEMENT_MAPPING = {
+        "emphasis": (elements.Emphasis, True),
+        "strong": (elements.Strong, True),
+    }
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
         super().__init__(document, builder)
@@ -24,11 +31,41 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = self.dom
         self._indent_level = 0
 
+    def _find_mepped_element(
+        self, node
+    ) -> Optional[Tuple[Callable[..., nodes.Element], bool]]:
+        for node_class in node.__class__.__mro__:
+            if node_class.__name__ in self.ELEMENT_MAPPING:
+                return self.ELEMENT_MAPPING[node_class.__name__]
+        return None
+
+    def unknown_visit(self, node: nodes.Node):
+        map = self._find_mepped_element(node)
+        if map is None:
+            super().unknown_visit(node)
+            return
+        elm_class, move_ptr = map
+        elm = elm_class(parent=self._ptr)
+        if move_ptr:
+            self._ptr = elm
+
+    def unknown_departure(self, node: nodes.Node):
+        map = self._find_mepped_element(node)
+        if map is None:
+            super().unknown_departure(node)
+            return
+        elm_class, move_ptr = map
+        if move_ptr:
+            self._ptr = self._ptr.parent
+
     def _not_proc(self, node):
         pass
 
     def _move_ptr_to_parent(self, node):
         self._ptr = self._ptr.parent
+
+    def _add_node(self, node):
+        pass
 
     # TODO: Implement after
     visit_document = _not_proc

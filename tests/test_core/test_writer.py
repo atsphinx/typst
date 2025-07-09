@@ -253,6 +253,41 @@ Paragraph
     """,
             id="Field list",
         ),
+        pytest.param(
+            """
+*Content*
+""",
+            """
+#emph[
+  Content
+]
+    """,
+            id="Emphasizes content",
+        ),
+        pytest.param(
+            """
+**Content**
+""",
+            """
+#strong[
+  Content
+]
+    """,
+            id="strong content",
+        ),
+        pytest.param(
+            """
+This *is* **content**
+""",
+            """
+This #emph[
+  is
+] #strong[
+  content
+]
+    """,
+            id="strong content",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
