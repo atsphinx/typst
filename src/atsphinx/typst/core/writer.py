@@ -12,7 +12,7 @@ from sphinx.util.docutils import SphinxTranslator
 from . import elements
 
 if TYPE_CHECKING:
-    from typing import Callable, Optional, Tuple
+    from typing import Optional
 
     from sphinx.builders import Builder
 
@@ -20,10 +20,19 @@ if TYPE_CHECKING:
 class TypstTranslator(SphinxTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
-    ELEMENT_MAPPING = {
+    ELEMENT_MAPPING: dict[str, Optional[tuple[type[nodes.Element], bool]]] = {
         "emphasis": (elements.Emphasis, True),
         "strong": (elements.Strong, True),
     }
+    """Controls for mapping Typst elements and docutils nodes.
+
+    If a node class need not work as element, value of dict must be ``None``.
+
+    If a node class requires element, value of dict must be these tuple.
+
+    1. First value is class of element.
+    2. Second value is boolean that is required nest.
+    """
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
         super().__init__(document, builder)
@@ -31,9 +40,7 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = self.dom
         self._indent_level = 0
 
-    def _find_mepped_element(
-        self, node
-    ) -> Optional[Tuple[Callable[..., nodes.Element], bool]]:
+    def _find_mepped_element(self, node) -> Optional[tuple[type[nodes.Element], bool]]:
         for node_class in node.__class__.__mro__:
             if node_class.__name__ in self.ELEMENT_MAPPING:
                 return self.ELEMENT_MAPPING[node_class.__name__]
