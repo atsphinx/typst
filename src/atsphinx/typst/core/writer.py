@@ -71,16 +71,10 @@ class TypstTranslator(SphinxTranslator):
         if element_class is None:
             super().unknown_departure(node)
             return
+        self._move_ptr_to_parent()
+
+    def _move_ptr_to_parent(self, node=None):
         self._ptr = self._ptr.parent
-
-    def _not_proc(self, node):
-        pass
-
-    def _move_ptr_to_parent(self, node):
-        self._ptr = self._ptr.parent
-
-    def _add_node(self, node):
-        pass
 
     def visit_Text(self, node: nodes.Text):
         self._ptr = elements.Text(node.astext(), parent=self._ptr)
