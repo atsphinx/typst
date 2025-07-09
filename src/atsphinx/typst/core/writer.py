@@ -30,25 +30,21 @@ class TypstTranslator(SphinxTranslator):
         "field_body",
     ]
 
-    ELEMENT_MAPPING: dict[str, Optional[tuple[type[nodes.Element], bool]]] = {
-        "paragraph": (elements.Paragraph, True),
-        "title": (elements.Heading, True),
-        "section": (elements.Section, True),
-        "bullet_list": (elements.BulletList, True),
-        "field_list": (elements.Table, True),
-        "docinfo": (elements.Table, True),
-        "enumerated_list": (elements.NumberedList, True),
-        "emphasis": (elements.Emphasis, True),
-        "strong": (elements.Strong, True),
+    ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
+        "paragraph": elements.Paragraph,
+        "title": elements.Heading,
+        "section": elements.Section,
+        "bullet_list": elements.BulletList,
+        "field_list": elements.Table,
+        "docinfo": elements.Table,
+        "enumerated_list": elements.NumberedList,
+        "emphasis": elements.Emphasis,
+        "strong": elements.Strong,
     }
     """Controls for mapping Typst elements and docutils nodes.
 
-    If a node class need not work as element, value of dict must be ``None``.
-
-    If a node class requires element, value of dict must be these tuple.
-
-    1. First value is class of element.
-    2. Second value is boolean that is required nest.
+    If a node requires only to add element with empty content,
+    you should add pair of node name and element class into this.
     """
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
@@ -57,30 +53,25 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = self.dom
         self._indent_level = 0
 
-    def _find_mepped_element(self, node) -> Optional[tuple[type[nodes.Element], bool]]:
+    def _find_mepped_element(self, node) -> Optional[type[nodes.Element]]:
         for node_class in node.__class__.__mro__:
             if node_class.__name__ in self.ELEMENT_MAPPING:
                 return self.ELEMENT_MAPPING[node_class.__name__]
         return None
 
     def unknown_visit(self, node: nodes.Node):
-        map = self._find_mepped_element(node)
-        if map is None:
+        element_class = self._find_mepped_element(node)
+        if element_class is None:
             super().unknown_visit(node)
             return
-        elm_class, move_ptr = map
-        elm = elm_class(parent=self._ptr)
-        if move_ptr:
-            self._ptr = elm
+        self._ptr = element_class(parent=self._ptr)
 
     def unknown_departure(self, node: nodes.Node):
-        map = self._find_mepped_element(node)
-        if map is None:
+        element_class = self._find_mepped_element(node)
+        if element_class is None:
             super().unknown_departure(node)
             return
-        elm_class, move_ptr = map
-        if move_ptr:
-            self._ptr = self._ptr.parent
+        self._ptr = self._ptr.parent
 
     def _not_proc(self, node):
         pass
