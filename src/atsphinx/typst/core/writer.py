@@ -20,7 +20,24 @@ if TYPE_CHECKING:
 class TypstTranslator(SphinxTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
+    optional = [
+        # TODO: Implement after for configure document itself.
+        "document",
+        # NOTE: Currently, these need not render anything.
+        "list_item",
+        "field",
+        "field_name",
+        "field_body",
+    ]
+
     ELEMENT_MAPPING: dict[str, Optional[tuple[type[nodes.Element], bool]]] = {
+        "paragraph": (elements.Paragraph, True),
+        "title": (elements.Heading, True),
+        "section": (elements.Section, True),
+        "bullet_list": (elements.BulletList, True),
+        "field_list": (elements.Table, True),
+        "docinfo": (elements.Table, True),
+        "enumerated_list": (elements.NumberedList, True),
         "emphasis": (elements.Emphasis, True),
         "strong": (elements.Strong, True),
     }
@@ -74,56 +91,7 @@ class TypstTranslator(SphinxTranslator):
     def _add_node(self, node):
         pass
 
-    # TODO: Implement after
-    visit_document = _not_proc
-    depart_document = _not_proc
-
-    def visit_section(self, node: nodes.section):
-        self._ptr = elements.Section(parent=self._ptr)
-
-    depart_section = _move_ptr_to_parent
-
     def visit_Text(self, node: nodes.Text):
         self._ptr = elements.Text(node.astext(), parent=self._ptr)
 
     depart_Text = _move_ptr_to_parent
-
-    def visit_title(self, node: nodes.title):
-        self._ptr = elements.Heading(parent=self._ptr)
-
-    depart_title = _move_ptr_to_parent
-
-    def visit_paragraph(self, node: nodes.paragraph):
-        self._ptr = elements.Paragraph(parent=self._ptr)
-
-    depart_paragraph = _move_ptr_to_parent
-
-    def visit_bullet_list(self, node: nodes.bullet_list):
-        self._ptr = elements.BulletList(parent=self._ptr)
-
-    depart_bullet_list = _move_ptr_to_parent
-
-    def visit_enumerated_list(self, node: nodes.enumerated_list):
-        self._ptr = elements.NumberedList(parent=self._ptr)
-
-    depart_enumerated_list = _move_ptr_to_parent
-
-    visit_list_item = _not_proc
-    depart_list_item = _not_proc
-
-    def visit_field_list(self, node: nodes.field_list):
-        self._ptr = elements.Table(parent=self._ptr)
-
-    depart_field_list = _move_ptr_to_parent
-
-    visit_field = _not_proc
-    depart_field = _not_proc
-    visit_field_name = _not_proc
-    depart_field_name = _not_proc
-    visit_field_body = _not_proc
-    depart_field_body = _not_proc
-
-    def visit_docinfo(self, node: nodes.docinfo):
-        self._ptr = elements.Table(parent=self._ptr)
-
-    depart_docinfo = _move_ptr_to_parent
