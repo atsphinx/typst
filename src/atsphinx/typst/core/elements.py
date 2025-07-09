@@ -5,21 +5,22 @@ Elements is tree style object and have ``to_text`` method to render document.
 # TODO: Write docstrings after.
 # ruff: noqa: D101, D102, D107
 
+from __future__ import annotations
+
 import textwrap
 from functools import lru_cache
+from typing import TYPE_CHECKING
 
 import jinja2
 from anytree import Node
 
-
-class Text(Node):
-    def to_text(self):
-        return self.name
+if TYPE_CHECKING:
+    from typing import ClassVar
 
 
 class Element(Node):
-    LABEL: str = ""
-    TEMPLATE: str = """\
+    LABEL: ClassVar[str] = ""
+    TEMPLATE: ClassVar[str] = """\
         {%- for content in contents %}
         {{ content }}
         {%- endfor %}
@@ -35,6 +36,18 @@ class Element(Node):
 
     def to_text(self):
         return self.get_template().render(contents=[c.to_text() for c in self.children])
+
+
+class Text(Element):
+    LABEL = "#text"
+    content: str
+
+    def __init__(self, content: str, parent=None, children=None, **kwargs):
+        super().__init__(parent, children, **kwargs)
+        self.content = content
+
+    def to_text(self):
+        return self.content
 
 
 class Document(Element):
