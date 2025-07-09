@@ -77,6 +77,10 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = self._ptr.parent
 
     def visit_Text(self, node: nodes.Text):
+        """Work about visit text content of node.
+
+        This type should manage content value itself.
+        """
         self._ptr = elements.Text(node.astext(), parent=self._ptr)
 
     depart_Text = _move_ptr_to_parent
