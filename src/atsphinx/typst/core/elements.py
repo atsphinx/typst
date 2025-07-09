@@ -66,8 +66,6 @@ class Heading(Element):
 
     def to_text(self):
         content = self.children[0].to_text() if self.children else ""
-        print(self.TEMPLATE)
-        print(self.get_template())
         return self.get_template().render(level=self.depth, content=content)
 
 
