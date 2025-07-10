@@ -288,6 +288,17 @@ This #emph[
     """,
             id="strong content",
         ),
+        pytest.param(
+            """
+.. raw:: typst
+
+    #heading([Hello])
+""",
+            """
+#heading([Hello])
+    """,
+            id="raw typst source",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):

@@ -38,6 +38,18 @@ class Element(Node):
         return self.get_template().render(contents=[c.to_text() for c in self.children])
 
 
+class Raw(Element):
+    LABEL = "raw"
+    content: str
+
+    def __init__(self, content: str, parent=None, children=None, **kwargs):
+        super().__init__(parent, children, **kwargs)
+        self.content = content
+
+    def to_text(self):
+        return self.content
+
+
 class Text(Element):
     LABEL = "#text"
     content: str

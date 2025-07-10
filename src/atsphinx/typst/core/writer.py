@@ -76,6 +76,11 @@ class TypstTranslator(SphinxTranslator):
     def _move_ptr_to_parent(self, node=None):
         self._ptr = self._ptr.parent
 
+    def visit_raw(self, node: nodes.raw):
+        self._ptr = elements.Raw(node.astext(), parent=self._ptr)
+
+    depart_raw = _move_ptr_to_parent
+
     def visit_Text(self, node: nodes.Text):
         """Work about visit text content of node.
 
