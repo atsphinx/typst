@@ -320,6 +320,43 @@ This #emph[
 """,
             id="inline raw code",
         ),
+        pytest.param(
+            """
+This is an ordinary paragraph, introducing a block quote.
+
+    "It is my business to know things.  That is my trade."
+""",
+            """
+This is an ordinary paragraph, introducing a block quote.
+
+#quote(
+  block: true,
+)[
+  "It is my business to know things.  That is my trade."
+]
+""",
+            id="block quote",
+        ),
+        pytest.param(
+            """
+This is an ordinary paragraph, introducing a block quote.
+
+    "It is my business to know things.  That is my trade."
+
+    -- Sherlock Holmes
+""",
+            """
+This is an ordinary paragraph, introducing a block quote.
+
+#quote(
+  block: true,
+  attribution: [Sherlock Holmes],
+)[
+  "It is my business to know things.  That is my trade."
+]
+""",
+            id="block quote with attribution",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):

@@ -40,6 +40,7 @@ class TypstTranslator(SphinxTranslator):
         "enumerated_list": elements.NumberedList,
         "emphasis": elements.Emphasis,
         "strong": elements.Strong,
+        "block_quote": elements.Quote,
     }
     """Controls for mapping Typst elements and docutils nodes.
 
@@ -93,3 +94,8 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = elements.Text(node.astext(), parent=self._ptr)
 
     depart_Text = _move_ptr_to_parent
+
+    def visit_attribution(self, node: nodes.attribution):
+        if isinstance(node.parent, nodes.block_quote):
+            self._ptr.attribution = node.astext()
+        raise nodes.SkipNode()

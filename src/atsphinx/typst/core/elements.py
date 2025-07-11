@@ -202,6 +202,29 @@ class Raw(Element):
         return self.get_template().render(content=self.content)
 
 
+class Quote(Element):
+    LABEL = "quote"
+    TEMPLATE = """\
+        #quote(
+          block: true,
+          {%- if attribution %}
+          attribution: [{{attribution}}],
+          {%- endif %}
+        )[
+          {%- for content in contents %}
+          {{ content | indent(2, first=False) }}
+          {%- endfor %}
+        ]
+    """
+    attribution: str = ""
+
+    def to_text(self):
+        return self.get_template().render(
+            contents=[c.to_text() for c in self.children],
+            attribution=self.attribution,
+        )
+
+
 class FunctionalText(Element):
     """Element base-class to render decorated text."""
 
