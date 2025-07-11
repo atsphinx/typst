@@ -86,6 +86,10 @@ class TypstTranslator(SphinxTranslator):
         elements.Raw(node.astext(), parent=self._ptr)
         raise nodes.SkipNode()
 
+    def visit_literal_block(self, node: nodes.raw):
+        elements.RawBlock(node.astext(), node.get("language", None), parent=self._ptr)
+        raise nodes.SkipNode()
+
     def visit_Text(self, node: nodes.Text):
         """Work about visit text content of node.
 

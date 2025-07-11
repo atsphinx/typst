@@ -357,6 +357,21 @@ This is an ordinary paragraph, introducing a block quote.
 """,
             id="block quote with attribution",
         ),
+        pytest.param(
+            """
+.. code:: python
+
+    print("テスト")
+    print("Hello")
+""",
+            """
+```python
+print(\"テスト\")
+print(\"Hello\")
+```
+""",
+            id="block raw code",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):

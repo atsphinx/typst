@@ -183,7 +183,7 @@ class Table(Element):
 class Raw(Element):
     TEMPLATE = """\
         #raw(
-          {{ content|tojson }}
+          {{ content|tojson|indent(2, first=False)}}
         )
     """
     content: str
@@ -200,6 +200,24 @@ class Raw(Element):
 
     def to_text(self):
         return self.get_template().render(content=self.content)
+
+
+class RawBlock(Element):
+    TEMPLATE = """\
+        ```{{lang}}
+        {{content}}
+        ```
+    """
+    content: str
+    lang: str
+
+    def __init__(self, content: str, lang: str, parent=None, children=None, **kwargs):
+        super().__init__(parent, children, **kwargs)
+        self.content = content
+        self.lang = lang
+
+    def to_text(self):
+        return self.get_template().render(content=self.content, lang=self.lang)
 
 
 class Quote(Element):
