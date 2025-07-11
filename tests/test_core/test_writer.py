@@ -255,6 +255,38 @@ Paragraph
         ),
         pytest.param(
             """
+Paragraph
+
+-h  Help
+-v  Show version
+""",
+            """
+Paragraph
+
+#table(
+  columns: 2,
+  [
+    #strong[
+      -h
+    ]
+  ],
+  [
+    Help
+  ],
+  [
+    #strong[
+      -v
+    ]
+  ],
+  [
+    Show version
+  ]
+)
+    """,
+            id="Option list",
+        ),
+        pytest.param(
+            """
 *Content*
 """,
             """

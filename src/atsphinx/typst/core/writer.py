@@ -28,10 +28,14 @@ class TypstTranslator(SphinxTranslator):
         # TODO: Implement after for configure document itself.
         "document",
         # NOTE: Currently, these need not render anything.
+        "description",
         "list_item",
         "field",
         "field_name",
         "field_body",
+        "option_list_item",
+        "option_group",
+        "option",
     ]
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
@@ -40,6 +44,8 @@ class TypstTranslator(SphinxTranslator):
         "section": elements.Section,
         "bullet_list": elements.BulletList,
         "field_list": elements.Table,
+        "option_list": elements.Table,
+        "option_string": elements.Strong,
         "docinfo": elements.Table,
         "enumerated_list": elements.NumberedList,
         "emphasis": elements.Emphasis,
