@@ -7,6 +7,7 @@ Elements is tree style object and have ``to_text`` method to render document.
 
 from __future__ import annotations
 
+import sys
 import textwrap
 from functools import lru_cache
 from typing import TYPE_CHECKING
@@ -16,6 +17,23 @@ from anytree import Node
 
 if TYPE_CHECKING:
     from typing import ClassVar
+
+
+def load_template(name: str) -> str:
+    """Load template from class var.
+
+    :param name: Class name to use as template.
+    :returns: Template string.
+    """
+    module = sys.modules[load_template.__module__]
+    if not hasattr(module, name):
+        print(dir(module))
+        raise Exception(f"{name} is not found.")
+    return textwrap.dedent(getattr(module, name).TEMPLATE).strip("\n")
+
+
+env = jinja2.Environment(loader=jinja2.FunctionLoader(load_template))
+env.policies["json.dumps_kwargs"]["ensure_ascii"] = False
 
 
 class Element(Node):
@@ -39,7 +57,7 @@ class Element(Node):
 
 
 class Source(Element):
-    LABEL = "#source"
+    LABEL = "#raw"
     content: str
 
     def __init__(self, content: str, parent=None, children=None, **kwargs):
@@ -160,6 +178,28 @@ class Table(Element):
     def to_text(self):
         contents = [f"{c.to_text()}" for c in self.children]
         return self.get_template().render(contents=contents)
+
+
+class Raw(Element):
+    TEMPLATE = """\
+        #raw(
+          {{ content|tojson }}
+        )
+    """
+    content: str
+
+    def __init__(self, content: str, parent=None, children=None, **kwargs):
+        super().__init__(parent, children, **kwargs)
+        self.content = content
+
+    @classmethod
+    @lru_cache()
+    def get_template(cls) -> jinja2.Template:
+        # Override to work 'ensure_ascii' settings by tojson.
+        return env.get_template("Raw")
+
+    def to_text(self):
+        return self.get_template().render(content=self.content)
 
 
 class FunctionalText(Element):
