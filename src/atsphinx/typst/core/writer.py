@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from docutils import nodes
 from sphinx.util.docutils import SphinxTranslator
+from sphinx.util.logging import getLogger
 
 from . import elements
 
@@ -15,6 +16,9 @@ if TYPE_CHECKING:
     from typing import Optional
 
     from sphinx.builders import Builder
+
+
+logger = getLogger(__name__)
 
 
 class TypstTranslator(SphinxTranslator):
@@ -102,4 +106,9 @@ class TypstTranslator(SphinxTranslator):
     def visit_attribution(self, node: nodes.attribution):
         if isinstance(node.parent, nodes.block_quote):
             self._ptr.attribution = node.astext()
+        raise nodes.SkipNode()
+
+    def visit_Admonition(self, node):
+        msg = "Currently, admonition-like directive is not supported."
+        logger.info(msg)
         raise nodes.SkipNode()

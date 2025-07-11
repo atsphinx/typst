@@ -372,6 +372,16 @@ print(\"Hello\")
 """,
             id="block raw code",
         ),
+        pytest.param(
+            """
+.. hint:: Hello
+
+.. warning:: world
+""",
+            """
+""",
+            id="Admonitions",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
