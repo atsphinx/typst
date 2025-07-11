@@ -299,6 +299,16 @@ This #emph[
     """,
             id="raw typst source",
         ),
+        pytest.param(
+            """
+.. raw:: python
+
+    print("hello")
+""",
+            """
+    """,
+            id="raw other source",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
