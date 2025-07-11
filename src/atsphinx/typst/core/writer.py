@@ -78,7 +78,7 @@ class TypstTranslator(SphinxTranslator):
 
     def visit_raw(self, node: nodes.raw):
         if node.get("format") == "typst":
-            elements.Raw(node.astext(), parent=self._ptr)
+            elements.Source(node.astext(), parent=self._ptr)
         raise nodes.SkipNode()
 
     def visit_Text(self, node: nodes.Text):
