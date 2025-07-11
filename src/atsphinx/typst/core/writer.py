@@ -51,6 +51,7 @@ class TypstTranslator(SphinxTranslator):
         "emphasis": elements.Emphasis,
         "strong": elements.Strong,
         "block_quote": elements.Quote,
+        "figure": elements.Figure,
     }
     """Controls for mapping Typst elements and docutils nodes.
 
@@ -117,4 +118,8 @@ class TypstTranslator(SphinxTranslator):
     def visit_Admonition(self, node):
         msg = "Currently, admonition-like directive is not supported."
         logger.info(msg)
+        raise nodes.SkipNode()
+
+    def visit_image(self, node: nodes.image):
+        elements.Image(node["uri"], node.get("width"), node.get("alt"), parent=self._ptr)
         raise nodes.SkipNode()

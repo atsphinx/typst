@@ -16,7 +16,7 @@ import jinja2
 from anytree import Node
 
 if TYPE_CHECKING:
-    from typing import ClassVar
+    from typing import ClassVar, Optional
 
 
 def load_template(name: str) -> str:
@@ -266,3 +266,52 @@ class Emphasis(FunctionalText):
 
 class Strong(FunctionalText):
     LABEL = "strong"
+
+
+class Image(Element):
+    LABEL = "image"
+    TEMPLATE = """\
+        #image(
+          "{{ elm.uri }}",
+          {%- if elm.width %}
+          width: {{ elm.width }},
+          {%- endif %}
+          {%- if elm.alt %}
+          alt: "{{ elm.alt }}",
+          {%- endif %}
+        )
+    """
+
+    uri: str
+    width: Optional[str]
+    alt: Optional[str]
+
+    def __init__(
+        self,
+        uri: str,
+        width: Optional[str] = None,
+        alt: Optional[str] = None,
+        parent=None,
+        children=None,
+        **kwargs,
+    ):
+        super().__init__(parent, children, **kwargs)
+        self.uri = uri
+        self.width = width
+        self.alt = alt
+
+    def to_text(self):
+        return self.get_template().render(elm=self)
+
+
+class Figure(Element):
+    LABEL = "figure"
+    TEMPLATE = """\
+        #figure(
+          {{ image|indent(2, first=False) }}
+        )
+    """
+
+    def to_text(self):
+        image = self.children[0].to_text()
+        return self.get_template().render(image=image)

@@ -414,6 +414,45 @@ print(\"Hello\")
 """,
             id="Admonitions",
         ),
+        pytest.param(
+            """
+.. image:: ./example.jpg
+""",
+            """
+#image(
+  "./example.jpg",
+)
+""",
+            id="Simple image",
+        ),
+        pytest.param(
+            """
+.. image:: ./example.jpg
+    :width: 50%
+    :alt: Sample
+""",
+            """
+#image(
+  "./example.jpg",
+  width: 50%,
+  alt: "Sample",
+)
+""",
+            id="Image with attributes",
+        ),
+        pytest.param(
+            """
+.. figure:: ./example.jpg
+""",
+            """
+#figure(
+  #image(
+    "./example.jpg",
+  )
+)
+""",
+            id="Simple figure",
+        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
