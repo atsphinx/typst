@@ -36,6 +36,11 @@ class TypstTranslator(SphinxTranslator):
         "option_list_item",
         "option_group",
         "option",
+        "colspec",
+        "thead",
+        "tbody",
+        "row",
+        "entry",
     ]
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
@@ -136,4 +141,15 @@ class TypstTranslator(SphinxTranslator):
         pass
 
     def depart_legend(self, node: nodes.legend):
+        pass
+
+    def visit_table(self, node: nodes.table):
+        self._ptr = elements.Table(parent=self._ptr)
+
+    depart_table = _move_ptr_to_parent
+
+    def visit_tgroup(self, node: nodes.tgroup):
+        self._ptr.columns = int(node["cols"])
+
+    def depart_tgroup(self, node):
         pass

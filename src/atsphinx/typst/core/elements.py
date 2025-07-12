@@ -162,10 +162,11 @@ class NumberedList(List):
 
 
 class Table(Element):
+    # TODO: Support thead design
     LABEL = "table"
     TEMPLATE = """\
         #table(
-          columns: 2,
+          columns: {{ columns }},
           {%- for content in contents %}
           {%- if not loop.first %},{% endif %}
           [
@@ -175,9 +176,11 @@ class Table(Element):
         )
     """
 
+    columns: int = 2
+
     def to_text(self):
         contents = [f"{c.to_text()}" for c in self.children]
-        return self.get_template().render(contents=contents)
+        return self.get_template().render(contents=contents, columns=self.columns)
 
 
 class Raw(Element):

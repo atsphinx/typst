@@ -507,3 +507,87 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
     assert visitor.dom.to_text().strip() == dest.strip()
+
+
+@pytest.mark.parametrize(
+    "src",
+    [
+        pytest.param(
+            """
+== ==== ========
+ID Name Note
+== ==== ========
+1  Tom  Engineer
+== ==== ========
+""",
+            id="Simple table",
+        ),
+        pytest.param(
+            """
++--+----+--------+
+|ID|Name|Note    |
++==+====+========+
+|1 |Tom |Engineer|
++--+----+--------+
+""",
+            id="Grid table",
+        ),
+        pytest.param(
+            """
+.. csv-table::
+    :header: ID,Name,Note
+
+    1,Tom,Engineer
+""",
+            id="CSV table",
+        ),
+        pytest.param(
+            """
+.. list-table::
+
+    * - ID
+      - Name
+      - Note
+    * - 1
+      - Tom
+      - Engineer
+""",
+            id="List table",
+        ),
+    ],
+)
+def test_table_syntax(app: SphinxTestApp, src: str):
+    dest = """
+#table(
+  columns: 3,
+  [
+    ID
+  ],
+  [
+    Name
+  ],
+  [
+    Note
+  ],
+  [
+    1
+  ],
+  [
+    Tom
+  ],
+  [
+    Engineer
+  ]
+)
+"""
+    # NOTE: Keep debugging print
+    from anytree import RenderTree
+
+    """Very simple test for syntax by Translator."""
+    document = publish_doctree(src.strip())
+    print(document)
+    document.settings.strict_visitor = False
+    visitor = t.TypstTranslator(document, app.builder)
+    document.walkabout(visitor)
+    print(RenderTree(visitor.dom))
+    assert visitor.dom.to_text().strip() == dest.strip()
