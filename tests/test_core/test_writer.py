@@ -448,10 +448,50 @@ print(\"Hello\")
 #figure(
   #image(
     "./example.jpg",
-  )
+  ),
 )
 """,
             id="Simple figure",
+        ),
+        pytest.param(
+            """
+.. figure:: ./example.jpg
+
+    This is sample.
+""",
+            """
+#figure(
+  #image(
+    "./example.jpg",
+  ),
+  caption: [
+    This is sample.
+  ],
+)
+""",
+            id="Figure with caption",
+        ),
+        pytest.param(
+            """
+.. figure:: ./example.jpg
+
+    This is sample.
+
+    Support multiline.
+""",
+            # NOTE: It removes blank line between caption and legend.
+            """
+#figure(
+  #image(
+    "./example.jpg",
+  ),
+  caption: [
+    This is sample.
+    Support multiline.
+  ],
+)
+""",
+            id="Figure with caption",
         ),
     ],
 )

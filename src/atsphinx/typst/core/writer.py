@@ -121,5 +121,19 @@ class TypstTranslator(SphinxTranslator):
         raise nodes.SkipNode()
 
     def visit_image(self, node: nodes.image):
-        elements.Image(node["uri"], node.get("width"), node.get("alt"), parent=self._ptr)
+        elements.Image(
+            node["uri"], node.get("width"), node.get("alt"), parent=self._ptr
+        )
         raise nodes.SkipNode()
+
+    def visit_caption(self, node: nodes.caption):
+        if isinstance(self._ptr, elements.Figure):
+            para = elements.Paragraph(parent=self._ptr)
+            elements.Text(node.astext(), parent=para)
+        raise nodes.SkipNode()
+
+    def visit_legend(self, node: nodes.legend):
+        pass
+
+    def depart_legend(self, node: nodes.legend):
+        pass

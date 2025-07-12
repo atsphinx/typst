@@ -308,10 +308,24 @@ class Figure(Element):
     LABEL = "figure"
     TEMPLATE = """\
         #figure(
-          {{ image|indent(2, first=False) }}
+          {{ image|indent(2, first=False) }},
+          {%- if caption %}
+          caption: [
+            {%- for content in caption %}
+            {{ content | indent(4, first=False) }}
+            {%- endfor %}
+          ],
+          {%- endif %}
         )
     """
 
+    caption: Optional[str] = None
+
     def to_text(self):
         image = self.children[0].to_text()
-        return self.get_template().render(image=image)
+        caption = []
+        for idx, child in enumerate(self.children):
+            if idx == 0:
+                continue
+            caption.append(child.to_text())
+        return self.get_template().render(image=image, caption=caption)
