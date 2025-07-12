@@ -36,6 +36,11 @@ jobs:
         run: |
           task -y docs:build-latexpdf
           ls -l docs/_build/latex
+      - uses: 'actions/upload-artifact@v4'
+        with:
+          name: 'LaTeX-PDF'
+          path: 'docs/_build/latex/atsphinx-typst.pdf'
+
   typstpdf:
     runs-on: ubuntu-latest
     steps:
@@ -50,3 +55,7 @@ jobs:
         run: |
           task -y docs:build-typstpdf
           ls -l docs/_build/typstpdf
+      - uses: 'actions/upload-artifact@v4'
+        with:
+          name: 'Typst-PDF'
+          path: 'docs/_build/typstpdf/index.pdf'
