@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from .. import __version__
-from . import builders
+from . import builders, config
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
@@ -20,6 +20,7 @@ def setup(app: Sphinx):  # noqa: D103
     # Builders
     app.add_builder(builders.TypstBuilder)
     app.add_builder(builders.TypstPDFBuilder)
+    config.setup(app)
     return {
         "version": __version__,
         "env_version": 1,
