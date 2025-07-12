@@ -23,7 +23,7 @@ def test__it(app: SphinxTestApp):
     out = app.outdir / "index.typ"
     assert out.exists()
     assert "#heading(" in out.read_text()
-    assert "[Test doc for atsphinx-typst]" in out.read_text()
+    assert "Test doc for atsphinx-typst" in out.read_text()
 
 
 @pytest.mark.sphinx("typst", confoverrides={"extensions": []})

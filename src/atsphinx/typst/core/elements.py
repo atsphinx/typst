@@ -103,13 +103,21 @@ class Heading(Element):
     TEMPLATE = """\
         #heading(
           level: {{level}},
-          [{{content}}]
+          [
+            {{content}}
+            {%- if label %}
+            #label("{{ label }}")
+            {%- endif %}
+          ]
         )
     """
+    label: Optional[str] = None
 
     def to_text(self):
         content = self.children[0].to_text() if self.children else ""
-        return self.get_template().render(level=self.depth, content=content)
+        return self.get_template().render(
+            level=self.depth, content=content, label=self.label
+        )
 
 
 class Paragraph(Element):
@@ -332,3 +340,30 @@ class Figure(Element):
                 continue
             caption.append(child.to_text())
         return self.get_template().render(image=image, caption=caption)
+
+
+class Link(Element):
+    LABEL = "link"
+    TEMPLATE = """\
+        #link(
+          "{{ dest }}",
+          [
+            {{ content|indent(4, first=False) }}
+          ],
+        )
+    """
+
+    def __init__(
+        self,
+        uri: str,
+        content: Optional[str] = None,
+        parent=None,
+        children=None,
+        **kwargs,
+    ):
+        super().__init__(parent, children, **kwargs)
+        self.uri = uri
+        self.content = content
+
+    def to_text(self):
+        return self.get_template().render(dest=self.uri, content=self.content)

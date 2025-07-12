@@ -45,7 +45,6 @@ class TypstTranslator(SphinxTranslator):
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
         "paragraph": elements.Paragraph,
-        "title": elements.Heading,
         "section": elements.Section,
         "bullet_list": elements.BulletList,
         "field_list": elements.Table,
@@ -69,6 +68,7 @@ class TypstTranslator(SphinxTranslator):
         self.dom: elements.Document = elements.Document()
         self._ptr = self.dom
         self._indent_level = 0
+        self._targets: list[nodes.target] = []
 
     def _find_mepped_element(self, node) -> Optional[type[nodes.Element]]:
         for node_class in node.__class__.__mro__:
@@ -153,3 +153,24 @@ class TypstTranslator(SphinxTranslator):
 
     def depart_tgroup(self, node):
         pass
+
+    def visit_reference(self, node: nodes.reference):
+        self._ptr = elements.Link(node["refuri"], node.astext(), parent=self._ptr)
+
+    depart_reference = _move_ptr_to_parent
+
+    def visit_target(self, node: nodes.target):
+        node_idx = node.parent.children.index(node)  # type: ignore[possibily-unbound-attribute]
+        if node_idx < 0:
+            self._targets.append(node)
+        elif isinstance(self._ptr.children[-1], elements.Heading):
+            self._ptr.children[-1].label = node["refid"]
+        raise nodes.SkipNode()
+
+    def visit_title(self, node: nodes.title):
+        self._ptr = elements.Heading(parent=self._ptr)
+        if self._targets:
+            target = self._targets.pop()
+            self._ptr.label = target["refid"]
+
+    depart_title = _move_ptr_to_parent

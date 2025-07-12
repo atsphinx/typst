@@ -58,7 +58,9 @@ Title
             """
 #heading(
   level: 1,
-  [Title]
+  [
+    Title
+  ]
 )
     """,
             id="Single heading",
@@ -76,14 +78,18 @@ Section 1
             """
 #heading(
   level: 1,
-  [Title]
+  [
+    Title
+  ]
 )
 
 Paragraph
 
 #heading(
   level: 2,
-  [Section 1]
+  [
+    Section 1
+  ]
 )
     """,
             id="Heading with paragraph",
@@ -587,6 +593,82 @@ def test_table_syntax(app: SphinxTestApp, src: str):
     document = publish_doctree(src.strip())
     print(document)
     document.settings.strict_visitor = False
+    visitor = t.TypstTranslator(document, app.builder)
+    document.walkabout(visitor)
+    print(RenderTree(visitor.dom))
+    assert visitor.dom.to_text().strip() == dest.strip()
+
+
+@pytest.mark.parametrize(
+    "src,dest",
+    [
+        pytest.param(
+            """
+http://example.com
+""",
+            """
+#link(
+  "http://example.com",
+  [
+    http://example.com
+  ],
+)
+""",
+        ),
+        pytest.param(
+            """
+`Here <http://example.com>`_
+""",
+            """
+#link(
+  "http://example.com",
+  [
+    Here
+  ],
+)
+""",
+        ),
+        pytest.param(
+            """
+`a link`_
+
+.. _a link: http://example.com/
+""",
+            """
+#link(
+  "http://example.com/",
+  [
+    a link
+  ],
+)
+""",
+        ),
+        pytest.param(
+            """
+.. _my-reference-label:
+
+Section to cross-reference
+--------------------------
+""",
+            """
+#heading(
+  level: 1,
+  [
+    Section to cross-reference
+    #label("my-reference-label")
+  ]
+)
+""",
+        ),
+    ],
+)
+def test_reference(app: SphinxTestApp, src: str, dest: str):
+    # NOTE: Keep debugging print
+    from anytree import RenderTree
+
+    """Very simple test for syntax by Translator."""
+    document = publish_doctree(src.strip())
+    print(document)
     visitor = t.TypstTranslator(document, app.builder)
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
