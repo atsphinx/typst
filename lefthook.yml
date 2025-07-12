@@ -17,8 +17,10 @@ pre-commit:
         parallel: false
         jobs:
           - name: format
+            stage_fixed: true
             run: '{run_python} ruff format {staged_files}'
           - name: lint
+            stage_fixed: true
             run: '{run_python} ruff check --fix {staged_files}'
   commands:
     ty:
