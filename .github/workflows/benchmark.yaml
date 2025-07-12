@@ -1,0 +1,52 @@
+# ------
+# CAUTION!!
+#
+# Ttis is benchmark to compare build time each latexpdf and typstpdf.
+# But currently, it is not fair score because these are different of output content.
+# ------
+name: 'Test build times'
+
+on:
+  workflow_dispatch:
+
+env:
+  UV_NO_SYNC: 1
+  TASK_X_REMOTE_TASKFILES: 1
+
+jobs:
+  latexpdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@d1fe50798dbadd4eb5b98957290ca175f6b4870f # v4.0.2
+        with:
+          aqua_version: v2.51.2
+      - name: 'Configure dependencies'
+        run: |
+          uv sync --all-extras --frozen
+      - name: Install LaTeX dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-latex-recommended \
+            texlive-fonts-recommended \
+            texlive-latex-extra \
+            latexmk
+      - name: 'Run build'
+        run: |
+          task -y docs:build-latexpdf
+          ls -l docs/_build/latex
+  typstpdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquaproj/aqua-installer@d1fe50798dbadd4eb5b98957290ca175f6b4870f # v4.0.2
+        with:
+          aqua_version: v2.51.2
+      - name: 'Configure dependencies'
+        run: |
+          uv sync --all-extras --frozen
+      - name: 'Run build'
+        run: |
+          task -y docs:build-typstpdf
+          ls -l docs/_build/typstpdf
