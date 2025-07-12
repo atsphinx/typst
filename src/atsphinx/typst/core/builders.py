@@ -39,7 +39,7 @@ class TypstBuilder(Builder):
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         out = Path(self.app.outdir) / f"{docname}.typ"
-        out.write_text(visitor.dom.to_text())
+        out.write_text(visitor.dom.to_text(), encoding="utf8")
 
     def assemble_doctree(self, doctree_: nodes.document) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
