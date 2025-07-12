@@ -90,13 +90,5 @@ allow-direct-references = true
 packages = ["src/atsphinx"]
 only-includes = ["src/atsphinx"]
 
-[tool.mypy]
-python_version = "3.9"
-exclude = 'conf\.py$'
-
-[[tool.mypy.overrides]]
-module = ['docutils', 'docutils.*']
-ignore_missing_imports = true
-
 [tool.doc8]
 ignore = ["D004"]
