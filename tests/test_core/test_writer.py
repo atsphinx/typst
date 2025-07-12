@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import textwrap
 from typing import TYPE_CHECKING
 
 import pytest
@@ -325,27 +326,6 @@ This #emph[
 ]
     """,
             id="strong content",
-        ),
-        pytest.param(
-            """
-.. raw:: typst
-
-    #heading([Hello])
-""",
-            """
-#heading([Hello])
-    """,
-            id="raw typst source",
-        ),
-        pytest.param(
-            """
-.. raw:: python
-
-    print("hello")
-""",
-            """
-    """,
-            id="raw other source",
         ),
         pytest.param(
             """
@@ -673,3 +653,31 @@ def test_reference(app: SphinxTestApp, src: str, dest: str):
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
     assert visitor.dom.to_text().strip() == dest.strip()
+
+
+def test_raw_typst_source(app: SphinxTestApp):
+    src = """
+        .. raw:: typst
+
+            #heading([Hello])
+        """
+    document = publish_doctree(textwrap.dedent(src))
+    visitor = t.TypstTranslator(document, app.builder)
+    dest = """
+        #heading([Hello])
+
+        """
+    document.walkabout(visitor)
+    assert visitor.dom.to_text() == textwrap.dedent(dest)
+
+
+def test_raw_not_typst_source(app: SphinxTestApp):
+    src = """
+        .. raw:: python
+
+            print("hello")
+        """
+    document = publish_doctree(textwrap.dedent(src))
+    visitor = t.TypstTranslator(document, app.builder)
+    document.walkabout(visitor)
+    assert visitor.dom.to_text() == textwrap.dedent("")

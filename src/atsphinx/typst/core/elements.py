@@ -80,7 +80,7 @@ class Source(Element):
         self.content = content
 
     def to_text(self):
-        return self.content
+        return self.content + "\n"
 
 
 class Text(Element):
