@@ -140,14 +140,17 @@ class Heading(Element):
         )
     """
 
+    level: int = 0
     label: Optional[str] = None
     """RefID of document."""
 
     def to_text(self):
         content = self.children[0].to_text() if self.children else ""
-        return self.get_template().render(
-            level=self.depth, content=content, label=self.label
-        )
+        if self.level > 0:
+            return self.get_template().render(
+                level=self.level, content=content, label=self.label
+            )
+        return ""
 
 
 class Paragraph(Element):

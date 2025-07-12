@@ -46,7 +46,6 @@ class TypstTranslator(SphinxTranslator):
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
         "paragraph": elements.Paragraph,
-        "section": elements.Section,
         "bullet_list": elements.BulletList,
         "field_list": elements.Table,
         "option_list": elements.Table,
@@ -68,7 +67,7 @@ class TypstTranslator(SphinxTranslator):
         super().__init__(document, builder)
         self.dom: elements.Document = elements.Document()
         self._ptr = self.dom
-        self._indent_level = 0
+        self._section_level = 0
         self._targets: list[nodes.target] = []
 
     def _find_mepped_element(self, node) -> Optional[type[nodes.Element]]:
@@ -176,8 +175,17 @@ class TypstTranslator(SphinxTranslator):
 
     def visit_title(self, node: nodes.title):
         self._ptr = elements.Heading(parent=self._ptr)
+        self._ptr.level = self._section_level
         if self._targets:
             target = self._targets.pop()
             self._ptr.label = target["refid"]
 
     depart_title = _move_ptr_to_parent
+
+    def visit_section(self, node: nodes.section):
+        self._ptr = elements.Section(parent=self._ptr)
+        self._section_level += 1
+
+    def depart_section(self, node):
+        self._move_ptr_to_parent()
+        self._section_level -= 1

@@ -490,6 +490,7 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
     print(document)
     document.settings.strict_visitor = False
     visitor = t.TypstTranslator(document, app.builder)
+    visitor._section_level = 1
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
     assert visitor.dom.to_text().strip() == dest.strip()
@@ -650,6 +651,7 @@ def test_reference(app: SphinxTestApp, src: str, dest: str):
     document = publish_doctree(src.strip())
     print(document)
     visitor = t.TypstTranslator(document, app.builder)
+    visitor._section_level = 1
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
     assert visitor.dom.to_text().strip() == dest.strip()

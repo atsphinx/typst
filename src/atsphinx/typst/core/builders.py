@@ -46,18 +46,21 @@ class TypstBuilder(Builder):
 
         This method is to generate single Typst document.
         """
-        doctree = doctree_.deepcopy()
-        for toctree in doctree.findall(addnodes.toctree):
-            parent = toctree.parent
-            pos = parent.index(toctree)
-            children = []
-            for title, entry in toctree["entries"]:
-                child = self.assemble_doctree(self.env.get_doctree(entry))
-                children.append(child)
-            for child in reversed(children):
-                parent.insert(pos, child)
-            parent.remove(toctree)
-        return doctree
+        root = doctree_.copy()
+
+        def _assemble_doctree(
+            parent: nodes.document, child: nodes.document
+        ) -> nodes.document:
+            for toctree in child.findall(addnodes.toctree):
+                for title, entry in toctree["entries"]:
+                    child_ = self.env.get_doctree(entry)
+                    parent.append(child_)
+                toctree.parent.remove(toctree)
+            parent.insert(0, child)
+
+            return parent
+
+        return _assemble_doctree(root, doctree_)
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102
         # TODO: Implement it!
