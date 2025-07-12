@@ -41,6 +41,7 @@ class TypstTranslator(SphinxTranslator):
         "tbody",
         "row",
         "entry",
+        "compound",
     ]
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {

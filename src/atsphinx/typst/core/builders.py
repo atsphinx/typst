@@ -35,6 +35,9 @@ class TypstBuilder(Builder):
         out = Path(self.app.outdir) / f"{docname}.typ"
         out.write_text(visitor.dom.to_text())
 
+    def get_target_uri(self, docname, typ=None):  # noqa: D102
+        return ""
+
 
 class TypstPDFBuilder(TypstBuilder):
     """PDF creation builder from doctree.
