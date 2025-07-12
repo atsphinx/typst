@@ -36,28 +36,44 @@ env.policies["json.dumps_kwargs"]["ensure_ascii"] = False
 
 
 class Element(Node):
+    """Abstract of all elements.
+
+    This defines common methods and class vars.
+    """
+
     LABEL: ClassVar[str] = ""
     TEMPLATE: ClassVar[str] = """\
         {%- for content in contents %}
         {{ content }}
         {%- endfor %}
     """
+    """Template string when ``to_text`` runs."""
 
     def __init__(self, parent=None, children=None, **kwargs):
+        """Set ``cls.LABEL`` for node name of anytree when it is created."""
         super().__init__(self.LABEL, parent, children, **kwargs)
 
     @classmethod
     @lru_cache()
     def get_template(cls) -> jinja2.Template:
+        """Create template object from class vars."""
         return jinja2.Template(textwrap.dedent(cls.TEMPLATE).strip("\n"))
 
     def to_text(self):
+        """Convert from element to Typst source."""
         return self.get_template().render(contents=[c.to_text() for c in self.children])
 
 
 class Source(Element):
+    """Raw Typst source (It is not Typst's ``raw`` element!).
+
+    This is from Sphinx ``raw`` directive, and it is used to set Typst customize.
+    """
+
     LABEL = "#raw"
+
     content: str
+    """Content to insert into source."""
 
     def __init__(self, content: str, parent=None, children=None, **kwargs):
         super().__init__(parent, children, **kwargs)
@@ -68,8 +84,12 @@ class Source(Element):
 
 
 class Text(Element):
+    """Plain text element."""
+
     LABEL = "#text"
+
     content: str
+    """Text content itself."""
 
     def __init__(self, content: str, parent=None, children=None, **kwargs):
         super().__init__(parent, children, **kwargs)
@@ -80,6 +100,8 @@ class Text(Element):
 
 
 class Document(Element):
+    """Document element."""
+
     LABEL = "document"
     TEMPLATE = """\
         {% for content in contents %}
@@ -89,6 +111,8 @@ class Document(Element):
 
 
 class Section(Element):
+    """Sphinx's section element."""
+
     LABEL = "section"
     TEMPLATE: str = """\
         {%- for content in contents -%}
@@ -98,6 +122,11 @@ class Section(Element):
 
 
 class Heading(Element):
+    """Section's heading element.
+
+    :ref: https://typst.app/docs/reference/model/heading/
+    """
+
     LABEL = "heading"
     TEMPLATE = """\
         #heading(
@@ -110,7 +139,9 @@ class Heading(Element):
           ]
         )
     """
+
     label: Optional[str] = None
+    """RefID of document."""
 
     def to_text(self):
         content = self.children[0].to_text() if self.children else ""
@@ -120,6 +151,8 @@ class Heading(Element):
 
 
 class Paragraph(Element):
+    """Paragraph of document."""
+
     LABEL = "par"
     TEMPLATE: str = """\
         {%- for content in contents -%}
@@ -129,6 +162,8 @@ class Paragraph(Element):
 
 
 class List(Element):
+    """Abstract element of list-type content."""
+
     TEMPLATE = """\
         {{ prefix }}{{ funcname }}(
           {%- for content, delimiter in contents %}
@@ -139,6 +174,11 @@ class List(Element):
     """
 
     def to_text(self):
+        """Render as Typst source.
+
+        Typst must remove function symbol to use nested list.
+        It replace ``+`` to join for parent.
+        """
         prefix = "+" if isinstance(self.parent, List) else "#"
         contents = []
         for c in self.children:
@@ -161,15 +201,33 @@ class List(Element):
 
 
 class BulletList(List):
+    """Bullet list element.
+
+    :ref: https://typst.app/docs/reference/model/list/
+    """
+
     LABEL = "list"
 
 
 class NumberedList(List):
+    """Enumerated list element.
+
+    :ref: https://typst.app/docs/reference/model/enum/
+    """
+
     LABEL = "enum"
 
 
 class Table(Element):
-    # TODO: Support thead design
+    """Table content element.
+
+    .. note:: Currently, some elements use this if it is not table directive.
+
+    .. todo:: This only renders simple style table, It should support thead design.
+
+    :ref: https://typst.app/docs/reference/model/table/
+    """
+
     LABEL = "table"
     TEMPLATE = """\
         #table(
@@ -191,11 +249,17 @@ class Table(Element):
 
 
 class Raw(Element):
+    """Inline highlighting element.
+
+    :ref: https://typst.app/docs/reference/text/raw/
+    """
+
     TEMPLATE = """\
         #raw(
           {{ content|tojson|indent(2, first=False)}}
         )
     """
+
     content: str
 
     def __init__(self, content: str, parent=None, children=None, **kwargs):
@@ -213,13 +277,17 @@ class Raw(Element):
 
 
 class RawBlock(Element):
+    """Code-block element."""
+
     TEMPLATE = """\
         ```{{lang}}
         {{content}}
         ```
     """
+
     content: str
     lang: str
+    """Highlighting language."""
 
     def __init__(self, content: str, lang: str, parent=None, children=None, **kwargs):
         super().__init__(parent, children, **kwargs)
@@ -231,6 +299,11 @@ class RawBlock(Element):
 
 
 class Quote(Element):
+    """Blockquote element.
+
+    :ref: https://typst.app/docs/reference/model/quote/
+    """
+
     LABEL = "quote"
     TEMPLATE = """\
         #quote(
@@ -244,6 +317,7 @@ class Quote(Element):
           {%- endfor %}
         ]
     """
+
     attribution: str = ""
 
     def to_text(self):
@@ -271,14 +345,29 @@ class FunctionalText(Element):
 
 
 class Emphasis(FunctionalText):
+    """Emphasized text.
+
+    :ref: https://typst.app/docs/reference/model/emph/
+    """
+
     LABEL = "emph"
 
 
 class Strong(FunctionalText):
+    """Strong emphasized text.
+
+    :ref: https://typst.app/docs/reference/model/strong/
+    """
+
     LABEL = "strong"
 
 
 class Image(Element):
+    """Embedding image.
+
+    :ref: https://typst.app/docs/reference/visualize/image/
+    """
+
     LABEL = "image"
     TEMPLATE = """\
         #image(
@@ -315,6 +404,11 @@ class Image(Element):
 
 
 class Figure(Element):
+    """Component element included image and caption.
+
+    :ref: https://typst.app/docs/reference/model/figure/
+    """
+
     LABEL = "figure"
     TEMPLATE = """\
         #figure(
@@ -342,6 +436,11 @@ class Figure(Element):
 
 
 class Link(Element):
+    """Link to external website.
+
+    :ref: https://typst.app/docs/reference/model/link/
+    """
+
     LABEL = "link"
     TEMPLATE = """\
         #link(

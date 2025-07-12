@@ -72,12 +72,17 @@ class TypstTranslator(SphinxTranslator):
         self._targets: list[nodes.target] = []
 
     def _find_mepped_element(self, node) -> Optional[type[nodes.Element]]:
+        """Find registed element mapped from node.
+
+        :returns: Matched Element subclass. If it does not matche, return None.
+        """
         for node_class in node.__class__.__mro__:
             if node_class.__name__ in self.ELEMENT_MAPPING:
                 return self.ELEMENT_MAPPING[node_class.__name__]
         return None
 
     def unknown_visit(self, node: nodes.Node):
+        """Handle visit methods for unregistered nodes."""
         element_class = self._find_mepped_element(node)
         if element_class is None:
             super().unknown_visit(node)
@@ -85,6 +90,7 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = element_class(parent=self._ptr)
 
     def unknown_departure(self, node: nodes.Node):
+        """Handle depart methods for unregistered nodes."""
         element_class = self._find_mepped_element(node)
         if element_class is None:
             super().unknown_departure(node)
