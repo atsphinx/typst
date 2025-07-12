@@ -41,26 +41,25 @@ class TypstBuilder(Builder):
         out = Path(self.app.outdir) / f"{docname}.typ"
         out.write_text(visitor.dom.to_text(), encoding="utf8")
 
-    def assemble_doctree(self, doctree_: nodes.document) -> nodes.document:
+    def assemble_doctree(self, doctree: nodes.document) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
 
         This method is to generate single Typst document.
         """
-        root = doctree_.copy()
 
-        def _assemble_doctree(
-            parent: nodes.document, child: nodes.document
-        ) -> nodes.document:
-            for toctree in child.findall(addnodes.toctree):
+        def _unpack_doctree(doctree: nodes.document) -> list[nodes.Node]:
+            parts = []
+            for toctree in doctree.findall(addnodes.toctree):
+                toctree.parent.remove(toctree)
                 for title, entry in toctree["entries"]:
                     child_ = self.env.get_doctree(entry)
-                    parent.append(child_)
-                toctree.parent.remove(toctree)
-            parent.insert(0, child)
+                    parts.append(child_)
+            return [doctree] + parts
 
-            return parent
-
-        return _assemble_doctree(root, doctree_)
+        root = doctree.copy()
+        for child in _unpack_doctree(doctree):
+            root.append(child)
+        return root
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102
         # TODO: Implement it!
