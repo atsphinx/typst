@@ -27,7 +27,6 @@ def load_template(name: str) -> str:
     """
     module = sys.modules[load_template.__module__]
     if not hasattr(module, name):
-        print(dir(module))
         raise Exception(f"{name} is not found.")
     return textwrap.dedent(getattr(module, name).TEMPLATE).strip("\n")
 
