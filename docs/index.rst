@@ -1,15 +1,3 @@
-.. raw:: typst
-
-    #set document(title: [atsphinx-typst])
-    #show link: underline
-    #show heading.where(level: 1): it => [
-      #pagebreak()
-      #it
-    ]
-
-    #set heading(numbering: "1.1.")
-    #outline()
-
 ==============
 atsphinx-typst
 ==============

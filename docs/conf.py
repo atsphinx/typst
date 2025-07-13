@@ -56,6 +56,16 @@ html_sidebars = {
     ]
 }
 
+# -- Options for Typst outout
+typst_documents = [
+    {
+        "entry": "index",
+        "filename": "document",
+        "theme": "manual",
+        "title": f"{project}'s documentation",
+    }
+]
+
 # -- Options for extensions
 # sphinx.ext.intersphinx
 intersphinx_mapping = {

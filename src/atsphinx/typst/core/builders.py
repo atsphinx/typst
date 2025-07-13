@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING
 
 from sphinx import addnodes
 from sphinx.builders import Builder
 from sphinx.errors import SphinxError
+from sphinx.locale import _
 
 from . import themes, writer
 
@@ -42,10 +44,15 @@ class TypstBuilder(Builder):
         doctree = self.assemble_doctree(doctree)
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
-        out = Path(self.app.outdir) / f"{docname}.typ"
-        out.write_text(
-            theme.get_template().render(body=visitor.dom.to_text()), encoding="utf8"
+        today_fmt = self.config.today_fmt or _("%b %d, %Y")
+        context = themes.ThemeContext(
+            title=document_settings["title"],
+            config=self.config,
+            date=date.today().strftime(today_fmt),
+            body=visitor.dom.to_text(),
         )
+        out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
+        theme.write_doc(out, context)
 
     def assemble_doctree(self, doctree: nodes.document) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
@@ -89,11 +96,11 @@ class TypstPDFBuilder(TypstBuilder):
         except ImportError:
             raise SphinxError("Require 'typst' to run 'typstpdf' builder.")
 
-    def write_doc(self, docment_settings: DocumentSettings) -> None:  # noqa: D102
+    def write_doc(self, document_settings: DocumentSettings) -> None:  # noqa: D102
         # TODO: Implement it!
         import typst
 
-        super().write_doc(docment_settings)
-        src = Path(self.app.outdir) / f"{docment_settings['entry']}.typ"
-        out = Path(self.app.outdir) / f"{docment_settings['title']}.pdf"
+        super().write_doc(document_settings)
+        src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
+        out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"
         typst.compile(src, output=out)

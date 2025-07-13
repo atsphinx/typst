@@ -13,6 +13,8 @@ class DocumentSettings(TypedDict):
 
     entry: str
     """Docname of entrypoint."""
+    filename: str
+    """Output filename (without ext)."""
     title: str
     """Title of document."""
     theme: str = "manual"

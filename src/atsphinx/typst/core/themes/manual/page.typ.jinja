@@ -1,1 +1,89 @@
-{{ body|safe }}
+{%- block pdf %}
+  #set document(title: [{{ title }}])
+{% endblock %}
+
+{%- block page %}
+  #let headerText = "{{ config.project }} {{ config.release }}"
+  #set page(
+    header: context {
+      if here().page() == 1 {
+        []
+      } else if calc.odd(here().page()) {
+        [
+          #set text(12pt)
+          #align(right)[#headerText]
+          #line(length: 100%, stroke: 2pt + black)
+        ]
+      } else {
+        [
+          #set text(12pt)
+          #align(left)[#headerText]
+          #line(length: 100%, stroke: 2pt + black)
+        ]
+      }
+    },
+    footer: context {        
+      if here().page() == 1 {
+        []
+      } else if calc.odd(here().page()) {
+        [
+          #line(length: 100%)
+          #set text(10pt)
+          #align(right)[#here().page()]
+        ]
+      } else {
+        [
+          #line(length: 100%)
+          #set text(10pt)
+          #set par(first-line-indent: (amount: 1em, all: false))
+          #align(left)[#here().page()]
+        ]
+      }
+    }
+  )
+{% endblock %}
+
+{%- block heading %}
+  #set heading(numbering: "1.1.")
+  #show heading.where(level: 1): it => [
+    #pagebreak()
+    #align(right)[#it]
+    #v(18pt)
+  ]
+  #show heading.where(level: 2): it => [
+    #v(36pt)
+    #it
+    #v(18pt)
+  ]
+  #show heading.where(level: 3): it => [
+    #v(24pt)
+    #it
+    #v(12pt)
+  ]
+{% endblock %}
+
+{%- block content %}
+
+  {%- block titlepage %}
+    #let titlepage(body, size: 24pt, vt: 0%) = {
+      set align(right)
+      set text(size: size, weight: "bold")
+      v(vt)
+      body
+    }
+
+    #titlepage("{{ title }}", size: 24pt, vt: 10%)
+    #titlepage("{{ config.release }}", size: 16pt, vt: 0%)
+    #titlepage("{{ config.author }}", size: 18pt, vt: 30%)
+    #titlepage("{{ date }}", size: 14pt, vt: 40%)
+  {% endblock %}
+
+  {%- block outline %}
+    #outline()
+  {% endblock %}
+
+  {%- block main %}
+    {{ body|safe }}
+  {% endblock %}
+
+{% endblock %}
