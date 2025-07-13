@@ -76,12 +76,15 @@ class TypstPDFBuilder(TypstBuilder):
     name = "typstpdf"
     format = "typst"
 
+    epilog = "PDF files are in %(outdir)s (same with typst builder)."
+
     def init(self) -> None:
         """Check that python env has typst package."""
         try:
             import typst  # noqa - Only try importing
         except ImportError:
             raise SphinxError("Require 'typst' to run 'typstpdf' builder.")
+        self.app.outdir = self.app.outdir.parent / self.format
 
     def write_doc(self, docname: str, doctree: nodes.document) -> None:  # noqa: D102
         # TODO: Implement it!
