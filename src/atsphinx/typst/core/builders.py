@@ -9,7 +9,7 @@ from sphinx import addnodes
 from sphinx.builders import Builder
 from sphinx.errors import SphinxError
 
-from . import writer
+from . import themes, writer
 
 if TYPE_CHECKING:
     from docutils import nodes
@@ -37,12 +37,15 @@ class TypstBuilder(Builder):
 
     def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
         docname = document_settings["entry"]
+        theme = themes.get_theme(document_settings["theme"])
         doctree = self.env.get_doctree(docname)
         doctree = self.assemble_doctree(doctree)
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         out = Path(self.app.outdir) / f"{docname}.typ"
-        out.write_text(visitor.dom.to_text(), encoding="utf8")
+        out.write_text(
+            theme.get_template().render(body=visitor.dom.to_text()), encoding="utf8"
+        )
 
     def assemble_doctree(self, doctree: nodes.document) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
