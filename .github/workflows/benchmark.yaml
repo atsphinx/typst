@@ -40,7 +40,18 @@ jobs:
         with:
           name: 'LaTeX-PDF'
           path: 'docs/_build/latex/atsphinx-typst.pdf'
-
+  latexpdf-docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 'Run build'
+        run: |
+          docker run --rm -v `pwd`:/docs sphinxdoc/sphinx-latexpdf sphinx-build -M latexpdf docs docs/_build
+          ls -l docs/_build/latex
+      - uses: 'actions/upload-artifact@v4'
+        with:
+          name: 'LaTeX-PDF'
+          path: 'docs/_build/latex/atsphinx-typst.pdf'
   typstpdf:
     runs-on: ubuntu-latest
     steps:
