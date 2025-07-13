@@ -14,6 +14,8 @@ from . import writer
 if TYPE_CHECKING:
     from docutils import nodes
 
+    from .config import DocumentSettings
+
 
 class TypstBuilder(Builder):
     """Custom builder to generate Typst source from doctree."""
@@ -30,10 +32,11 @@ class TypstBuilder(Builder):
         pass
 
     def write_documents(self, docnames):  # noqa: D102
-        for docname in self.config.typst_documents:
-            self.write_doc(docname, self.env.get_doctree(docname))
+        for document_settings in self.config.typst_documents:
+            self.write_doc(document_settings)
 
-    def write_doc(self, docname, doctree):  # noqa: D102
+    def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
+        docname = document_settings["entry"]
         doctree = self.env.get_doctree(docname)
         doctree = self.assemble_doctree(doctree)
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
@@ -83,11 +86,11 @@ class TypstPDFBuilder(TypstBuilder):
         except ImportError:
             raise SphinxError("Require 'typst' to run 'typstpdf' builder.")
 
-    def write_doc(self, docname: str, doctree: nodes.document) -> None:  # noqa: D102
+    def write_doc(self, docment_settings: DocumentSettings) -> None:  # noqa: D102
         # TODO: Implement it!
         import typst
 
-        super().write_doc(docname, doctree)
-        src = Path(self.app.outdir) / f"{docname}.typ"
-        out = Path(self.app.outdir) / f"{docname}.pdf"
+        super().write_doc(docment_settings)
+        src = Path(self.app.outdir) / f"{docment_settings['entry']}.typ"
+        out = Path(self.app.outdir) / f"{docment_settings['title']}.pdf"
         typst.compile(src, output=out)
