@@ -58,4 +58,4 @@ jobs:
       - uses: 'actions/upload-artifact@v4'
         with:
           name: 'Typst-PDF'
-          path: 'docs/_build/typstpdf/index.pdf'
+          path: 'docs/_build/typstpdf/document.pdf'
