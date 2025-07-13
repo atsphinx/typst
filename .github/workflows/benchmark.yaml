@@ -46,7 +46,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: 'Run build'
         run: |
-          docker run --rm -v `pwd`:/docs sphinxdoc/sphinx-latexpdf sphinx-build -M latexpdf docs docs/_build
+          docker build -t local .
+          docker run --rm -v `pwd`:/docs local sphinx-build -M latexpdf docs docs/_build
           ls -l docs/_build/latex
       - uses: 'actions/upload-artifact@v4'
         with:
