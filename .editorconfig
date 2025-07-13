@@ -17,7 +17,7 @@ end_of_line = crlf
 charset = sjis
 
 # 2 space indentation
-[*.{yml,js,json,rst,html,css,md}]
+[*.{yml,js,json,rst,html,css,md,jinja,jinja2}]
 indent_size = 2
 
 # 4 space indentation
