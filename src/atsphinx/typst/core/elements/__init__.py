@@ -14,6 +14,7 @@ import jinja2
 
 from .base import Element, Source, Text  # noqa - To keep compatibility
 from .text import Emphasis, Raw, RawBlock, Strong  # noqa - To keep compatibility
+from .visualize import Image  # noqa - To keep compatibility
 
 if TYPE_CHECKING:
     from typing import Optional
@@ -198,47 +199,6 @@ class Quote(Element):
             contents=[c.to_text() for c in self.children],
             attribution=self.attribution,
         )
-
-
-class Image(Element):
-    """Embedding image.
-
-    :ref: https://typst.app/docs/reference/visualize/image/
-    """
-
-    LABEL = "image"
-    TEMPLATE = """\
-        #image(
-          "{{ elm.uri }}",
-          {%- if elm.width %}
-          width: {{ elm.width }},
-          {%- endif %}
-          {%- if elm.alt %}
-          alt: "{{ elm.alt }}",
-          {%- endif %}
-        )
-    """
-
-    uri: str
-    width: Optional[str]
-    alt: Optional[str]
-
-    def __init__(
-        self,
-        uri: str,
-        width: Optional[str] = None,
-        alt: Optional[str] = None,
-        parent=None,
-        children=None,
-        **kwargs,
-    ):
-        super().__init__(parent, children, **kwargs)
-        self.uri = uri
-        self.width = width
-        self.alt = alt
-
-    def to_text(self):
-        return self.get_template().render(elm=self)
 
 
 class Figure(Element):
