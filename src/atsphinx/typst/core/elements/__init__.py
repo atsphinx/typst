@@ -1,13 +1,10 @@
-"""Classes for Typst elements.
+"""Classes root of Typst elements.
 
-Elements is tree style object and have ``to_text`` method to render document.
+This module is entrypoint of importing core elements (written in submodules).
 """
-# TODO: Write docstrings after.
-# ruff: noqa: D101, D102, D107, F401
+# ruff: noqa: F401
 
-from __future__ import annotations
-
-from .base import Element, Source, Text  # noqa - To keep compatibility
+from .base import Element, Source, Text
 from .model import (
     BulletList,
     Document,
@@ -20,5 +17,5 @@ from .model import (
     Section,
     Table,
 )
-from .text import Emphasis, Raw, RawBlock, Strong  # noqa - To keep compatibility
-from .visualize import Image  # noqa - To keep compatibility
+from .text import Emphasis, Raw, RawBlock, Strong
+from .visualize import Image
