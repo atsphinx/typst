@@ -2,7 +2,7 @@
 atsphinx-typst
 ==============
 
-Generate Typst sources and PDF from Sphinx document.
+Faster PDF generator from Sphinx document using Typst.
 
 Features
 ========
@@ -36,7 +36,8 @@ v0.1 (for working)
 ------------------
 
 * Supports core directives and roles.
-* Supports generating PDF using ``typst`` python project.
+* ✅ Supports generating PDF using ``typst`` python project.
+* ✅ Gnerate PDF file of this project's project.
 
 v1.0 (for stable)
 -----------------
