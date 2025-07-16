@@ -11,4 +11,4 @@ pytest_plugins = "sphinx.testing.fixtures"
 
 @pytest.fixture(scope="session")
 def rootdir() -> Path:  # noqa: D103
-    return Path(__file__).parent.resolve()
+    return Path(__file__).parent.resolve() / "testdocs"
