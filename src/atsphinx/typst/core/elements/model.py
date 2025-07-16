@@ -1,102 +1,21 @@
-"""Classes for Typst elements.
+"""Structure model elements.
 
-Elements is tree style object and have ``to_text`` method to render document.
+:ref: https://typst.app/docs/reference/model/
 """
 # TODO: Write docstrings after.
 # ruff: noqa: D101, D102, D107
 
 from __future__ import annotations
 
-import sys
 import textwrap
-from functools import lru_cache
 from typing import TYPE_CHECKING
 
 import jinja2
-from anytree import Node
+
+from .base import Element
 
 if TYPE_CHECKING:
-    from typing import ClassVar, Optional
-
-
-def load_template(name: str) -> str:
-    """Load template from class var.
-
-    :param name: Class name to use as template.
-    :returns: Template string.
-    """
-    module = sys.modules[load_template.__module__]
-    if not hasattr(module, name):
-        raise Exception(f"{name} is not found.")
-    return textwrap.dedent(getattr(module, name).TEMPLATE).strip("\n")
-
-
-env = jinja2.Environment(loader=jinja2.FunctionLoader(load_template))
-env.policies["json.dumps_kwargs"]["ensure_ascii"] = False
-
-
-class Element(Node):
-    """Abstract of all elements.
-
-    This defines common methods and class vars.
-    """
-
-    LABEL: ClassVar[str] = ""
-    TEMPLATE: ClassVar[str] = """\
-        {%- for content in contents %}
-        {{ content }}
-        {%- endfor %}
-    """
-    """Template string when ``to_text`` runs."""
-
-    def __init__(self, parent=None, children=None, **kwargs):
-        """Set ``cls.LABEL`` for node name of anytree when it is created."""
-        super().__init__(self.LABEL, parent, children, **kwargs)
-
-    @classmethod
-    @lru_cache()
-    def get_template(cls) -> jinja2.Template:
-        """Create template object from class vars."""
-        return jinja2.Template(textwrap.dedent(cls.TEMPLATE).strip("\n"))
-
-    def to_text(self):
-        """Convert from element to Typst source."""
-        return self.get_template().render(contents=[c.to_text() for c in self.children])
-
-
-class Source(Element):
-    """Raw Typst source (It is not Typst's ``raw`` element!).
-
-    This is from Sphinx ``raw`` directive, and it is used to set Typst customize.
-    """
-
-    LABEL = "#raw"
-
-    content: str
-    """Content to insert into source."""
-
-    def __init__(self, content: str, parent=None, children=None, **kwargs):
-        super().__init__(parent, children, **kwargs)
-        self.content = content
-
-    def to_text(self):
-        return self.content + "\n"
-
-
-class Text(Element):
-    """Plain text element."""
-
-    LABEL = "#text"
-
-    content: str
-    """Text content itself."""
-
-    def __init__(self, content: str, parent=None, children=None, **kwargs):
-        super().__init__(parent, children, **kwargs)
-        self.content = content
-
-    def to_text(self):
-        return self.content
+    from typing import Optional
 
 
 class Document(Element):
@@ -251,56 +170,6 @@ class Table(Element):
         return self.get_template().render(contents=contents, columns=self.columns)
 
 
-class Raw(Element):
-    """Inline highlighting element.
-
-    :ref: https://typst.app/docs/reference/text/raw/
-    """
-
-    TEMPLATE = """\
-        #raw(
-          {{ content|tojson|indent(2, first=False)}}
-        )
-    """
-
-    content: str
-
-    def __init__(self, content: str, parent=None, children=None, **kwargs):
-        super().__init__(parent, children, **kwargs)
-        self.content = content
-
-    @classmethod
-    @lru_cache()
-    def get_template(cls) -> jinja2.Template:
-        # Override to work 'ensure_ascii' settings by tojson.
-        return env.get_template("Raw")
-
-    def to_text(self):
-        return self.get_template().render(content=self.content)
-
-
-class RawBlock(Element):
-    """Code-block element."""
-
-    TEMPLATE = """\
-        ```{{lang}}
-        {{content}}
-        ```
-    """
-
-    content: str
-    lang: str
-    """Highlighting language."""
-
-    def __init__(self, content: str, lang: str, parent=None, children=None, **kwargs):
-        super().__init__(parent, children, **kwargs)
-        self.content = content
-        self.lang = lang
-
-    def to_text(self):
-        return self.get_template().render(content=self.content, lang=self.lang)
-
-
 class Quote(Element):
     """Blockquote element.
 
@@ -328,82 +197,6 @@ class Quote(Element):
             contents=[c.to_text() for c in self.children],
             attribution=self.attribution,
         )
-
-
-class FunctionalText(Element):
-    """Element base-class to render decorated text."""
-
-    TEMPLATE = """\
-        #{{label}}[
-          {%- for content in contents %}
-          {{ content | indent(2, first=False) }}
-          {%- endfor %}
-        ]
-    """
-
-    def to_text(self):
-        return self.get_template().render(
-            label=self.LABEL, contents=[c.to_text() for c in self.children]
-        )
-
-
-class Emphasis(FunctionalText):
-    """Emphasized text.
-
-    :ref: https://typst.app/docs/reference/model/emph/
-    """
-
-    LABEL = "emph"
-
-
-class Strong(FunctionalText):
-    """Strong emphasized text.
-
-    :ref: https://typst.app/docs/reference/model/strong/
-    """
-
-    LABEL = "strong"
-
-
-class Image(Element):
-    """Embedding image.
-
-    :ref: https://typst.app/docs/reference/visualize/image/
-    """
-
-    LABEL = "image"
-    TEMPLATE = """\
-        #image(
-          "{{ elm.uri }}",
-          {%- if elm.width %}
-          width: {{ elm.width }},
-          {%- endif %}
-          {%- if elm.alt %}
-          alt: "{{ elm.alt }}",
-          {%- endif %}
-        )
-    """
-
-    uri: str
-    width: Optional[str]
-    alt: Optional[str]
-
-    def __init__(
-        self,
-        uri: str,
-        width: Optional[str] = None,
-        alt: Optional[str] = None,
-        parent=None,
-        children=None,
-        **kwargs,
-    ):
-        super().__init__(parent, children, **kwargs)
-        self.uri = uri
-        self.width = width
-        self.alt = alt
-
-    def to_text(self):
-        return self.get_template().render(elm=self)
 
 
 class Figure(Element):
@@ -464,7 +257,7 @@ class Link(Element):
     ):
         super().__init__(parent, children, **kwargs)
         self.uri = uri
-        self.content = content
+        self.content = content or uri
 
     def to_text(self):
         return self.get_template().render(dest=self.uri, content=self.content)
