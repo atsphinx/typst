@@ -69,7 +69,7 @@ class TestFigure:
         pass
 
 
-class TestLint:
+class TestLink:
     def test_display_url(self):
         elm = t.Link("http://example.com")
         assert elm.to_text() == textwrap.dedent("""\
