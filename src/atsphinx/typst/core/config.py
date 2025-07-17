@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
+    from sphinx.config import Config
 
 
 class DocumentSettings(TypedDict):
@@ -17,8 +18,20 @@ class DocumentSettings(TypedDict):
     """Output filename (without ext)."""
     title: str
     """Title of document."""
-    theme: str = "manual"
+    theme: str
     """Generate theme."""
+
+
+DEFAULT_DOCUMENT_SETTINGS = {
+    "theme": "manual",
+}
+
+
+def set_config_defaults(app: Sphinx, config: Config):
+    """Inject default values of configured ``typest_documents``."""
+    document_settings = config.typst_documents or []
+    for idx, user_value in enumerate(document_settings):
+        document_settings[idx] = DEFAULT_DOCUMENT_SETTINGS | user_value
 
 
 def setup(app: Sphinx):  # noqa: D103
@@ -28,3 +41,4 @@ def setup(app: Sphinx):  # noqa: D103
         "env",
         list[str],
     )
+    app.connect("config-inited", set_config_defaults)
