@@ -20,10 +20,13 @@ class DocumentSettings(TypedDict):
     """Title of document."""
     theme: str
     """Generate theme."""
+    toctree_only: bool
+    """When it is ``True``, builder only write contents of toctree from 'entry'."""
 
 
 DEFAULT_DOCUMENT_SETTINGS = {
     "theme": "manual",
+    "toctree_only": False,
 }
 
 

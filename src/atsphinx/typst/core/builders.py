@@ -41,7 +41,7 @@ class TypstBuilder(Builder):
         docname = document_settings["entry"]
         theme = themes.get_theme(document_settings["theme"])
         doctree = self.env.get_doctree(docname)
-        doctree = self.assemble_doctree(doctree)
+        doctree = self.assemble_doctree(doctree, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         today_fmt = self.config.today_fmt or _("%b %d, %Y")
@@ -54,23 +54,29 @@ class TypstBuilder(Builder):
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
 
-    def assemble_doctree(self, doctree: nodes.document) -> nodes.document:
+    def assemble_doctree(
+        self, doctree: nodes.document, toctree_only: bool
+    ) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
 
         This method is to generate single Typst document.
         """
 
-        def _unpack_doctree(doctree: nodes.document) -> list[nodes.Node]:
+        def _unpack_doctree(
+            doctree: nodes.document, toctree_only: bool
+        ) -> list[nodes.Node]:
             parts = []
             for toctree in doctree.findall(addnodes.toctree):
                 toctree.parent.remove(toctree)
                 for title, entry in toctree["entries"]:
                     child_ = self.env.get_doctree(entry)
                     parts.append(child_)
+            if toctree_only:
+                return parts
             return [doctree] + parts
 
         root = doctree.copy()
-        for child in _unpack_doctree(doctree):
+        for child in _unpack_doctree(doctree, toctree_only):
             root.append(child)
         return root
 
