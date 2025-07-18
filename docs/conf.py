@@ -63,6 +63,7 @@ typst_documents = [
         "filename": "document",
         "theme": "manual",
         "title": f"{project}'s documentation",
+        "toctree_only": True,
     }
 ]
 
