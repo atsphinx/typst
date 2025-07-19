@@ -30,3 +30,13 @@ def test__it(app: SphinxTestApp):
         )""")
         in out.read_text()
     )
+    assert (
+        textwrap.dedent("""\
+        #heading(
+          level: 2,
+          [
+            Sub section 1-1
+          ]
+        )""")
+        in out.read_text()
+    )

@@ -6,10 +6,13 @@ from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from docutils import nodes
 from sphinx import addnodes
+from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
 from sphinx.errors import SphinxError
 from sphinx.locale import _
+from sphinx.util.nodes import inline_all_toctrees
 
 from . import themes, writer
 
@@ -40,8 +43,7 @@ class TypstBuilder(Builder):
     def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
         docname = document_settings["entry"]
         theme = themes.get_theme(document_settings["theme"])
-        doctree = self.env.get_doctree(docname)
-        doctree = self.assemble_doctree(doctree, document_settings["toctree_only"])
+        doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         today_fmt = self.config.today_fmt or _("%b %d, %Y")
@@ -54,31 +56,24 @@ class TypstBuilder(Builder):
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
 
-    def assemble_doctree(
-        self, doctree: nodes.document, toctree_only: bool
-    ) -> nodes.document:
+    def assemble_doctree(self, docname: str, toctree_only: bool) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
 
         This method is to generate single Typst document.
+
+        .. todo::
+
+           We must see how does inline_all_toctrees work.
         """
-
-        def _unpack_doctree(
-            doctree: nodes.document, toctree_only: bool
-        ) -> list[nodes.Node]:
-            parts = []
-            for toctree in doctree.findall(addnodes.toctree):
-                toctree.parent.remove(toctree)
-                for title, entry in toctree["entries"]:
-                    child_ = self.env.get_doctree(entry)
-                    parts.append(child_)
-            if toctree_only:
-                return parts
-            return [doctree] + parts
-
-        root = doctree.copy()
-        for child in _unpack_doctree(doctree, toctree_only):
-            root.append(child)
-        return root
+        root = self.env.get_doctree(docname)
+        if toctree_only:
+            root_section = nodes.section()
+            for toctree in root.findall(addnodes.toctree):
+                root_section += toctree
+            root = root.copy()
+            root += root_section
+        tree = inline_all_toctrees(self, {docname}, docname, root, darkgreen, [docname])
+        return tree
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102
         # TODO: Implement it!

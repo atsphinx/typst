@@ -42,6 +42,7 @@ class TypstTranslator(SphinxTranslator):
         "row",
         "entry",
         "compound",
+        "start_of_file",
     ]
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
@@ -67,7 +68,8 @@ class TypstTranslator(SphinxTranslator):
         super().__init__(document, builder)
         self.dom: elements.Document = elements.Document()
         self._ptr = self.dom
-        self._section_level = 0
+        # Set to avoid rendering root hedering text.
+        self._section_level = -1
         self._targets: list[nodes.target] = []
 
     def _find_mepped_element(self, node) -> Optional[type[nodes.Element]]:
