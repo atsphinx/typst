@@ -1,89 +1,122 @@
-{%- block pdf %}
-  #set document(title: [{{ title }}])
-{% endblock %}
-
-{%- block page %}
-  #let headerText = "{{ config.project }} {{ config.release }}"
-  #set page(
-    header: context {
-      if here().page() == 1 {
-        []
-      } else if calc.odd(here().page()) {
-        [
-          #set text(12pt)
-          #align(right)[#headerText]
-          #line(length: 100%, stroke: 2pt + black)
-        ]
-      } else {
-        [
-          #set text(12pt)
-          #align(left)[#headerText]
-          #line(length: 100%, stroke: 2pt + black)
-        ]
-      }
-    },
-    footer: context {        
-      if here().page() == 1 {
-        []
-      } else if calc.odd(here().page()) {
-        [
-          #line(length: 100%)
-          #set text(10pt)
-          #align(right)[#here().page()]
-        ]
-      } else {
-        [
-          #line(length: 100%)
-          #set text(10pt)
-          #set par(first-line-indent: (amount: 1em, all: false))
-          #align(left)[#here().page()]
-        ]
-      }
-    }
+#let cleanPage(..it) = {
+  page(
+    header: none,
+    footer: none,
+    ..it,
   )
-{% endblock %}
+}
 
-{%- block heading %}
-  #set heading(numbering: "1.1.")
-  #show heading.where(level: 1): it => [
-    #pagebreak()
+#let contentPage(body) = context {
+  let headerText = "{{ config.project }} {{ config.release }}"
+  let pos(cur, total) = {
+    if calc.odd(total - cur) and calc.odd(cur) {
+      return left
+    }
+    if calc.odd(total - cur) and calc.even(cur) {
+      return right
+    }
+    if calc.even(total - cur) and calc.odd(cur) {
+      return right
+    }
+    if calc.even(total - cur) and calc.even(cur) {
+      return left
+    }
+  }
+  page(
+    numbering: "1",
+    header: context {
+      let totalPageNum = here().page();
+      let currentPageNum = counter(page).get().first();
+
+      align(pos(currentPageNum, totalPageNum))[#headerText]
+      line(length: 100%, stroke: 2pt + black);
+    },
+    footer: context {
+      let totalPageNum = here().page();
+      let currentPageNum = counter(page).get().first();
+
+      line(length: 100%, stroke: 1pt + black);
+      align(pos(currentPageNum, totalPageNum))[#currentPageNum]
+    },
+    [
+      #body
+    ]
+  )
+}
+
+#set heading(numbering: "1.1.")
+#show heading.where(level: 1): it => {
+  let count = counter(heading).at(here()).first()
+  if count > 1 {
+    pagebreak()
+  }
+  [
     #align(right)[#it]
     #v(18pt)
   ]
-  #show heading.where(level: 2): it => [
-    #v(36pt)
-    #it
-    #v(18pt)
-  ]
-  #show heading.where(level: 3): it => [
-    #v(24pt)
-    #it
-    #v(12pt)
-  ]
-{% endblock %}
+}
+#show heading.where(level: 2): it => [
+  #v(36pt)
+  #it
+  #v(18pt)
+]
+#show heading.where(level: 3): it => [
+  #v(24pt)
+  #it
+  #v(12pt)
+]
 
-{%- block content %}
+#show raw.where(block: true): it => {
+  rect(
+    width: 100%,
+    fill: rgb("#f8f8f8"),
+    stroke: (paint: rgb("#4a5568"), thickness: 1pt),
+    radius: 0pt,
+    inset: 16pt,
+    {
+      it
+    }
+  )
+}
 
-  {%- block titlepage %}
+#show raw.where(block: false): it => {
+  box(
+    fill: rgb("#cccccc").lighten(80%),
+    radius: 0pt,
+    outset: 1pt,
+    it
+  )
+}
+
+{%- block main %}
+
+  {%- block page_title %}
     #let titlepage(body, size: 24pt, vt: 0%) = {
       set align(right)
       set text(size: size, weight: "bold")
       v(vt)
       body
     }
-
-    #titlepage("{{ title }}", size: 24pt, vt: 10%)
-    #titlepage("{{ config.release }}", size: 16pt, vt: 0%)
-    #titlepage("{{ config.author }}", size: 18pt, vt: 30%)
-    #titlepage("{{ date }}", size: 14pt, vt: 40%)
+    #cleanPage(
+      [
+        #titlepage("{{ title }}", size: 24pt, vt: 10%)
+        #titlepage("{{ config.release }}", size: 16pt, vt: 0%)
+        #titlepage("{{ config.author }}", size: 18pt, vt: 30%)
+        #titlepage("{{ date }}", size: 14pt, vt: 40%)
+        #pagebreak()
+      ]
+    )
   {% endblock %}
 
-  {%- block outline %}
+  {%- block page_outline %}
     #outline()
   {% endblock %}
 
-  {%- block main %}
+  #show: contentPage
+  #counter(page).update(1);
+
+  {%- block page_contents %}
     {{ body|safe }}
   {% endblock %}
 
-{% endblock %}
+{%- endblock %}
