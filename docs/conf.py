@@ -56,13 +56,25 @@ html_sidebars = {
     ]
 }
 
+# -- Options for LaTeX output
+latex_documents = [
+    (
+        "index",
+        "document.tex",
+        f"{project} Documentation",
+        "Kazuya Takei",
+        "manual",
+        1,
+    ),
+]
+
 # -- Options for Typst outout
 typst_documents = [
     {
         "entry": "index",
         "filename": "document",
         "theme": "manual",
-        "title": f"{project}'s documentation",
+        "title": f"{project} Documentation",
         "toctree_only": True,
     }
 ]
