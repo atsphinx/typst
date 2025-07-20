@@ -65,6 +65,7 @@ docs = [
     "furo",
     "sphinx-autobuild",
     "sphinx-intl",
+    "sphinx-toolbox>=4.0.0",
 ]
 test = [
     "pytest",

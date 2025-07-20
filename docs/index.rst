@@ -32,5 +32,6 @@ Refs
 .. toctree::
    :maxdepth: 1
 
-   guide
+   getting-started
+   configuration
    changes

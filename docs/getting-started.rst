@@ -1,11 +1,14 @@
-==========
-User guide
-==========
+===============
+Getting started
+===============
 
 Installation
 ============
 
-It is going to publish on PyPI.
+It is published on PyPI.
+You can install it by pip or other package management tools.
+
+.. note:: Currently, it is not published yet.
 
 .. code-block:: console
 
@@ -20,17 +23,13 @@ If you want to generate PDF too, you should set ``pdf`` extra.
 Usage
 =====
 
-You need not to edit your ``conf.py`` to build by custom builders.
+You can run ``typst`` builder without editing your ``conf.py``. 
 
 .. code-block:: console
 
+    # To build Typst sources. 
     make typst
-
+    # To build Typst sources and PDF files. 
     make typstpdf
 
 When you call ``typst`` builder, it generate ``BUILD_DIR/typst``.
-
-Configuration
-=============
-
-.. todo:: Write it
