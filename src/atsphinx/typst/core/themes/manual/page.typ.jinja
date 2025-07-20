@@ -88,6 +88,19 @@
   )
 }
 
+#let sphinxField(title, content) = {
+  block(
+    {
+      title
+      linebreak()
+      pad(
+        left: 2em,
+        content,
+      )
+    }
+  )
+}
+
 {%- block main %}
 
   {%- block page_title %}

@@ -8,6 +8,7 @@ from .base import Element, Source, Text
 from .model import (
     BulletList,
     Document,
+    Field,
     Figure,
     Heading,
     Link,

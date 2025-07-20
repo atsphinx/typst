@@ -24,9 +24,9 @@ class Element(Node):
     LABEL: ClassVar[str] = ""
     """Name to show as anytree node."""
     TEMPLATE: ClassVar[str] = """\
-        {%- for content in contents %}
+        {%- for content in contents -%}
         {{ content }}
-        {%- endfor %}
+        {%- endfor -%}
     """
     """Template string when ``to_text`` runs."""
 

@@ -199,6 +199,28 @@ class Quote(Element):
         )
 
 
+class Field(Element):
+    LABEL = "fiield"
+    TEMPLATE = """\
+        #sphinxField(
+          [
+            {{ title|indent(4, first=False) }}
+          ],
+          [
+            {%- for content in contents %}
+            {{ content | indent(4, first=False) }}
+            {%- endfor %}
+          ],
+        )
+    """
+
+    def to_text(self):
+        return self.get_template().render(
+            title=self.children[0].to_text(),
+            contents=[c.to_text() for c in self.children[1:]],
+        )
+
+
 class Figure(Element):
     """Component element included image and caption.
 

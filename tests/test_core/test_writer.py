@@ -214,27 +214,28 @@ Paragraph
               This is atsphinx-typst.
 """,
             """
-#table(
-  columns: 2,
+#sphinxField(
   [
     Language
   ],
   [
     Japanese
   ],
+)#sphinxField(
   [
     Language2
   ],
   [
     English
   ],
+)#sphinxField(
   [
     Description
   ],
   [
     Hello world
     This is atsphinx-typst.
-  ]
+  ],
 )
     """,
             id="Docinfo",
@@ -248,14 +249,13 @@ Paragraph
             """
 Paragraph
 
-#table(
-  columns: 2,
+#sphinxField(
   [
     Language
   ],
   [
     Japanese
-  ]
+  ],
 )
     """,
             id="Field list",
