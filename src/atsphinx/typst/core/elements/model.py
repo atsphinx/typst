@@ -36,7 +36,7 @@ class Section(Element):
     TEMPLATE: str = """\
         {%- for content in contents -%}
         {{ content }}
-        {%- endfor %}
+        {% endfor %}
     """
 
 
