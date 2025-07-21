@@ -2,7 +2,6 @@
 atsphinx-typst
 ==============
 
-
 .. note:: This is ALPHA-stage product.
 
     We implement basic features to work for us,
@@ -15,14 +14,17 @@ Quickstart
 2. Run ``make typstpdf`` on your document.
 3. You can open ``typstpdf/document.pdf`` on your document's build directory.
 
-Refs
-====
-
-- `Typst reference <https://typst.app/docs/reference/>`_.
+Contents
+========
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    overview
    usage/index
    changes
+
+Refs
+====
+
+- `Typst reference <https://typst.app/docs/reference/>`_.

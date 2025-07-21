@@ -14,8 +14,6 @@ Features
 Getting started
 ===============
 
-.. caution:: Currently, This is not published anywhere yet.
-
 .. code:: console
 
    pip install atsphinx-typst
@@ -26,8 +24,10 @@ You can run ``typst`` and ``typstpdf`` builder without set it into extensions.
 
 .. code:: console
 
-   make typst
-   make typstpdf
+    # To generate Typst document.
+    make typst
+    # To generate Typst document and PDF from document.
+    make typstpdf
 
 Milestones
 ==========
@@ -44,5 +44,3 @@ v1.0 (for stable)
 
 * Use for PDF of sphinx-revealjs's documentation.
 * Publish my private tech ZINE.
-
-
