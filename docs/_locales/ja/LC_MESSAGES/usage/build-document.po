@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: atsphinx-typst 0.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-18 02:22+0900\n"
+"POT-Creation-Date: 2025-07-21 16:48+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -20,43 +20,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ../../guide.rst:3
-msgid "User guide"
+#: ../../usage/build-document.rst:2
+msgid "Build document"
 msgstr ""
 
-#: ../../guide.rst:6
-msgid "Installation"
+#: ../../usage/build-document.rst:4
+msgid ""
+"You can run ``typst`` builder without editing your ``conf.py`` after "
+"install."
 msgstr ""
 
-#: ../../guide.rst:8
-msgid "It is going to publish on PyPI."
-msgstr ""
-
-#: ../../guide.rst:14
-msgid "If you want to generate PDF too, you should set ``pdf`` extra."
-msgstr ""
-
-#: ../../guide.rst:21
-msgid "Usage"
-msgstr ""
-
-#: ../../guide.rst:23
-msgid "You need not to edit your ``conf.py`` to build by custom builders."
-msgstr ""
-
-#: ../../guide.rst:31
+#: ../../usage/build-document.rst:13
 msgid "When you call ``typst`` builder, it generate ``BUILD_DIR/typst``."
-msgstr ""
-
-#: ../../guide.rst:34
-msgid "Configuration"
-msgstr ""
-
-#: ../../guide.rst:36
-msgid "Todo"
-msgstr ""
-
-#: ../../guide.rst:36
-msgid "Write it"
 msgstr ""
 

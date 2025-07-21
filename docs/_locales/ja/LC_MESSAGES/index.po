@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: atsphinx-typst 0.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-13 02:44+0900\n"
+"POT-Creation-Date: 2025-07-21 16:48+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -25,14 +25,47 @@ msgid "atsphinx-typst"
 msgstr ""
 
 #: ../../index.rst:6
-msgid "Overview"
+msgid "This is ALPHA-stage product."
 msgstr ""
 
 #: ../../index.rst:8
-msgid "Todo"
+msgid ""
+"We implement basic features to work for us, but you may encounter missing"
+" features or malfunctions when using it."
 msgstr ""
 
-#: ../../index.rst:8
-msgid "Write it"
+#: ../../index.rst:12
+msgid "Quickstart"
 msgstr ""
+
+#: ../../index.rst:14
+msgid ""
+"Add ``atsphinx-typst[pdf]`` into your project as documentation "
+"dependencies."
+msgstr ""
+
+#: ../../index.rst:15
+msgid "Run ``make typstpdf`` on your document."
+msgstr ""
+
+#: ../../index.rst:16
+msgid "You can open ``typstpdf/document.pdf`` on your document's build directory."
+msgstr ""
+
+#: ../../index.rst:19
+msgid "Refs"
+msgstr ""
+
+#: ../../index.rst:21
+msgid "`Typst reference <https://typst.app/docs/reference/>`_."
+msgstr ""
+
+#~ msgid "Overview"
+#~ msgstr ""
+
+#~ msgid "Todo"
+#~ msgstr ""
+
+#~ msgid "Write it"
+#~ msgstr ""
 

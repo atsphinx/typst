@@ -20,52 +20,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ../../../CHANGES.rst:3
-msgid "Change logs"
+#: ../../usage/installation.rst:2
+msgid "Installation"
 msgstr ""
 
-#: ../../../CHANGES.rst:6
-msgid "Version 0.0.1"
+#: ../../usage/installation.rst:5
+msgid "Install from PyPI"
 msgstr ""
 
-#: ../../../CHANGES.rst
-msgid "Release date"
+#: ../../usage/installation.rst:7
+msgid ""
+"It is published on PyPI. You can install it by pip or other package "
+"management tools."
 msgstr ""
 
-#: ../../../CHANGES.rst:8
-msgid "2025-07-21 (Asia/Tokyo)"
+#: ../../usage/installation.rst:10
+msgid "Currently, it is not published yet."
 msgstr ""
 
-#: ../../../CHANGES.rst:10
-msgid "First published release."
+#: ../../usage/installation.rst:16
+msgid "If you want to generate PDF too, you should set ``pdf`` extra."
 msgstr ""
-
-#: ../../../CHANGES.rst:13
-msgid "Features"
-msgstr ""
-
-#: ../../../CHANGES.rst:15
-msgid "Add builders."
-msgstr ""
-
-#: ../../../CHANGES.rst:18
-msgid "Version 0.0.0"
-msgstr ""
-
-#: ../../../CHANGES.rst:20
-msgid "2025-06-13 (Asia/Tokyo)"
-msgstr ""
-
-#: ../../../CHANGES.rst:22
-msgid "Initial commit."
-msgstr ""
-
-#~ msgid "Changelogs"
-#~ msgstr ""
-
-#~ msgid "v0.0.0"
-#~ msgstr ""
-
-#~ msgid "date"
-#~ msgstr ""
 

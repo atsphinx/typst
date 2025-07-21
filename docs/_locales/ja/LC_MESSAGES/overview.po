@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2025, Kazuya Takei
+# This file is distributed under the same license as the atsphinx-typst
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: atsphinx-typst 0.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../overview.rst:3
+msgid "Overview"
+msgstr ""
+
+#: ../../overview.rst:6
+msgid "What is this"
+msgstr ""
+
+#: ../../overview.rst:8
+msgid ""
+"This is Sphinx extension to provide custom builders that covert doctree "
+"to Typst document and PDF."
+msgstr ""
+
+#: ../../overview.rst:11
+msgid "This will increase scenes using Sphinx for documentation."
+msgstr ""
+
+#: ../../overview.rst:14
+msgid "About Typst"
+msgstr ""
+
+#: ../../overview.rst:16
+msgid ""
+"Typst is a new markup-based typesetting system for the sciences. [#1]_ It"
+" has easy syntax to learn and lightweight builder to generate PDF."
+msgstr ""
+
+#: ../../overview.rst:19
+msgid "They design it to be alternative LaTeX."
+msgstr ""
+
+#: ../../overview.rst:21
+msgid "https://typst.app/docs/"
+msgstr ""
+
+#: ../../overview.rst:24
+msgid "Motivation"
+msgstr ""
+
+#: ../../overview.rst:26
+msgid "I publish \"Tech-ZINE\" [#2]_ using Sphinx and ``latexpdf`` builder."
+msgstr ""
+
+#: ../../overview.rst:28
+msgid "It means non-commercial publications about engineerings."
+msgstr ""
+
+#: ../../overview.rst:30
+msgid ""
+"Currently, Sphinx can create PDF document easily because it provides "
+"official docker image. But, I think that it has some problems."
+msgstr ""
+
+#: ../../overview.rst:33
+msgid "Image size is too large."
+msgstr ""
+
+#: ../../overview.rst:34
+msgid "It is little hard to use image with other extensions."
+msgstr ""
+
+#: ../../overview.rst:35
+msgid "It is very hard to build without using docker image."
+msgstr ""
+
+#: ../../overview.rst:37
+msgid ""
+"I want to create PDF as easy and low-layer as possible. So, I try to "
+"adopt Typst as PDF builder that can run without container layer."
+msgstr ""
+
+#: ../../overview.rst:41
+msgid "Goal"
+msgstr ""
+
+#: ../../overview.rst:43
+msgid ""
+"As above, this is personal project from private motivation. But, I think "
+"that it should have goal of project."
+msgstr ""
+
+#: ../../overview.rst:46
+msgid "I set three goals as milestone."
+msgstr ""
+
+#: ../../overview.rst:49
+msgid "For v0.0.1"
+msgstr ""
+
+#: ../../overview.rst:51
+msgid ""
+"On this version, it should be able to generate full-featured PDF of this "
+"project."
+msgstr ""
+
+#: ../../overview.rst:54
+msgid "For v0.1.0"
+msgstr ""
+
+#: ../../overview.rst:56
+msgid ""
+"On this version, it should be able to generate full-featured PDF of any "
+"own projects."
+msgstr ""
+
+#: ../../overview.rst:58
+msgid "Example:"
+msgstr ""
+
+#: ../../overview.rst:60
+msgid "sphinx-revealjs"
+msgstr ""
+
+#: ../../overview.rst:61
+msgid "oEmbedPy"
+msgstr ""
+
+#: ../../overview.rst:64
+msgid "For v1.0.0"
+msgstr ""
+
+#: ../../overview.rst:66
+msgid ""
+"On this version, it should be able to generate full-featured PDF of major"
+" Sphinx documentations."
+msgstr ""
+
+#: ../../overview.rst:68
+msgid "Sphinx"
+msgstr ""
+
+#: ../../overview.rst:70
+msgid "Todo"
+msgstr ""
+
+#: ../../overview.rst:70
+msgid "It is plan."
+msgstr ""
+
