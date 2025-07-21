@@ -83,8 +83,21 @@ class TypstTranslator(SphinxTranslator):
                 return self.ELEMENT_MAPPING[node_class.__name__]
         return None
 
+    def _move_ptr_to_parent(self, node=None):
+        """Move pointer for parent of current node.
+
+        This method should be used to assign departure methods
+        when only visit method require to define.
+        """
+        self._ptr = self._ptr.parent
+
     def unknown_visit(self, node: nodes.Node):
-        """Handle visit methods for unregistered nodes."""
+        """Handle visit methods for unregistered nodes.
+
+        When node class has mapping for element class,
+        it creates element object as child of current pointed node,
+        and it moves pointer for created object.
+        """
         element_class = self._find_mepped_element(node)
         if element_class is None:
             super().unknown_visit(node)
@@ -92,15 +105,16 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = element_class(parent=self._ptr)
 
     def unknown_departure(self, node: nodes.Node):
-        """Handle depart methods for unregistered nodes."""
+        """Handle depart methods for unregistered nodes.
+
+        When node class has mapping for element class,
+        and it moves pointer for parent of current node.
+        """
         element_class = self._find_mepped_element(node)
         if element_class is None:
             super().unknown_departure(node)
             return
         self._move_ptr_to_parent()
-
-    def _move_ptr_to_parent(self, node=None):
-        self._ptr = self._ptr.parent
 
     def visit_raw(self, node: nodes.raw):
         if node.get("format") == "typst":
