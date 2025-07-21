@@ -17,7 +17,6 @@ extensions = [
     # atsphinx extensions
     "atsphinx.mini18n",
     # Third-party extensions
-    "sphinx_toolbox.confval",
 ]
 templates_path = ["_templates", get_mini18n_template_dir()]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
