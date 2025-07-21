@@ -2,9 +2,21 @@
 Change logs
 ===========
 
-v0.0.0
-======
+Version 0.0.1
+=============
 
-:date: 2025-06-13 (Asia/Tokyo)
+:Release date: 2025-07-21 (Asia/Tokyo)
+
+First published release.
+
+Features
+--------
+
+* Add builders.
+
+Version 0.0.0
+=============
+
+:Release date: 2025-06-13 (Asia/Tokyo)
 
 Initial commit.
