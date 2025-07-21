@@ -18,14 +18,14 @@ replace = "version = \"{{new_version}}\""
 path = "CHANGES.rst"
 
 search = """
-v{{current_version}}
-={% for _ in current_version %}={% endfor %}
+Version {{current_version}}
+========{{#sameLengthChars}}=@{{current_version}}{{/sameLengthChars}}
 """
 replace = """
-v{{new_version}}
-={% for _ in new_version %}={% endfor %}
+Version {{new_version}}
+========{{#sameLengthChars}}=@{{new_version}}{{/sameLengthChars}}
 
-:Date: {{ now|date }} (Asia/Tokyo)
+:Release date: {{ nowFormat.dateISO }} (Asia/Tokyo)
 
 Breaking changes
 ----------------
@@ -39,8 +39,8 @@ Fixes
 Others
 ------
 
-v{{current_version}}
-={% for _ in current_version %}={% endfor %}
+Version {{current_version}}
+========{{#sameLengthChars}}=@{{current_version}}{{/sameLengthChars}}
 """
 
 
