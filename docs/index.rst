@@ -8,21 +8,12 @@ atsphinx-typst
     We implement basic features to work for us,
     but you may encounter missing features or malfunctions when using it.
 
-Overview
-========
+Quickstart
+==========
 
-This is Sphinx extension to provide custom builders
-that covert doctree to Typst document and PDF.
-
-Goal
-====
-
-This project's final goal is that
-it can generate full-featured PDF from any Sphinx documents.
-
-- Curently, It can generate PDF from documention of itself.
-- On next step, It will generate PDF from ``sphinx-revealjs`` documentation.
-- And, It will publish our tech-zine for Japanese by this.
+1. Add ``atsphinx-typst[pdf]`` into your project as documentation dependencies.
+2. Run ``make typstpdf`` on your document.
+3. You can open ``typstpdf/document.pdf`` on your document's build directory.
 
 Refs
 ====
@@ -32,6 +23,6 @@ Refs
 .. toctree::
    :maxdepth: 1
 
-   getting-started
-   configuration
+   overview
+   usage/index
    changes
