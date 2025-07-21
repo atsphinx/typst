@@ -31,19 +31,20 @@ DEFAULT_DOCUMENT_SETTINGS = {
 
 
 def set_config_defaults(app: Sphinx, config: Config):
-    """Inject default values of configured ``typest_documents``."""
+    """Inject default values of configured ``typst_documents``."""
     document_settings = config.typst_documents or []
     if not document_settings:
         document_settings.append(
             {
                 "entry": config.root_doc,
-                "filename": "document",
-                "title": f"{config.project} Documentation",
+                "filename": f"document-{config.language}",
+                "title": f"{config.project} Documentation [{config.language.upper()}]",
                 "theme": "manual",
             }
         )
     for idx, user_value in enumerate(document_settings):
         document_settings[idx] = DEFAULT_DOCUMENT_SETTINGS | user_value
+    config.typst_documents = document_settings
 
 
 def setup(app: Sphinx):  # noqa: D103
