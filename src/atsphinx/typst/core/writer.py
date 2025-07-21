@@ -41,7 +41,7 @@ def _append_child_element(
 class TypstTranslator(SphinxTranslator):
     """Custom translator that has converter from dotctree to Typst syntax.
 
-    This defines visit/departuer methods in order to:
+    This defines visit/departure methods in order to:
 
     1. Text node of docutils.
     2. Dependents (docutils, sphinx, and others ...)
@@ -86,7 +86,7 @@ class TypstTranslator(SphinxTranslator):
         self._ptr = self._ptr.parent
 
     # ------
-    # visit/departuer methods
+    # visit/departure methods
     # ------
 
     # : docutils
