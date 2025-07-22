@@ -41,7 +41,7 @@ class Theme:
 
     def get_template(self) -> Template:
         """Retrieve template to render Typst source."""
-        return self._env.get_template("document.typ.jinja")
+        return self._env.get_template(self._config["template_name"])
 
     def write_doc(self, out: Path, context: ThemeContext):
         """Write content as document."""
@@ -64,14 +64,11 @@ class ThemeContext:
 def _verify_theme_path(theme_dir: Path) -> bool:
     """Verify that target directory is correct for theme."""
     theme_conf = theme_dir / "theme.toml"
-    theme_typst = theme_dir / "document.typ.jinja"
     return (
         theme_dir.exists()
         and theme_dir.is_dir()
         and theme_conf.exists()
         and theme_conf.is_file()
-        and theme_typst.exists()
-        and theme_typst.is_file()
     )
 
 
@@ -84,8 +81,13 @@ def load_theme(name: str) -> Theme:
     def _load_theme(theme_path: Path) -> Theme:
         """Create theme object from theme path."""
         name = theme_path.stem
+        dirs = [theme_path]
         config = tomllib.loads((theme_path / "theme.toml").read_text(encoding="utf8"))
-        return Theme(name, config, [theme_path])
+        if "extend" in config:
+            parent = load_theme(config["extend"])
+            config = parent._config | config
+            dirs += parent._dirs
+        return Theme(name, config, dirs)
 
     # Find from built-in themes
     theme_dir = _BASE_THEMES_DIR / name

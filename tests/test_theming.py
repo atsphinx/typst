@@ -15,3 +15,6 @@ def test__theme_not_found():
 def test__builtin_theme_found():
     theme = t.load_theme("manual")
     assert isinstance(theme, t.Theme)
+    assert len(theme._dirs) == 2
+    assert theme._config["extend"] == "base"
+    assert theme._config["template_name"] == "document.typ.jinja"
