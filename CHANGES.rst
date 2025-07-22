@@ -2,6 +2,21 @@
 Change logs
 ===========
 
+Version 0.0.2
+=============
+
+:date: 2025-07-23 (Asia/Tokyo)
+
+Fixes
+-----
+
+* Controle version using import-metadata.
+
+Others
+------
+
+* Restructure modules.
+
 Version 0.0.1
 =============
 
