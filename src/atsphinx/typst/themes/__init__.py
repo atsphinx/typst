@@ -45,4 +45,4 @@ class ThemeContext:
 def get_theme(name: str) -> Theme:
     """Find and setup built-in theme."""
     theme_path = _HERE / name
-    return Theme(template_path=theme_path / "page.typ.jinja")
+    return Theme(template_path=theme_path / "document.typ.jinja")
