@@ -14,7 +14,7 @@ from sphinx.errors import SphinxError
 from sphinx.locale import _
 from sphinx.util.nodes import inline_all_toctrees
 
-from . import themes, writer
+from . import theming, writer
 
 if TYPE_CHECKING:
     from docutils import nodes
@@ -42,12 +42,12 @@ class TypstBuilder(Builder):
 
     def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
         docname = document_settings["entry"]
-        theme = themes.get_theme(document_settings["theme"])
+        theme = theming.load_theme(document_settings["theme"])
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         today_fmt = self.config.today_fmt or _("%b %d, %Y")
-        context = themes.ThemeContext(
+        context = theming.ThemeContext(
             title=document_settings["title"],
             config=self.config,
             date=date.today().strftime(today_fmt),

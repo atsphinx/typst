@@ -5,9 +5,11 @@ This module is inspired :py:mod:`sphinx.theming`, but it is impleemented simplif
 
 from __future__ import annotations
 
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from jinja2 import Environment, FileSystemLoader, Template
 from sphinx.errors import ThemeError
 
 try:
@@ -17,6 +19,8 @@ except ImportError:
 
 if TYPE_CHECKING:
     from typing import Any
+
+    from sphinx.config import Config
 
 _BASE_THEMES_DIR = Path(__file__).parent / "themes"
 
@@ -28,6 +32,33 @@ class Theme:
         self.name = name
         self._config = config
         self._dirs = dirs
+        self._env: Environment
+        self.init()
+
+    def init(self):  # noqa: D102
+        loader = FileSystemLoader(self._dirs)
+        self._env = Environment(loader=loader)
+
+    def get_template(self) -> Template:
+        """Retrieve template to render Typst source."""
+        return self._env.get_template("document.typ.jinja")
+
+    def write_doc(self, out: Path, context: ThemeContext):
+        """Write content as document."""
+        tmpl = self.get_template()
+        content = tmpl.render(asdict(context))
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(content, encoding="utf8")
+
+
+@dataclass
+class ThemeContext:
+    """Default context values for templating."""
+
+    title: str
+    config: Config
+    date: str
+    body: str
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
