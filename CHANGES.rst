@@ -20,7 +20,7 @@ Others
 Version 0.0.1
 =============
 
-:Release date: 2025-07-21 (Asia/Tokyo)
+:date: 2025-07-21 (Asia/Tokyo)
 
 First published release.
 
@@ -32,6 +32,6 @@ Features
 Version 0.0.0
 =============
 
-:Release date: 2025-06-13 (Asia/Tokyo)
+:date: 2025-06-13 (Asia/Tokyo)
 
 Initial commit.

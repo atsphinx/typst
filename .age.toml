@@ -25,7 +25,7 @@ replace = """
 Version {{new_version}}
 ========{{#sameLengthChars}}=@{{new_version}}{{/sameLengthChars}}
 
-:Release date: {{ nowFormat.dateISO }} (Asia/Tokyo)
+:date: {{ nowFormat.dateISO }} (Asia/Tokyo)
 
 Breaking changes
 ----------------
