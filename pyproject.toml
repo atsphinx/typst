@@ -39,8 +39,8 @@ Home = "https://github.com/atsphinx/typst"
 Documentation = "https://atsphinx.github.io/typst"
 
 [project.entry-points."sphinx.builders"]
-typst = "atsphinx.typst.core"
-typstpdf = "atsphinx.typst.core"
+typst = "atsphinx.typst"
+typstpdf = "atsphinx.typst"
 
 [project.optional-dependencies]
 pdf = [

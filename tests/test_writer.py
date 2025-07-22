@@ -8,7 +8,7 @@ from typing import TYPE_CHECKING
 import pytest
 from docutils.core import publish_doctree
 
-from atsphinx.typst.core import writer as t
+from atsphinx.typst import writer as t
 
 if TYPE_CHECKING:
     from sphinx.testing.util import SphinxTestApp

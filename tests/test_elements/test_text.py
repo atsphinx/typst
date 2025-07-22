@@ -2,8 +2,8 @@
 # ruff: noqa: D101, D102, D107
 import textwrap
 
-from atsphinx.typst.core.elements import text as t
-from atsphinx.typst.core.elements.base import Text
+from atsphinx.typst.elements import text as t
+from atsphinx.typst.elements.base import Text
 
 
 class TestRaw:

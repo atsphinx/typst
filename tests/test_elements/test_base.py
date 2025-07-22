@@ -2,7 +2,7 @@
 # ruff: noqa: D101, D102, D107
 import textwrap
 
-from atsphinx.typst.core import elements as t
+from atsphinx.typst import elements as t
 
 
 class TestSource:

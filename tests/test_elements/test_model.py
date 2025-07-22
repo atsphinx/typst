@@ -4,8 +4,8 @@ import textwrap
 
 import pytest
 
-from atsphinx.typst.core.elements import model as t
-from atsphinx.typst.core.elements.base import Text
+from atsphinx.typst.elements import model as t
+from atsphinx.typst.elements.base import Text
 
 
 class TestHeading:

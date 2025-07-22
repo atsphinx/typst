@@ -16,9 +16,9 @@ def load_template(name: str) -> str:
     :param name: Class name to use as template.
     :returns: Template string.
     """
-    import atsphinx.typst.core.elements  # noqa
+    import atsphinx.typst.elements  # noqa
 
-    module = sys.modules["atsphinx.typst.core.elements"]
+    module = sys.modules["atsphinx.typst.elements"]
     if not hasattr(module, name):
         raise Exception(f"{name} is not found.")
     return textwrap.dedent(getattr(module, name).TEMPLATE).strip("\n")
