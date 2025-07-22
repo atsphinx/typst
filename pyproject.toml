@@ -32,6 +32,7 @@ readme = "README.rst"
 dependencies = [
     "anytree>=2.12.1",
     "sphinx>=8.1",
+    "tomli>=2.2.1 ; python_version < '3.11'",
 ]
 
 [project.urls]

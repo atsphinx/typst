@@ -61,6 +61,7 @@ dependencies = [
     { name = "anytree" },
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+    { name = "tomli", marker = "python_full_version < '3.11'" },
 ]
 
 [package.optional-dependencies]
@@ -94,6 +95,7 @@ test = [
 requires-dist = [
     { name = "anytree", specifier = ">=2.12.1" },
     { name = "sphinx", specifier = ">=8.1" },
+    { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "typst", marker = "extra == 'pdf'", specifier = ">=0.13.2" },
 ]
 provides-extras = ["pdf"]
