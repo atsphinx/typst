@@ -9,8 +9,8 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from jinja2 import Environment, FileSystemLoader, Template
 from sphinx.errors import ThemeError
+from sphinx.jinja2glue import BuiltinTemplateLoader
 
 try:
     import tomllib  # type: ignore[unresolved-import]
@@ -21,6 +21,8 @@ if TYPE_CHECKING:
     from typing import TypedDict
 
     from sphinx.config import Config
+
+    from .builders import TypstBuilder
 
     class _ThemeToml(TypedDict, total=False):
         extend: str
@@ -37,21 +39,18 @@ class Theme:
         self.name = name
         self._config = config
         self._dirs = dirs
-        self._env: Environment
-        self.init()
+        self._templates = BuiltinTemplateLoader()
 
-    def init(self):  # noqa: D102
-        loader = FileSystemLoader(self._dirs)
-        self._env = Environment(loader=loader)
+    def init(self, builder: TypstBuilder):  # noqa: D102
+        self._templates.init(builder, self)
 
-    def get_template(self) -> Template:
-        """Retrieve template to render Typst source."""
-        return self._env.get_template(self._config.template_name)
+    def get_theme_dirs(self):  # noqa: D102
+        # This is to work BuiltinTemplateLoader.init
+        return self._dirs
 
     def write_doc(self, out: Path, context: ThemeContext):
         """Write content as document."""
-        tmpl = self.get_template()
-        content = tmpl.render(asdict(context))
+        content = self._templates.render(self._config.template_name, asdict(context))
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(content, encoding="utf8")
 

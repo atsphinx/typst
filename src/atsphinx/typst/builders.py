@@ -43,6 +43,7 @@ class TypstBuilder(Builder):
     def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
         docname = document_settings["entry"]
         theme = theming.load_theme(document_settings["theme"])
+        theme.init(self)
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
