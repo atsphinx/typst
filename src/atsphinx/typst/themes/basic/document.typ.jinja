@@ -1,0 +1,80 @@
+{#-
+  Base theme of atsphinx-typst
+  ============================
+
+  This implements simple reporing style.
+  It has these settings:
+
+  * Cover page.
+  * Outline of contents.
+  * Contents with page number on footer layout.
+
+  This is designed by 3 blocks of Jinja.
+
+  meta
+      Manage PDF metadata, page size and settings overall Typst document.
+  layout
+      Layout settings of page and components.
+  content
+      Body of document that only display on paper.
+-#}
+{%- block meta %}
+
+{#- 
+  To set PDF metadata.
+
+  :ref: https://typst.app/docs/reference/model/document/
+#}
+#document(
+  title: [{{ title }}],
+  author: "{{ config.author }}",
+)
+{%- endblock %}
+
+{%- block layout %}
+#let cleanPage(body) = {
+  page(
+    header: none,
+    footer: none,
+    [
+      #body
+    ]
+  )
+}
+
+#let contentPage(body) = context {
+  page(
+    numbering: "1 / 1",
+    header: none,
+    [
+      #body
+    ]
+  )
+}
+{%- endblock %}
+
+{%- block content %}
+  {%- block cover %}
+    #show: cleanPage
+    #align(center, [
+      #v(36pt)
+      #text(
+        weight: "bold",
+        size: 3em,
+        "{{ title }}",
+      )
+    ])
+    #pagebreak()
+  {% endblock %}
+
+  {%- block outline %}
+    #show: cleanPage
+    #outline()
+  {% endblock %}
+
+  {%- block document %}
+    #show: contentPage
+    {{ body|safe }}
+  {% endblock %}
+
+{%- endblock %}

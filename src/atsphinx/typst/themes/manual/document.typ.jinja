@@ -1,11 +1,11 @@
-#let cleanPage(..it) = {
-  page(
-    header: none,
-    footer: none,
-    ..it,
-  )
-}
+{#-
+  Sphinx-doc like manual theme
+  ============================
+-#}
+{%- extends 'basic/document.typ.jinja' %}
 
+{%- block layout %}
+  {{ super() }}
 #let contentPage(body) = context {
   let headerText = "{{ config.project }} {{ config.release }}"
   let pos(cur, total) = {
@@ -100,36 +100,27 @@
     }
   )
 }
+{%- endblock %}
 
-{%- block main %}
+{%- block cover %}
+  #let titlepage(body, size: 24pt, vt: 0%) = {
+    set align(right)
+    set text(size: size, weight: "bold")
+    v(vt)
+    body
+  }
+  #cleanPage(
+    [
+      #titlepage("{{ title }}", size: 24pt, vt: 10%)
+      #titlepage("{{ config.release }}", size: 16pt, vt: 0%)
+      #titlepage("{{ config.author }}", size: 18pt, vt: 30%)
+      #titlepage("{{ date }}", size: 14pt, vt: 40%)
+      #pagebreak()
+    ]
+  )
+{%- endblock %}
 
-  {%- block page_title %}
-    #let titlepage(body, size: 24pt, vt: 0%) = {
-      set align(right)
-      set text(size: size, weight: "bold")
-      v(vt)
-      body
-    }
-    #cleanPage(
-      [
-        #titlepage("{{ title }}", size: 24pt, vt: 10%)
-        #titlepage("{{ config.release }}", size: 16pt, vt: 0%)
-        #titlepage("{{ config.author }}", size: 18pt, vt: 30%)
-        #titlepage("{{ date }}", size: 14pt, vt: 40%)
-        #pagebreak()
-      ]
-    )
-  {% endblock %}
-
-  {%- block page_outline %}
-    #outline()
-  {% endblock %}
-
-  #show: contentPage
+{%- block document %}
   #counter(page).update(1);
-
-  {%- block page_contents %}
-    {{ body|safe }}
-  {% endblock %}
-
+  {{ super() }}
 {%- endblock %}
