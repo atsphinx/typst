@@ -1,1 +1,2 @@
-extend = "basic"
+[theme]
+inherit = "basic"
