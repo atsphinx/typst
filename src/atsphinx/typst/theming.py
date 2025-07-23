@@ -26,6 +26,7 @@ if TYPE_CHECKING:
 
     class _ThemeToml_Theme(TypedDict, total=False):
         inherit: str
+        imports: list[str]
 
     class _ThemeToml(TypedDict, total=False):
         theme: _ThemeToml_Theme
@@ -47,13 +48,20 @@ class Theme:
     def init(self, builder: TypstBuilder):  # noqa: D102
         self._templates.init(builder, self)
 
+    def get_theme_dir(self) -> Path:
+        """Retrieve base directory of theme."""
+        return self._dirs[0]
+
     def get_theme_dirs(self):  # noqa: D102
         # This is to work BuiltinTemplateLoader.init
         return self._dirs
 
     def write_doc(self, out: Path, context: ThemeContext):
         """Write content as document."""
-        content = self._templates.render("document.typ.jinja", asdict(context))
+        ctx = asdict(context) | {
+            "theme": self._config,
+        }
+        content = self._templates.render("document.typ.jinja", ctx)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(content, encoding="utf8")
 
@@ -65,12 +73,13 @@ class ThemeConfig:
     This provides behavior that how dow theme work on builder.
     """
 
+    module_imports: list[str]
     default_options: dict[str, Any]
 
     @classmethod
     def make_default(cls) -> ThemeConfig:
         """Create object of default configuration values of theme."""
-        return cls(default_options={})
+        return cls(module_imports=[], default_options={})
 
     @classmethod
     def resolve(cls, configs: list[_ThemeToml]) -> ThemeConfig:
@@ -78,6 +87,7 @@ class ThemeConfig:
         obj = cls.make_default()
         for config in configs:
             obj.default_options = config.get("options", {})
+            obj.module_imports += config["theme"].get("imports", [])
         return obj
 
 

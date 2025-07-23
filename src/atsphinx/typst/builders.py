@@ -12,6 +12,7 @@ from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
 from sphinx.errors import SphinxError
 from sphinx.locale import _
+from sphinx.util.fileutil import copy_asset
 from sphinx.util.nodes import inline_all_toctrees
 
 from . import theming, writer
@@ -29,12 +30,21 @@ class TypstBuilder(Builder):
     format = "typst"
     default_translator_class = writer.TypstTranslator
 
+    def init(self):  # noqa: D102
+        super().init()
+        self._themes: dict[str, theming.Theme] = {}
+
     def get_outdated_docs(self):  # noqa: D102
         return "all targets"
 
     def prepare_writing(self, docnames: set[str]) -> None:  # noqa: D102
-        # TODO: Implement after if it needs
-        pass
+        # Preload themes to copy assets before write_documents.
+        for document_settings in self.config.typst_documents:
+            name = document_settings["theme"]
+            if name not in self._themes:
+                theme = theming.load_theme(document_settings["theme"])
+                theme.init(self)
+                self._themes[name] = theme
 
     def write_documents(self, docnames):  # noqa: D102
         for document_settings in self.config.typst_documents:
@@ -42,8 +52,7 @@ class TypstBuilder(Builder):
 
     def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
         docname = document_settings["entry"]
-        theme = theming.load_theme(document_settings["theme"])
-        theme.init(self)
+        theme = self._themes[document_settings["theme"]]
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
@@ -79,6 +88,20 @@ class TypstBuilder(Builder):
     def get_target_uri(self, docname, typ=None):  # noqa: D102
         # TODO: Implement it!
         return ""
+
+    def copy_assets(self):  # noqa: D102
+        # Copying all theme assets.
+        def _copy_theme_assets():
+            base_dir = self.app.outdir / "_themes"
+            for name, theme in self._themes.items():
+                assets_outdir = base_dir / name
+                assets_srcdir = theme.get_theme_dir() / "assets"
+                copy_asset(
+                    assets_srcdir,
+                    assets_outdir,
+                )
+
+        _copy_theme_assets()
 
 
 class TypstPDFBuilder(TypstBuilder):

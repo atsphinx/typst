@@ -30,6 +30,7 @@ def test__auto_adding_extension(app: SphinxTestApp):
     """Test to pass."""
     app.build()
     assert (app.outdir / "index.typ").exists()
+    assert (app.outdir / "_themes/manual/elements.typ").exists()
 
 
 @pytest.mark.sphinx(
