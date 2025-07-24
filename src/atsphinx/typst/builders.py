@@ -39,12 +39,19 @@ class TypstBuilder(Builder):
 
     def prepare_writing(self, docnames: set[str]) -> None:  # noqa: D102
         # Preload themes to copy assets before write_documents.
+        def _load_theme(name: str) -> theming.Theme | None:
+            if name in self._themes:
+                return
+
+            theme = theming.load_theme(name)
+            theme.init(self)
+            self._themes[name] = theme
+            parent = theme.get_parent_theme()
+            if parent:
+                _load_theme(parent)
+
         for document_settings in self.config.typst_documents:
-            name = document_settings["theme"]
-            if name not in self._themes:
-                theme = theming.load_theme(document_settings["theme"])
-                theme.init(self)
-                self._themes[name] = theme
+            _load_theme(document_settings["theme"])
 
     def write_documents(self, docnames):  # noqa: D102
         for document_settings in self.config.typst_documents:

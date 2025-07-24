@@ -1,2 +1,4 @@
 [theme]
-imports = []
+imports = [
+    '"_themes/basic/elements.typ": sphinxField'
+]

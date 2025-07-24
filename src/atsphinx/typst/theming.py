@@ -48,6 +48,10 @@ class Theme:
     def init(self, builder: TypstBuilder):  # noqa: D102
         self._templates.init(builder, self)
 
+    def get_parent_theme(self) -> str | None:
+        """Retrieve parent theme name if it is exists."""
+        return self._config.inherit
+
     def get_theme_dir(self) -> Path:
         """Retrieve base directory of theme."""
         return self._dirs[0]
@@ -73,19 +77,22 @@ class ThemeConfig:
     This provides behavior that how dow theme work on builder.
     """
 
+    inherit: str | None
     module_imports: list[str]
     default_options: dict[str, Any]
 
     @classmethod
     def make_default(cls) -> ThemeConfig:
         """Create object of default configuration values of theme."""
-        return cls(module_imports=[], default_options={})
+        return cls(inherit=None, module_imports=[], default_options={})
 
     @classmethod
     def resolve(cls, configs: list[_ThemeToml]) -> ThemeConfig:
         """Merge all configurations of TOML's values."""
         obj = cls.make_default()
         for config in configs:
+            if "inherit" in config["theme"]:
+                obj.inherit = config["theme"]["inherit"]
             obj.default_options = config.get("options", {})
             obj.module_imports += config["theme"].get("imports", [])
         return obj

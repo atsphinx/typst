@@ -1,5 +1,2 @@
 [theme]
 inherit = "basic"
-imports = [
-    '"_themes/manual/elements.typ": sphinxField'
-]
