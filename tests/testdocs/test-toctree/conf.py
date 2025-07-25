@@ -4,7 +4,7 @@ extensions = []
 
 typst_documents = [
     {
-        "entry": "index",
+        "entrypoint": "index",
         "filename": "index",
         "theme": "manual",
         "title": "Test documentation",

@@ -47,7 +47,7 @@ msgid "Dict keys:"
 msgstr ""
 
 #: ../../usage/configuration.rst:17
-msgid "entry"
+msgid "entrypoint"
 msgstr ""
 
 #: ../../usage/configuration.rst:18
@@ -85,7 +85,7 @@ msgstr ""
 #: ../../usage/configuration.rst:26
 msgid ""
 "WHen it is ``True``, builder only writes contents of toctree from "
-"``entry``."
+"``entrypoint``."
 msgstr ""
 
 #: ../../usage/configuration.rst:28

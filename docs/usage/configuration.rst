@@ -14,7 +14,7 @@ Currently, you can configure behviors of atsphinx-typst by some values.
 
     .. list-table::
 
-        - * entry
+        - * entrypoint
           * Docname for generating document.
         - * filename
           * Output filename (excluded extension).
@@ -23,7 +23,7 @@ Currently, you can configure behviors of atsphinx-typst by some values.
         - * theme
           * Generating style.
         - * toctree_only
-          * WHen it is ``True``, builder only writes contents of toctree from ``entry``.
+          * WHen it is ``True``, builder only writes contents of toctree from ``entrypoint``.
 
     You can write out multiple layout documents from same project.
 
@@ -31,13 +31,13 @@ Currently, you can configure behviors of atsphinx-typst by some values.
 
         typst_documents = [
             {
-                "entry": "index",
+                "entrypoint": "index",
                 "filename": "document-for-pdf",
                 "title": "Documentation (PDF style)",
                 "theme": "manual",
             },
             {
-                "entry": "index",
+                "entrypoint": "index",
                 "filename": "document-for-paper",
                 "title": "Documentation (Paper style)",
                 "theme": "manual-paper",

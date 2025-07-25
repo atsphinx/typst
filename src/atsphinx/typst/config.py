@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 class DocumentSettings(TypedDict):
     """Build settings each documets."""
 
-    entry: str
+    entrypoint: str
     """Docname of entrypoint."""
     filename: str
     """Output filename (without ext)."""
@@ -21,7 +21,7 @@ class DocumentSettings(TypedDict):
     theme: str
     """Generate theme."""
     toctree_only: bool
-    """When it is ``True``, builder only write contents of toctree from 'entry'."""
+    """When it is ``True``, builder only write contents of toctree from 'entrypoint'."""
 
 
 DEFAULT_DOCUMENT_SETTINGS = {
@@ -36,7 +36,7 @@ def set_config_defaults(app: Sphinx, config: Config):
     if not document_settings:
         document_settings.append(
             {
-                "entry": config.root_doc,
+                "entrypoint": config.root_doc,
                 "filename": f"document-{config.language}",
                 "title": f"{config.project} Documentation [{config.language.upper()}]",
                 "theme": "manual",

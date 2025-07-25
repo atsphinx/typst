@@ -13,7 +13,7 @@ Example
 
     typst_documents = [
         {
-            "entry": "index",
+            "entrypoint": "index",
             "filename": "document",
             "title": "A documentation",
             # Set using theme name here!

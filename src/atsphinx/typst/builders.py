@@ -58,7 +58,7 @@ class TypstBuilder(Builder):
             self.write_doc(document_settings)
 
     def write_doc(self, document_settings: DocumentSettings):  # noqa: D102
-        docname = document_settings["entry"]
+        docname = document_settings["entrypoint"]
         theme = self._themes[document_settings["theme"]]
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]

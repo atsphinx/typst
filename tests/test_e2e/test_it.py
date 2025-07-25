@@ -38,12 +38,12 @@ def test__auto_adding_extension(app: SphinxTestApp):
     confoverrides={
         "typst_documents": [
             {
-                "entry": "index",
+                "entrypoint": "index",
                 "filename": "document-1",
                 "title": "test",
             },
             {
-                "entry": "index",
+                "entrypoint": "index",
                 "filename": "document-2",
                 "title": "test",
             },

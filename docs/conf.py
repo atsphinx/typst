@@ -72,7 +72,7 @@ latex_documents = [
 # -- Options for Typst outout
 typst_documents = [
     {
-        "entry": "index",
+        "entrypoint": "index",
         "filename": "document",
         "theme": "manual",
         "title": f"{project} Documentation",
