@@ -127,6 +127,7 @@ class TypstPDFBuilder(TypstBuilder):
             import typst  # noqa - Only try importing
         except ImportError:
             raise SphinxError("Require 'typst' to run 'typstpdf' builder.")
+        super().init()
 
     def write_doc(self, document_settings: DocumentSettings) -> None:  # noqa: D102
         # TODO: Implement it!
