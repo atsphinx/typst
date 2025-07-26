@@ -2,6 +2,30 @@
 Change logs
 ===========
 
+Version 0.0.3
+=============
+
+:date: 2025-07-26 (Asia/Tokyo)
+
+Breaking changes
+----------------
+
+* Change key of ``typst_documents`` from ``'entry'`` to ``'entrypoint'``.
+* Change template name of theme.
+
+Features
+--------
+
+* Update structure of theme.
+* Add theme 'basic' and split some features from 'manual'.
+* Theme can pass assets (include any inherited themes)
+
+Fixes
+-----
+
+Others
+------
+
 Version 0.0.2
 =============
 

@@ -9,7 +9,7 @@ from . import builders, config
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
 
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 
 def setup(app: Sphinx):  # noqa: D103
