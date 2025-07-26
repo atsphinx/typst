@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING
 import jinja2
 
 from .base import Element
+from .foundations import Label
 
 if TYPE_CHECKING:
     from typing import Optional
@@ -156,15 +157,23 @@ class Footnote(Element):
     LABEL = "footnote"
     TEMPLATE = """\
         #footnote(
+          {%- if label %}
+          {{ label }}
+          {%- else %}
           [
             {%- for content in contents %}
             {{ content | indent(4, first=False) }}
             {%- endfor %}
           ],
+          {%- endif %}
         )
     """
 
     def to_text(self):
+        to_label = self.children and isinstance(self.children[0], Label)
+        if to_label:
+            return self.get_template().render(label=self.children[0].to_text())
+
         return self.get_template().render(
             contents=[c.to_text() for c in self.children[1:]],
         )

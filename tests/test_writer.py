@@ -497,14 +497,36 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
 
 
 @pytest.mark.parametrize(
-    "src",
+    "src,dest",
     [
+        pytest.param(
+            """
+This is a pen. [#fn1]_
+
+.. [#fn1] Example.
+    """,
+            """
+This is a pen. #footnote(
+  [
+    Example.
+  ],
+) #label("fn1")
+""",
+            id="String labeled footnote",
+        ),
         pytest.param(
             """
 This is a pen. [#1]_
 
 .. [#1] Example.
-    """,
+            """,
+            """
+This is a pen. #footnote(
+  [
+    Example.
+  ],
+) #label("footnote-1")
+        """,
             id="Numbered footnote",
         ),
         pytest.param(
@@ -512,20 +534,60 @@ This is a pen. [#1]_
 This is a pen. [#]_
 
 .. [#] Example.
-    """,
+            """,
+            """
+This is a pen. #footnote(
+  [
+    Example.
+  ],
+) #label("footnote-1")
+        """,
             id="Auto-numbered footnote",
         ),
         pytest.param(
             """
-This is a pen. [#fn1]_
+This is a pen. [#]_ [#]_
 
-.. [#fn1] Example.
-    """,
-            id="Strings labelded footnote",
+.. [#] Example 1.
+.. [#] Example 2.
+            """,
+            """
+This is a pen. #footnote(
+  [
+    Example 1.
+  ],
+) #label("footnote-1") #footnote(
+  [
+    Example 2.
+  ],
+) #label("footnote-2")
+        """,
+            id="Auto-numbered multiple footnotes",
+        ),
+        pytest.param(
+            """
+This is a pen. [#fn]_
+
+This is a pen too. [#fn]_
+
+.. [#fn] Example.
+            """,
+            """
+This is a pen. #footnote(
+  [
+    Example.
+  ],
+) #label("fn")
+
+This is a pen too. #footnote(
+  label("fn")
+)
+""",
+            id="Multi refs",
         ),
     ],
 )
-def test_footnote(app: SphinxTestApp, src: str):
+def test_footnote(app: SphinxTestApp, src: str, dest: str):
     """Simple test for footnote syntax by Translator.
 
     This includes test for ``transport_footnotes``.
@@ -533,22 +595,12 @@ def test_footnote(app: SphinxTestApp, src: str):
     # NOTE: Keep debugging print
     from anytree import RenderTree
 
-    dest = """
-This is a pen. #footnote(
-  [
-    Example.
-  ],
-)
-"""
     document = publish_doctree(src.strip())
     t.transport_footnotes(document)
-    print(document)
     document.settings.strict_visitor = False
     visitor = t.TypstTranslator(document, app.builder)
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
-    print(visitor.dom.to_text().strip())
-    print(dest.strip())
     assert visitor.dom.to_text().strip() == dest.strip()
 
 
