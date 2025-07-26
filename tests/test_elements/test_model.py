@@ -30,6 +30,12 @@ class TestFigure:
         pass
 
 
+class TestFootnote:
+    @pytest.mark.skip(reason="Thinking cases")
+    def test_it(self):
+        pass
+
+
 class TestHeading:
     def test_valid_level(self):
         elm = t.Heading()

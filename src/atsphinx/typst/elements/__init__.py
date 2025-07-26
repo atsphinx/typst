@@ -11,6 +11,7 @@ from .model import (
     Document,
     Emphasis,
     Figure,
+    Footnote,
     Heading,
     Link,
     NumberedList,

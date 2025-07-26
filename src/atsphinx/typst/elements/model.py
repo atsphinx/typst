@@ -147,6 +147,29 @@ class Figure(Element):
         return self.get_template().render(image=image, caption=caption)
 
 
+class Footnote(Element):
+    """Footnote.
+
+    :ref: https://typst.app/docs/reference/model/footnote/
+    """
+
+    LABEL = "footnote"
+    TEMPLATE = """\
+        #footnote(
+          [
+            {%- for content in contents %}
+            {{ content | indent(4, first=False) }}
+            {%- endfor %}
+          ],
+        )
+    """
+
+    def to_text(self):
+        return self.get_template().render(
+            contents=[c.to_text() for c in self.children[1:]],
+        )
+
+
 class Heading(Element):
     """Section's heading element.
 
