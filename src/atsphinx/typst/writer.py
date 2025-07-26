@@ -65,6 +65,7 @@ class TypstTranslator(SphinxTranslator):
         "field_list": elements.Element,
         "field_name": elements.Element,
         "figure": elements.Figure,
+        "footnote": elements.Footnote,
         "option_list": elements.Table,
         "option_string": elements.Strong,
         "paragraph": elements.Paragraph,
@@ -154,27 +155,27 @@ class TypstTranslator(SphinxTranslator):
             self._ptr.attribution = node.astext()
         raise nodes.SkipNode()
 
-    def visit_footnote(self, node: nodes.footnote):
-        # When it access footnote from initialized tree, skip it.
-        raise nodes.SkipNode()
+    # def visit_footnote(self, node: nodes.footnote):
+    #     # When it access footnote from initialized tree, skip it.
+    #     raise nodes.SkipNode()
 
-    def visit_footnote_reference(self, node: nodes.footnote_reference):
-        footnote_ = [
-            n
-            for n in node.document.findall(nodes.footnote)
-            if node["refid"] in n["ids"]
-        ]
-        if not footnote_:
-            raise Exception("Target footnote is not found.")
-        footnote = footnote_[0]
-        for idx, child in enumerate(footnote.children):
-            # Remove to label.
-            if idx == 0:
-                continue
-            node.children.append(child)
-        self._ptr = elements.Footnote(parent=self._ptr)
+    # def visit_footnote_reference(self, node: nodes.footnote_reference):
+    #     footnote_ = [
+    #         n
+    #         for n in node.document.findall(nodes.footnote)
+    #         if node["refid"] in n["ids"]
+    #     ]
+    #     if not footnote_:
+    #         raise Exception("Target footnote is not found.")
+    #     footnote = footnote_[0]
+    #     for idx, child in enumerate(footnote.children):
+    #         # Remove to label.
+    #         if idx == 0:
+    #             continue
+    #         node.children.append(child)
+    #     self._ptr = elements.Footnote(parent=self._ptr)
 
-    depart_footnote_reference = _move_ptr_to_parent
+    # depart_footnote_reference = _move_ptr_to_parent
 
     def visit_caption(self, node: nodes.caption):
         if isinstance(self._ptr, elements.Figure):
@@ -247,3 +248,19 @@ class TypstTranslator(SphinxTranslator):
             self._ptr.label = target["refid"]
 
     depart_title = _move_ptr_to_parent
+
+
+def transport_footnotes(doctree: nodes.document):
+    """Move each footnotes into refered footnote_reference in doctree."""
+    for ref in doctree.findall(nodes.footnote_reference):
+        parent = ref.parent
+        footnotes = [
+            n for n in doctree.findall(nodes.footnote) if ref["refid"] in n["ids"]
+        ]
+        if not footnotes:
+            raise Exception("Target footnote is not found.")
+        ft = footnotes[0]
+        ft_p = ft.parent
+        footnote = ft_p.pop(ft_p.index(ft))
+        parent.insert(parent.index(ref), footnote)
+        parent.remove(ref)

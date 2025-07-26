@@ -526,7 +526,10 @@ This is a pen. [#fn1]_
     ],
 )
 def test_footnote(app: SphinxTestApp, src: str):
-    """Very simple test for syntax by Translator."""
+    """Simple test for footnote syntax by Translator.
+
+    This includes test for ``transport_footnotes``.
+    """
     # NOTE: Keep debugging print
     from anytree import RenderTree
 
@@ -538,6 +541,7 @@ This is a pen. #footnote(
 )
 """
     document = publish_doctree(src.strip())
+    t.transport_footnotes(document)
     print(document)
     document.settings.strict_visitor = False
     visitor = t.TypstTranslator(document, app.builder)
