@@ -501,6 +501,58 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
     [
         pytest.param(
             """
+This is a pen. [#1]_
+
+.. [#1] Example.
+    """,
+            id="Numbered footnote",
+        ),
+        pytest.param(
+            """
+This is a pen. [#]_
+
+.. [#] Example.
+    """,
+            id="Auto-numbered footnote",
+        ),
+        pytest.param(
+            """
+This is a pen. [#fn1]_
+
+.. [#fn1] Example.
+    """,
+            id="Strings labelded footnote",
+        ),
+    ],
+)
+def test_footnote(app: SphinxTestApp, src: str):
+    """Very simple test for syntax by Translator."""
+    # NOTE: Keep debugging print
+    from anytree import RenderTree
+
+    dest = """
+This is a pen. #footnote(
+  [
+    Example.
+  ],
+)
+"""
+    document = publish_doctree(src.strip())
+    print(document)
+    document.settings.strict_visitor = False
+    visitor = t.TypstTranslator(document, app.builder)
+    document.walkabout(visitor)
+    print(RenderTree(visitor.dom))
+    print(visitor.dom.to_text().strip())
+    print(dest.strip())
+    assert visitor.dom.to_text().strip() == dest.strip()
+
+
+@pytest.mark.parametrize(
+    "src",
+    [
+        pytest.param(
+            """
 == ==== ========
 ID Name Note
 == ==== ========
