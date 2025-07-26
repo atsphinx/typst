@@ -55,7 +55,6 @@ class TypstTranslator(SphinxTranslator):
         # docutils' nodes
         "block_quote": elements.Quote,
         "bullet_list": elements.BulletList,
-        # Sphinx's nodes
         "docinfo": elements.Element,
         "emphasis": elements.Emphasis,
         "enumerated_list": elements.NumberedList,
