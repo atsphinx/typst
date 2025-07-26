@@ -126,18 +126,11 @@ class TypstTranslator(SphinxTranslator):
             return
         self._move_ptr_to_parent()
 
-    def visit_raw(self, node: nodes.raw):
-        if node.get("format") == "typst":
-            elements.Source(node.astext(), parent=self._ptr)
-        raise nodes.SkipNode()
+    # ------
+    # visit/departuer methods
+    # ------
 
-    def visit_literal(self, node: nodes.raw):
-        elements.Raw(node.astext(), parent=self._ptr)
-        raise nodes.SkipNode()
-
-    def visit_literal_block(self, node: nodes.raw):
-        elements.RawBlock(node.astext(), node.get("language", None), parent=self._ptr)
-        raise nodes.SkipNode()
+    # : For docutils
 
     def visit_Text(self, node: nodes.Text):
         """Work about visit text content of node.
@@ -148,20 +141,16 @@ class TypstTranslator(SphinxTranslator):
 
     depart_Text = _move_ptr_to_parent
 
-    def visit_attribution(self, node: nodes.attribution):
-        if isinstance(node.parent, nodes.block_quote):
-            self._ptr.attribution = node.astext()
-        raise nodes.SkipNode()
+    # : For docutils' elements
 
     def visit_Admonition(self, node):
         msg = "Currently, admonition-like directive is not supported."
         logger.info(msg)
         raise nodes.SkipNode()
 
-    def visit_image(self, node: nodes.image):
-        elements.Image(
-            node["uri"], node.get("width"), node.get("alt"), parent=self._ptr
-        )
+    def visit_attribution(self, node: nodes.attribution):
+        if isinstance(node.parent, nodes.block_quote):
+            self._ptr.attribution = node.astext()
         raise nodes.SkipNode()
 
     def visit_caption(self, node: nodes.caption):
@@ -170,27 +159,48 @@ class TypstTranslator(SphinxTranslator):
             elements.Text(node.astext(), parent=para)
         raise nodes.SkipNode()
 
+    def visit_image(self, node: nodes.image):
+        elements.Image(
+            node["uri"], node.get("width"), node.get("alt"), parent=self._ptr
+        )
+        raise nodes.SkipNode()
+
     def visit_legend(self, node: nodes.legend):
         pass
 
     def depart_legend(self, node: nodes.legend):
         pass
 
-    def visit_table(self, node: nodes.table):
-        self._ptr = elements.Table(parent=self._ptr)
+    def visit_literal(self, node: nodes.raw):
+        elements.Raw(node.astext(), parent=self._ptr)
+        raise nodes.SkipNode()
 
-    depart_table = _move_ptr_to_parent
+    def visit_literal_block(self, node: nodes.raw):
+        elements.RawBlock(node.astext(), node.get("language", None), parent=self._ptr)
+        raise nodes.SkipNode()
 
-    def visit_tgroup(self, node: nodes.tgroup):
-        self._ptr.columns = int(node["cols"])
-
-    def depart_tgroup(self, node):
-        pass
+    def visit_raw(self, node: nodes.raw):
+        if node.get("format") == "typst":
+            elements.Source(node.astext(), parent=self._ptr)
+        raise nodes.SkipNode()
 
     def visit_reference(self, node: nodes.reference):
         self._ptr = elements.Link(node["refuri"], node.astext(), parent=self._ptr)
 
     depart_reference = _move_ptr_to_parent
+
+    def visit_section(self, node: nodes.section):
+        self._ptr = elements.Section(parent=self._ptr)
+        self._section_level += 1
+
+    def depart_section(self, node):
+        self._move_ptr_to_parent()
+        self._section_level -= 1
+
+    def visit_table(self, node: nodes.table):
+        self._ptr = elements.Table(parent=self._ptr)
+
+    depart_table = _move_ptr_to_parent
 
     def visit_target(self, node: nodes.target):
         node_idx = node.parent.children.index(node)  # type: ignore[possibily-unbound-attribute]
@@ -200,6 +210,12 @@ class TypstTranslator(SphinxTranslator):
             self._ptr.children[-1].label = node["refid"]
         raise nodes.SkipNode()
 
+    def visit_tgroup(self, node: nodes.tgroup):
+        self._ptr.columns = int(node["cols"])
+
+    def depart_tgroup(self, node):
+        pass
+
     def visit_title(self, node: nodes.title):
         self._ptr = elements.Heading(parent=self._ptr)
         self._ptr.level = self._section_level
@@ -208,11 +224,3 @@ class TypstTranslator(SphinxTranslator):
             self._ptr.label = target["refid"]
 
     depart_title = _move_ptr_to_parent
-
-    def visit_section(self, node: nodes.section):
-        self._ptr = elements.Section(parent=self._ptr)
-        self._section_level += 1
-
-    def depart_section(self, node):
-        self._move_ptr_to_parent()
-        self._section_level -= 1
