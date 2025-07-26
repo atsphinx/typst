@@ -43,6 +43,7 @@ class Theme:
         self.name = name
         self._config = config
         self._dirs = dirs
+        self._theme_dir = dirs[0]
         self._templates = BuiltinTemplateLoader()
 
     def init(self, builder: TypstBuilder):  # noqa: D102
@@ -54,7 +55,7 @@ class Theme:
 
     def get_theme_dir(self) -> Path:
         """Retrieve base directory of theme."""
-        return Path(self._dirs[0])
+        return self._theme_dir
 
     def get_theme_dirs(self):  # noqa: D102
         # This is to work BuiltinTemplateLoader.init
