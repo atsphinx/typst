@@ -214,21 +214,21 @@ Paragraph
               This is atsphinx-typst.
 """,
             """
-#sphinxField(
+#docutils.field(
   [
     Language
   ],
   [
     Japanese
   ],
-)#sphinxField(
+)#docutils.field(
   [
     Language2
   ],
   [
     English
   ],
-)#sphinxField(
+)#docutils.field(
   [
     Description
   ],
@@ -249,7 +249,7 @@ Paragraph
             """
 Paragraph
 
-#sphinxField(
+#docutils.field(
   [
     Language
   ],

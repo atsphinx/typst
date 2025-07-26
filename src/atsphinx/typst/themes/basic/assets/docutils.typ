@@ -1,7 +1,7 @@
 /*
 Render field nodes of reStructuredText.
 */
-#let sphinxField(title, content) = {
+#let field(title, content) = {
   block(
     {
       title

@@ -5,10 +5,10 @@ This module is entrypoint of importing core elements (written in submodules).
 # ruff: noqa: F401
 
 from .base import Element, Source, Text
+from .ext.docutils import Field
 from .model import (
     BulletList,
     Document,
-    Field,
     Figure,
     Heading,
     Link,

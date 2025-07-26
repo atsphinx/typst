@@ -1,4 +1,4 @@
 [theme]
 imports = [
-    '"_themes/basic/elements.typ": sphinxField'
+    '"_themes/basic/docutils.typ"',
 ]
