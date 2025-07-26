@@ -1,4 +1,12 @@
-"""Writer and relative classes."""
+"""Writer and relative classes.
+
+Order of definitions.
+
+1. Write about docutils elements.
+   They are declared in order to
+   `Element Reference <https://docutils.sourceforge.io/docs/ref/doctree.html#element-reference>`_.
+2. Write about Spinx elements.
+"""
 # TODO: Write docstrings after.
 # ruff: noqa: D101, D102, D107
 
