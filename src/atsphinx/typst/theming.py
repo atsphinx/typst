@@ -54,7 +54,7 @@ class Theme:
 
     def get_theme_dir(self) -> Path:
         """Retrieve base directory of theme."""
-        return self._dirs[0]
+        return Path(self._dirs[0])
 
     def get_theme_dirs(self):  # noqa: D102
         # This is to work BuiltinTemplateLoader.init
