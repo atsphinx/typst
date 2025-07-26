@@ -8,6 +8,28 @@ from atsphinx.typst.elements import model as t
 from atsphinx.typst.elements.base import Text
 
 
+class TestBulletList:
+    @pytest.mark.skip(reason="Thinking cases")
+    def test_it(self):
+        pass
+
+
+class TestEmphasis:
+    def test_it(self):
+        elm = t.Emphasis()
+        Text("Content", parent=elm)
+        assert elm.to_text() == textwrap.dedent("""\
+#emph[
+  Content
+]""")
+
+
+class TestFigure:
+    @pytest.mark.skip(reason="Thinking cases")
+    def test_it(self):
+        pass
+
+
 class TestHeading:
     def test_valid_level(self):
         elm = t.Heading()
@@ -39,36 +61,6 @@ class TestHeading:
         assert elm.to_text() == ""
 
 
-class TestBulletList:
-    @pytest.mark.skip(reason="Thinking cases")
-    def test_it(self):
-        pass
-
-
-class TestNumberedList:
-    @pytest.mark.skip(reason="Thinking cases")
-    def test_it(self):
-        pass
-
-
-class TestTable:
-    @pytest.mark.skip(reason="Thinking cases")
-    def test_it(self):
-        pass
-
-
-class TestQuote:
-    @pytest.mark.skip(reason="Thinking cases")
-    def test_it(self):
-        pass
-
-
-class TestFigure:
-    @pytest.mark.skip(reason="Thinking cases")
-    def test_it(self):
-        pass
-
-
 class TestLink:
     def test_display_url(self):
         elm = t.Link("http://example.com")
@@ -89,3 +81,31 @@ class TestLink:
     EXAMPLE.COM
   ],
 )""")
+
+
+class TestNumberedList:
+    @pytest.mark.skip(reason="Thinking cases")
+    def test_it(self):
+        pass
+
+
+class TestQuote:
+    @pytest.mark.skip(reason="Thinking cases")
+    def test_it(self):
+        pass
+
+
+class TestStrong:
+    def test_it(self):
+        elm = t.Strong()
+        Text("Content", parent=elm)
+        assert elm.to_text() == textwrap.dedent("""\
+#strong[
+  Content
+]""")
+
+
+class TestTable:
+    @pytest.mark.skip(reason="Thinking cases")
+    def test_it(self):
+        pass

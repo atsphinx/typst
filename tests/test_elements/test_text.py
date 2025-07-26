@@ -3,7 +3,6 @@
 import textwrap
 
 from atsphinx.typst.elements import text as t
-from atsphinx.typst.elements.base import Text
 
 
 class TestRaw:
@@ -37,23 +36,3 @@ print(\"テスト\")
 print(\"Hello\")
 ```
 """)
-
-
-class TestEmphasis:
-    def test_it(self):
-        elm = t.Emphasis()
-        Text("Content", parent=elm)
-        assert elm.to_text() == textwrap.dedent("""\
-#emph[
-  Content
-]""")
-
-
-class TestStrong:
-    def test_it(self):
-        elm = t.Strong()
-        Text("Content", parent=elm)
-        assert elm.to_text() == textwrap.dedent("""\
-#strong[
-  Content
-]""")

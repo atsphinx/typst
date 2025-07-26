@@ -17,70 +17,9 @@ from .base import Element
 if TYPE_CHECKING:
     from typing import Optional
 
-
-class Document(Element):
-    """Document element."""
-
-    LABEL = "document"
-    TEMPLATE = """\
-        {% for content in contents %}
-        {{ content }}
-        {% endfor %}
-    """
-
-
-class Section(Element):
-    """Sphinx's section element."""
-
-    LABEL = "section"
-    TEMPLATE: str = """\
-        {%- for content in contents -%}
-        {{ content }}
-        {% endfor %}
-    """
-
-
-class Heading(Element):
-    """Section's heading element.
-
-    :ref: https://typst.app/docs/reference/model/heading/
-    """
-
-    LABEL = "heading"
-    TEMPLATE = """\
-        #heading(
-          level: {{level}},
-          [
-            {{content}}
-            {%- if label %}
-            #label("{{ label }}")
-            {%- endif %}
-          ]
-        )
-    """
-
-    level: int = 0
-    label: Optional[str] = None
-    """RefID of document."""
-
-    def to_text(self):
-        content = self.children[0].to_text() if self.children else ""
-        if self.level > 0:
-            return self.get_template().render(
-                level=self.level, content=content, label=self.label
-            )
-        return ""
-
-
-class Paragraph(Element):
-    """Paragraph of document."""
-
-    LABEL = "par"
-    TEMPLATE: str = """\
-        {%- for content in contents -%}
-        {{ content }}
-        {%- endfor %}
-    """
+# ------
+# Abstract classes
+# ------
 
 
 class List(Element):
@@ -122,6 +61,31 @@ class List(Element):
         )
 
 
+class FunctionalText(Element):
+    """Element base-class to render decorated text.
+
+    This is for inline syntax.
+    """
+
+    TEMPLATE = """\
+        #{{label}}[
+          {%- for content in contents %}
+          {{ content | indent(2, first=False) }}
+          {%- endfor %}
+        ]
+    """
+
+    def to_text(self):
+        return self.get_template().render(
+            label=self.LABEL, contents=[c.to_text() for c in self.children]
+        )
+
+
+# ------
+# Element classes
+# ------
+
+
 class BulletList(List):
     """Bullet list element.
 
@@ -131,72 +95,24 @@ class BulletList(List):
     LABEL = "list"
 
 
-class NumberedList(List):
-    """Enumerated list element.
+class Document(Element):
+    """Document element."""
 
-    :ref: https://typst.app/docs/reference/model/enum/
-    """
-
-    LABEL = "enum"
-
-
-class Table(Element):
-    """Table content element.
-
-    .. note:: Currently, some elements use this if it is not table directive.
-
-    .. todo:: This only renders simple style table, It should support thead design.
-
-    :ref: https://typst.app/docs/reference/model/table/
-    """
-
-    LABEL = "table"
+    LABEL = "document"
     TEMPLATE = """\
-        #table(
-          columns: {{ columns }},
-          {%- for content in contents %}
-          {%- if not loop.first %},{% endif %}
-          [
-            {{ content | indent(4, first=False) }}
-          ]
-          {%- endfor %}
-        )
+        {% for content in contents %}
+        {{ content }}
+        {% endfor %}
     """
 
-    columns: int = 2
 
-    def to_text(self):
-        contents = [f"{c.to_text()}" for c in self.children]
-        return self.get_template().render(contents=contents, columns=self.columns)
+class Emphasis(FunctionalText):
+    """Emphasized text.
 
-
-class Quote(Element):
-    """Blockquote element.
-
-    :ref: https://typst.app/docs/reference/model/quote/
+    :ref: https://typst.app/docs/reference/model/emph/
     """
 
-    LABEL = "quote"
-    TEMPLATE = """\
-        #quote(
-          block: true,
-          {%- if attribution %}
-          attribution: [{{attribution}}],
-          {%- endif %}
-        )[
-          {%- for content in contents %}
-          {{ content | indent(2, first=False) }}
-          {%- endfor %}
-        ]
-    """
-
-    attribution: str = ""
-
-    def to_text(self):
-        return self.get_template().render(
-            contents=[c.to_text() for c in self.children],
-            attribution=self.attribution,
-        )
+    LABEL = "emph"
 
 
 class Figure(Element):
@@ -231,6 +147,38 @@ class Figure(Element):
         return self.get_template().render(image=image, caption=caption)
 
 
+class Heading(Element):
+    """Section's heading element.
+
+    :ref: https://typst.app/docs/reference/model/heading/
+    """
+
+    LABEL = "heading"
+    TEMPLATE = """\
+        #heading(
+          level: {{level}},
+          [
+            {{content}}
+            {%- if label %}
+            #label("{{ label }}")
+            {%- endif %}
+          ]
+        )
+    """
+
+    level: int = 0
+    label: Optional[str] = None
+    """RefID of document."""
+
+    def to_text(self):
+        content = self.children[0].to_text() if self.children else ""
+        if self.level > 0:
+            return self.get_template().render(
+                level=self.level, content=content, label=self.label
+            )
+        return ""
+
+
 class Link(Element):
     """Link to external website.
 
@@ -261,3 +209,91 @@ class Link(Element):
 
     def to_text(self):
         return self.get_template().render(dest=self.uri, content=self.content)
+
+
+class NumberedList(List):
+    """Enumerated list element.
+
+    :ref: https://typst.app/docs/reference/model/enum/
+    """
+
+    LABEL = "enum"
+
+
+class Paragraph(Element):
+    """Paragraph of document."""
+
+    LABEL = "par"
+    TEMPLATE: str = """\
+        {%- for content in contents -%}
+        {{ content }}
+        {%- endfor %}
+    """
+
+
+class Quote(Element):
+    """Blockquote element.
+
+    :ref: https://typst.app/docs/reference/model/quote/
+    """
+
+    LABEL = "quote"
+    TEMPLATE = """\
+        #quote(
+          block: true,
+          {%- if attribution %}
+          attribution: [{{attribution}}],
+          {%- endif %}
+        )[
+          {%- for content in contents %}
+          {{ content | indent(2, first=False) }}
+          {%- endfor %}
+        ]
+    """
+
+    attribution: str = ""
+
+    def to_text(self):
+        return self.get_template().render(
+            contents=[c.to_text() for c in self.children],
+            attribution=self.attribution,
+        )
+
+
+class Strong(FunctionalText):
+    """Strong emphasized text.
+
+    :ref: https://typst.app/docs/reference/model/strong/
+    """
+
+    LABEL = "strong"
+
+
+class Table(Element):
+    """Table content element.
+
+    .. note:: Currently, some elements use this if it is not table directive.
+
+    .. todo:: This only renders simple style table, It should support thead design.
+
+    :ref: https://typst.app/docs/reference/model/table/
+    """
+
+    LABEL = "table"
+    TEMPLATE = """\
+        #table(
+          columns: {{ columns }},
+          {%- for content in contents %}
+          {%- if not loop.first %},{% endif %}
+          [
+            {{ content | indent(4, first=False) }}
+          ]
+          {%- endfor %}
+        )
+    """
+
+    columns: int = 2
+
+    def to_text(self):
+        contents = [f"{c.to_text()}" for c in self.children]
+        return self.get_template().render(contents=contents, columns=self.columns)
