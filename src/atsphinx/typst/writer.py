@@ -33,39 +33,41 @@ class TypstTranslator(SphinxTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
     optional = [
-        # TODO: Implement after for configure document itself.
-        "document",
-        # NOTE: Currently, these need not render anything.
-        "description",
-        "list_item",
-        "field",
-        "option_list_item",
-        "option_group",
-        "option",
+        # docutils' nodes
         "colspec",
-        "thead",
-        "tbody",
-        "row",
-        "entry",
         "compound",
+        "description",
+        "document",
+        "entry",
+        "field",
+        "list_item",
+        "option",
+        "option_group",
+        "option_list_item",
+        "row",
+        "tbody",
+        "thead",
+        # Sphinx's nodes
         "start_of_file",
     ]
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
-        "paragraph": elements.Paragraph,
+        # docutils' nodes
+        "block_quote": elements.Quote,
         "bullet_list": elements.BulletList,
-        "field_list": elements.Element,
+        # Sphinx's nodes
+        "docinfo": elements.Element,
+        "emphasis": elements.Emphasis,
+        "enumerated_list": elements.NumberedList,
         "field": elements.Field,
-        "field_name": elements.Element,
         "field_body": elements.Element,
+        "field_list": elements.Element,
+        "field_name": elements.Element,
+        "figure": elements.Figure,
         "option_list": elements.Table,
         "option_string": elements.Strong,
-        "docinfo": elements.Element,
-        "enumerated_list": elements.NumberedList,
-        "emphasis": elements.Emphasis,
+        "paragraph": elements.Paragraph,
         "strong": elements.Strong,
-        "block_quote": elements.Quote,
-        "figure": elements.Figure,
     }
     """Controls for mapping Typst elements and docutils nodes.
 
