@@ -432,7 +432,7 @@ print(\"Hello\")
 """,
             """
 #figure(
-  #image(
+  image(
     "./example.jpg",
   ),
 )
@@ -447,7 +447,7 @@ print(\"Hello\")
 """,
             """
 #figure(
-  #image(
+  image(
     "./example.jpg",
   ),
   caption: [
@@ -468,7 +468,7 @@ print(\"Hello\")
             # NOTE: It removes blank line between caption and legend.
             """
 #figure(
-  #image(
+  image(
     "./example.jpg",
   ),
   caption: [

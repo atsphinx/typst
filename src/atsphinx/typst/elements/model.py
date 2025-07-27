@@ -139,7 +139,8 @@ class Figure(Element):
     caption: Optional[str] = None
 
     def to_text(self):
-        image = self.children[0].to_text()
+        # PATCH: image() in figure() doesn't need '#'
+        image = self.children[0].to_text()[1:]
         caption = []
         for idx, child in enumerate(self.children):
             if idx == 0:
