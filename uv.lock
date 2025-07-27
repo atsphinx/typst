@@ -41,6 +41,19 @@ wheels = [
 ]
 
 [[package]]
+name = "atsphinx-footnotes"
+version = "0.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
+    { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d9/18/28f98a352a437f4861d41900a1c6a0e4795379b34b11e511d5f43095c6f8/atsphinx_footnotes-0.2.0.tar.gz", hash = "sha256:a6a4ff6f882a7cd4f6ac5da69e47d103b14872868eb3a2535175929d4d56f19e", size = 9012, upload-time = "2023-06-01T14:47:18.92Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/11/e5/2f5d8db33828c029be5fdf3ca7f2b88085e8d1fca579e15b3f224e54982a/atsphinx_footnotes-0.2.0-py2.py3-none-any.whl", hash = "sha256:31b5298b27adab4d77035f1fbdb3327b39c9907f8719f28cfc10b10a66bbf51d", size = 5571, upload-time = "2023-06-01T14:47:16.672Z" },
+]
+
+[[package]]
 name = "atsphinx-mini18n"
 version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
@@ -71,6 +84,7 @@ pdf = [
 
 [package.dev-dependencies]
 dev = [
+    { name = "atsphinx-footnotes" },
     { name = "atsphinx-mini18n" },
     { name = "doc8" },
     { name = "esbonio" },
@@ -82,6 +96,7 @@ dev = [
     { name = "ty" },
 ]
 docs = [
+    { name = "atsphinx-footnotes" },
     { name = "atsphinx-mini18n" },
     { name = "furo" },
     { name = "sphinx-autobuild" },
@@ -102,6 +117,7 @@ provides-extras = ["pdf"]
 
 [package.metadata.requires-dev]
 dev = [
+    { name = "atsphinx-footnotes", specifier = ">=0.2.0" },
     { name = "atsphinx-mini18n" },
     { name = "doc8" },
     { name = "esbonio" },
@@ -113,6 +129,7 @@ dev = [
     { name = "ty" },
 ]
 docs = [
+    { name = "atsphinx-footnotes", specifier = ">=0.2.0" },
     { name = "atsphinx-mini18n" },
     { name = "furo" },
     { name = "sphinx-autobuild" },

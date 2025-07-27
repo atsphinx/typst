@@ -62,6 +62,7 @@ dev = [
     "ty",
 ]
 docs = [
+    "atsphinx-footnotes>=0.2.0",
     "atsphinx-mini18n",
     "furo",
     "sphinx-autobuild",

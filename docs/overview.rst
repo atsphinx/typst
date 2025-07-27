@@ -13,19 +13,19 @@ This will increase scenes using Sphinx for documentation.
 About Typst
 -----------
 
-Typst is a new markup-based typesetting system for the sciences. [#1]_
+Typst is a new markup-based typesetting system for the sciences. [#]_
 It has easy syntax to learn and lightweight builder to generate PDF.
 
 They design it to be alternative LaTeX.
 
-.. [#1] https://typst.app/docs/
+.. [#] https://typst.app/docs/
 
 Motivation
 ==========
 
-I publish "Tech-ZINE" [#2]_ using Sphinx and ``latexpdf`` builder.
+I publish "Tech-ZINE" [#]_ using Sphinx and ``latexpdf`` builder.
 
-.. [#2] It means non-commercial publications about engineerings.
+.. [#] It means non-commercial publications about engineerings.
 
 Currently, Sphinx can create PDF document easily because it provides official docker image.
 But, I think that it has some problems.

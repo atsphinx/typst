@@ -16,6 +16,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
     # atsphinx extensions
+    "atsphinx.footnotes",
     "atsphinx.mini18n",
     # Third-party extensions
 ]
