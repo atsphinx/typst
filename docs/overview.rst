@@ -20,6 +20,23 @@ They design it to be alternative LaTeX.
 
 .. [#] https://typst.app/docs/
 
+Providing features
+------------------
+
+Role of atsphinx-typst is that **provides custom builders** using Typst.
+There are some internal modules and packages, but they are for providers.
+
+* ``typst`` builder generate Typst document from Sphinx document.
+* ``typstpdf`` builder generate Typst document from Sphinx document too.
+  After generatating Typst document, it generate PDF document from Typst document using compiler.
+
+..
+    TODO: Change sphinxcontrib-mermaid
+
+.. figure:: _static/process.svg
+
+    Supporting range of atsphinx-typst in Sphinx build process.
+
 Motivation
 ==========
 
