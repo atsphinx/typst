@@ -42,15 +42,15 @@ wheels = [
 
 [[package]]
 name = "atsphinx-footnotes"
-version = "0.2.0"
+version = "0.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sphinx", version = "8.1.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "sphinx", version = "8.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d9/18/28f98a352a437f4861d41900a1c6a0e4795379b34b11e511d5f43095c6f8/atsphinx_footnotes-0.2.0.tar.gz", hash = "sha256:a6a4ff6f882a7cd4f6ac5da69e47d103b14872868eb3a2535175929d4d56f19e", size = 9012, upload-time = "2023-06-01T14:47:18.92Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/53/35/da05fb0483ebab87488129b6d9077bec4f122267bf4efb4d59d211f4429d/atsphinx_footnotes-0.3.1.tar.gz", hash = "sha256:4fa8e2a430628b395d1cc6664b4d0a11f72fd46e8b8c3852126c97198c710e77", size = 5332, upload-time = "2025-07-27T17:19:24.746Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/11/e5/2f5d8db33828c029be5fdf3ca7f2b88085e8d1fca579e15b3f224e54982a/atsphinx_footnotes-0.2.0-py2.py3-none-any.whl", hash = "sha256:31b5298b27adab4d77035f1fbdb3327b39c9907f8719f28cfc10b10a66bbf51d", size = 5571, upload-time = "2023-06-01T14:47:16.672Z" },
+    { url = "https://files.pythonhosted.org/packages/cb/0b/18a545ec6c97e15316757acae9b2410573819b11a9fdc4fe509d7a8114a5/atsphinx_footnotes-0.3.1-py3-none-any.whl", hash = "sha256:42dfa72e5bcf4b572f5d6a5442e33ff7e3adb2e4bb554c8529c5907efdcfbaf7", size = 5742, upload-time = "2025-07-27T17:19:23.4Z" },
 ]
 
 [[package]]
@@ -117,7 +117,7 @@ provides-extras = ["pdf"]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "atsphinx-footnotes", specifier = ">=0.2.0" },
+    { name = "atsphinx-footnotes", specifier = ">=0.3.1" },
     { name = "atsphinx-mini18n" },
     { name = "doc8" },
     { name = "esbonio" },
@@ -129,7 +129,7 @@ dev = [
     { name = "ty" },
 ]
 docs = [
-    { name = "atsphinx-footnotes", specifier = ">=0.2.0" },
+    { name = "atsphinx-footnotes", specifier = ">=0.3.1" },
     { name = "atsphinx-mini18n" },
     { name = "furo" },
     { name = "sphinx-autobuild" },
