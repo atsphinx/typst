@@ -53,6 +53,8 @@ class TypstTranslator(SphinxTranslator):
     ]
 
     PASSING_NODES: list[str] = [
+        # Currently, I thknk that it need not convert as Typst comment.
+        "comment",
         # It has paragraph as content, and parent node manage as list.
         "list_item",
     ]
