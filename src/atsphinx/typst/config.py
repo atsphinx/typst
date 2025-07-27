@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING, TypedDict
 
 if TYPE_CHECKING:
@@ -30,8 +31,9 @@ DEFAULT_DOCUMENT_SETTINGS = {
 }
 
 
-def set_config_defaults(app: Sphinx, config: Config):
-    """Inject default values of configured ``typst_documents``."""
+def compute_configurations(app: Sphinx, config: Config):
+    """Clean up configurations for this extensions."""
+    # 1. Inject default values of configured ``typst_documents``.
     document_settings = config.typst_documents or []
     if not document_settings:
         document_settings.append(
@@ -46,7 +48,17 @@ def set_config_defaults(app: Sphinx, config: Config):
         document_settings[idx] = DEFAULT_DOCUMENT_SETTINGS | user_value
     config.typst_documents = document_settings
 
+    # 2. Cast string path to Path object.
+    typst_static_path = []
+    for p in config.typst_static_path:
+        if isinstance(p, Path):
+            typst_static_path.append(p)
+            continue
+        typst_static_path.append(app.confdir / p)
+    config.typst_static_path = typst_static_path
+
 
 def setup(app: Sphinx):  # noqa: D103
     app.add_config_value("typst_documents", [], "env", list[dict])
-    app.connect("config-inited", set_config_defaults)
+    app.add_config_value("typst_static_path", [], "env", [list[str | Path]])
+    app.connect("config-inited", compute_configurations)

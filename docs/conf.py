@@ -78,6 +78,7 @@ latex_documents = [
 ]
 
 # -- Options for Typst outout
+typst_static_path = ["_static"]
 typst_documents = [
     {
         "entrypoint": "index",

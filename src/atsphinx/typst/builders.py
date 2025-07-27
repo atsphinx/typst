@@ -19,6 +19,8 @@ from . import theming, writer
 
 if TYPE_CHECKING:
     from docutils import nodes
+    from sphinx.application import Sphinx
+    from sphinx.environment import BuildEnvironment
 
     from .config import DocumentSettings
 
@@ -29,6 +31,10 @@ class TypstBuilder(Builder):
     name = "typst"
     format = "typst"
     default_translator_class = writer.TypstTranslator
+
+    def __init__(self, app: Sphinx, env: BuildEnvironment) -> None:  # noqa: D107
+        super().__init__(app, env)
+        self._static_dir = Path(self.outdir / "_static")
 
     def init(self):  # noqa: D102
         super().init()
@@ -109,7 +115,15 @@ class TypstBuilder(Builder):
                     assets_outdir,
                 )
 
+        def _copy_static_assets():
+            for entry in self.config.typst_static_path:
+                copy_asset(
+                    entry,
+                    self._static_dir,
+                )
+
         _copy_theme_assets()
+        _copy_static_assets()
 
 
 class TypstPDFBuilder(TypstBuilder):
