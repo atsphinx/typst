@@ -40,6 +40,8 @@ class TypstTranslator(SphinxTranslator):
         "document",
         "entry",
         "field",
+        "footnote_reference",
+        "label",
         "list_item",
         "option",
         "option_group",
@@ -63,6 +65,7 @@ class TypstTranslator(SphinxTranslator):
         "field_list": elements.Element,
         "field_name": elements.Element,
         "figure": elements.Figure,
+        "footnote": elements.Footnote,
         "option_list": elements.Table,
         "option_string": elements.Strong,
         "paragraph": elements.Paragraph,
@@ -152,6 +155,15 @@ class TypstTranslator(SphinxTranslator):
             self._ptr.attribution = node.astext()
         raise nodes.SkipNode()
 
+    def visit_footnote_reference(self, node: nodes.footnote_reference):
+        idx = node.parent.index(node)
+        if isinstance(node.parent.children[idx - 1], nodes.footnote):
+            elements.Label(node["refid"], True, parent=self._ptr)
+        else:
+            footnote = elements.Footnote(parent=self._ptr)
+            elements.Label(node["refid"], parent=footnote)
+        raise nodes.SkipNode()
+
     def visit_caption(self, node: nodes.caption):
         if isinstance(self._ptr, elements.Figure):
             para = elements.Paragraph(parent=self._ptr)
@@ -223,3 +235,16 @@ class TypstTranslator(SphinxTranslator):
             self._ptr.label = target["refid"]
 
     depart_title = _move_ptr_to_parent
+
+
+def transport_footnotes(doctree: nodes.document):
+    """Move each footnotes into refered footnote_reference in doctree."""
+    # Step 1: Pop all footnotes
+    footnotes = list(doctree.findall(nodes.footnote))
+    for footnote in footnotes:
+        footnote.parent.remove(footnote)
+        for ref in doctree.findall(nodes.footnote_reference):
+            if ref["refid"] in footnote["ids"]:
+                parent = ref.parent
+                parent.insert(parent.index(ref), footnote.deepcopy())
+                break

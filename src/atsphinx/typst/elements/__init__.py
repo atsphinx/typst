@@ -6,11 +6,13 @@ This module is entrypoint of importing core elements (written in submodules).
 
 from .base import Element, Source, Text
 from .custom.docutils import Field, Section
+from .foundations import Label
 from .model import (
     BulletList,
     Document,
     Emphasis,
     Figure,
+    Footnote,
     Heading,
     Link,
     NumberedList,

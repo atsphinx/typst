@@ -1,7 +1,9 @@
 Build document
 ==============
 
-You can run ``typst`` builder without editing your ``conf.py`` after install.
+You can run ``typst`` builder without editing your ``conf.py`` after install. [#fn]_
+
+.. [#fn] Sphinx can search builder automately because it registers module of builder into entrypoint.
 
 .. code-block:: console
 
