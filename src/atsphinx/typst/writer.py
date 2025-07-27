@@ -42,7 +42,6 @@ class TypstTranslator(SphinxTranslator):
         "field",
         "footnote_reference",
         "label",
-        "list_item",
         "option",
         "option_group",
         "option_list_item",
@@ -52,6 +51,25 @@ class TypstTranslator(SphinxTranslator):
         # Sphinx's nodes
         "start_of_file",
     ]
+
+    PASSING_NODES: list[str] = [
+        # It has paragraph as content, and parent node manage as list.
+        "list_item",
+    ]
+    """List of nodes that translator can pass it.
+
+    This is similar to ``optional``, but there are differences.
+
+    * ``optional`` raises warning,
+      translator only ignores them temporary.
+    * ``PASSING_NODES`` works correctly,
+      translator exclude explicitly because it need not them.
+
+    Rule to manage them
+    -------------------
+
+    * Required comment each items about why translator can ignore it.
+    """
 
     ELEMENT_MAPPING: dict[str, type[nodes.Element]] = {
         # docutils' nodes
@@ -85,6 +103,13 @@ class TypstTranslator(SphinxTranslator):
         self._section_level = -1
         self._targets: list[nodes.target] = []
 
+    def _can_pass_node(self, node) -> bool:
+        """Detect that it can be ignored by translator."""
+        for node_class in node.__class__.__mro__:
+            if node_class.__name__ in self.PASSING_NODES:
+                return True
+        return False
+
     def _find_mepped_element(self, node) -> Optional[type[nodes.Element]]:
         """Find registed element mapped from node.
 
@@ -110,6 +135,8 @@ class TypstTranslator(SphinxTranslator):
         it creates element object as child of current pointed node,
         and it moves pointer for created object.
         """
+        if self._can_pass_node(node):
+            return
         element_class = self._find_mepped_element(node)
         if element_class is None:
             super().unknown_visit(node)
@@ -122,6 +149,8 @@ class TypstTranslator(SphinxTranslator):
         When node class has mapping for element class,
         and it moves pointer for parent of current node.
         """
+        if self._can_pass_node(node):
+            return
         element_class = self._find_mepped_element(node)
         if element_class is None:
             super().unknown_departure(node)
