@@ -25,6 +25,7 @@ tasks:
     cmds:
       - 'uv sync --frozen --all-extras'
       - 'lefthook install'
+      - task: apidoc
   verify:
     desc: 'Verify environment by all procs'
     cmds:
@@ -41,3 +42,14 @@ tasks:
     cmds:
       - 'age {{.LEVEL}}'
       - 'uv sync --all-extras'  # To write out as lock-file
+  apidoc:
+    # Patch for docs:apidoc to add option for namespace package.
+    desc: 'Update apidoc'
+    dir: 'docs/'
+    cmds:
+      - >
+        uv run sphinx-apidoc
+        --remove-old --separate --no-toc
+        --implicit-namespaces
+        --output-dir=api/
+        ../src/atsphinx

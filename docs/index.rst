@@ -24,7 +24,12 @@ Contents
    usage/index
    changes
 
-Refs
-====
+References
+==========
+
+.. toctree::
+    :maxdepth: 2
+
+    api/atsphinx.typst
 
 - `Typst reference <https://typst.app/docs/reference/>`_.

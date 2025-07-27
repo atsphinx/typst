@@ -11,6 +11,7 @@ release = version
 # -- General configuration
 extensions = [
     # Bundled extensions
+    "sphinx.ext.autodoc",
     "sphinx.ext.githubpages",
     "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
@@ -19,7 +20,13 @@ extensions = [
     # Third-party extensions
 ]
 templates_path = ["_templates", get_mini18n_template_dir()]
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+exclude_patterns = [
+    "_build",
+    "Thumbs.db",
+    ".DS_Store",
+    # sphinx-apidoc generates it, but it doesn't need this.
+    "api/atsphinx.rst",
+]
 
 # -- Options for i18n
 language = "en"

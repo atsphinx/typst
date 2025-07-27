@@ -1,0 +1,5 @@
+# ------
+# This directory is destination of sphinx-apidoc.
+# ------
+*
+!.gitignore
