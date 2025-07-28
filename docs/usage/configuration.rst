@@ -43,3 +43,9 @@ Currently, you can configure behviors of atsphinx-typst by some values.
                 "theme": "manual-paper",
             },
         ]
+
+.. confval:: typst_static_path
+    :type: list[str | Path]
+    :default: ``[]``
+
+    List of path for "Static assets".
