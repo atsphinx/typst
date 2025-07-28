@@ -2,6 +2,36 @@
 Change logs
 ===========
 
+Version 0.0.4
+=============
+
+:date: 2025-07-29 (Asia/Tokyo)
+
+Breaking changes
+----------------
+
+Features
+--------
+
+* Copy ``static_path`` assets.
+  and add ``typst_static_path`` as configuration.
+* Copy document assets (e.g. image files).
+* Ignore comment nodes of docutils.
+* Enable footnotes.
+
+Fixes
+-----
+
+* Remove hash from ``image`` call wrapped by ``figure``.
+
+Others
+------
+
+* Restructure element classes.
+* Sort visitor/departure methods of translator.
+* Experimental support Japanese document.
+* Update workspace environment.
+
 Version 0.0.3
 =============
 

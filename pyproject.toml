@@ -1,6 +1,6 @@
 [project]
 name = "atsphinx-typst"
-version = "0.0.3"
+version = "0.0.4"
 description = "Generate Typst sources and PDF from Sphinx document."
 authors = [{name = "Kazuya Takei", email = "myself@attakei.net"}]
 license = "Apache-2.0"
