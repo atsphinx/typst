@@ -35,6 +35,7 @@ class TypstBuilder(Builder):
     def __init__(self, app: Sphinx, env: BuildEnvironment) -> None:  # noqa: D107
         super().__init__(app, env)
         self._static_dir = Path(self.outdir / "_static")
+        self._images_dir = Path(self.outdir / "_images")
 
     def init(self):  # noqa: D102
         super().init()
@@ -125,6 +126,13 @@ class TypstBuilder(Builder):
         _copy_theme_assets()
         _copy_static_assets()
 
+    def finish(self):  # noqa: D102
+        def _copy_images():
+            for src, dest in self.images.items():
+                copy_asset(src, dest)
+
+        _copy_images()
+
 
 class TypstPDFBuilder(TypstBuilder):
     """PDF creation builder from doctree.
@@ -147,6 +155,7 @@ class TypstPDFBuilder(TypstBuilder):
     def finish(self):  # noqa: D102
         import typst
 
+        super().finish()
         for document_settings in self.config.typst_documents:
             src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
             out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"

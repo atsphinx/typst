@@ -66,3 +66,11 @@ def test__multiple_output(app: SphinxTestApp):
     app.build()
     assert (app.outdir / "document-1.typ").exists()
     assert (app.outdir / "document-2.typ").exists()
+
+
+@pytest.mark.sphinx("typst", testroot="with-images")
+def test__copy_content_images(app: SphinxTestApp):
+    """Test to pass."""
+    app.build()
+    assert (app.outdir / "index.typ").exists()
+    assert (app.outdir / "_images/example.png").exists()

@@ -12,6 +12,7 @@ Order of definitions.
 
 from __future__ import annotations
 
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from docutils import nodes
@@ -202,8 +203,16 @@ class TypstTranslator(SphinxTranslator):
         raise nodes.SkipNode()
 
     def visit_image(self, node: nodes.image):
+        uri = node["uri"]
+        source = Path(self.document["source"])
+        uri_path = source.parent / uri
+        uri_dest = self.builder._images_dir / uri_path.relative_to(
+            self.builder.app.srcdir
+        )
+        uri_map = uri_dest.relative_to(self.builder.outdir)
+        self.builder.images.setdefault(uri_path, uri_dest)
         elements.Image(
-            node["uri"], node.get("width"), node.get("alt"), parent=self._ptr
+            str(uri_map), node.get("width"), node.get("alt"), parent=self._ptr
         )
         raise nodes.SkipNode()
 

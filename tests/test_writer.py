@@ -400,85 +400,6 @@ print(\"Hello\")
 """,
             id="Admonitions",
         ),
-        pytest.param(
-            """
-.. image:: ./example.jpg
-""",
-            """
-#image(
-  "./example.jpg",
-)
-""",
-            id="Simple image",
-        ),
-        pytest.param(
-            """
-.. image:: ./example.jpg
-    :width: 50%
-    :alt: Sample
-""",
-            """
-#image(
-  "./example.jpg",
-  width: 50%,
-  alt: "Sample",
-)
-""",
-            id="Image with attributes",
-        ),
-        pytest.param(
-            """
-.. figure:: ./example.jpg
-""",
-            """
-#figure(
-  image(
-    "./example.jpg",
-  ),
-)
-""",
-            id="Simple figure",
-        ),
-        pytest.param(
-            """
-.. figure:: ./example.jpg
-
-    This is sample.
-""",
-            """
-#figure(
-  image(
-    "./example.jpg",
-  ),
-  caption: [
-    This is sample.
-  ],
-)
-""",
-            id="Figure with caption",
-        ),
-        pytest.param(
-            """
-.. figure:: ./example.jpg
-
-    This is sample.
-
-    Support multiline.
-""",
-            # NOTE: It removes blank line between caption and legend.
-            """
-#figure(
-  image(
-    "./example.jpg",
-  ),
-  caption: [
-    This is sample.
-    Support multiline.
-  ],
-)
-""",
-            id="Figure with caption",
-        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
@@ -490,6 +411,108 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
     print(document)
     document.settings.strict_visitor = False
     visitor = t.TypstTranslator(document, app.builder)
+    print(app.srcdir)
+    visitor._section_level = 1
+    document.walkabout(visitor)
+    print(RenderTree(visitor.dom))
+    assert visitor.dom.to_text().strip() == dest.strip()
+
+
+@pytest.mark.parametrize(
+    "src,dest",
+    [
+        pytest.param(
+            """
+.. image:: example.jpg
+""",
+            """
+#image(
+  "_images/example.jpg",
+)
+""",
+            id="Simple image",
+        ),
+        pytest.param(
+            """
+.. image:: example.jpg
+    :width: 50%
+    :alt: Sample
+""",
+            """
+#image(
+  "_images/example.jpg",
+  width: 50%,
+  alt: "Sample",
+)
+""",
+            id="Image with attributes",
+        ),
+        pytest.param(
+            """
+.. figure:: example.jpg
+""",
+            """
+#figure(
+  image(
+    "_images/example.jpg",
+  ),
+)
+""",
+            id="Simple figure",
+        ),
+        pytest.param(
+            """
+.. figure:: example.jpg
+
+    This is sample.
+""",
+            """
+#figure(
+  image(
+    "_images/example.jpg",
+  ),
+  caption: [
+    This is sample.
+  ],
+)
+""",
+            id="Figure with caption",
+        ),
+        pytest.param(
+            """
+.. figure:: example.jpg
+
+    This is sample.
+
+    Support multiline.
+""",
+            # NOTE: It removes blank line between caption and legend.
+            """
+#figure(
+  image(
+    "_images/example.jpg",
+  ),
+  caption: [
+    This is sample.
+    Support multiline.
+  ],
+)
+""",
+            id="Figure with caption",
+        ),
+    ],
+)
+def test_images(app: SphinxTestApp, src: str, dest: str):
+    # NOTE: Keep debugging print
+    from anytree import RenderTree
+
+    """Very simple test for syntax by Translator."""
+    document = publish_doctree(src.strip())
+    print(document)
+    document.settings.strict_visitor = False
+    document["source"] = str(app.srcdir / "index.rst")
+    visitor = t.TypstTranslator(document, app.builder)
+    app.builder._images_dir = app.outdir / "_images"
     visitor._section_level = 1
     document.walkabout(visitor)
     print(RenderTree(visitor.dom))
