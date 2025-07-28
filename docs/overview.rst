@@ -33,7 +33,7 @@ There are some internal modules and packages, but they are for providers.
 ..
     TODO: Change sphinxcontrib-mermaid
 
-.. figure:: _static/process.svg
+.. figure:: process.png
 
     Supporting range of atsphinx-typst in Sphinx build process.
 
