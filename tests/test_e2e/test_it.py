@@ -74,3 +74,4 @@ def test__copy_content_images(app: SphinxTestApp):
     app.build()
     assert (app.outdir / "index.typ").exists()
     assert (app.outdir / "_images/example.png").exists()
+    assert (app.outdir / "_images/example.png").is_file()

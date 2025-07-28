@@ -12,7 +12,7 @@ from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
 from sphinx.errors import SphinxError
 from sphinx.locale import _
-from sphinx.util.fileutil import copy_asset
+from sphinx.util.fileutil import copy_asset, copy_asset_file
 from sphinx.util.nodes import inline_all_toctrees
 
 from . import theming, writer
@@ -129,7 +129,8 @@ class TypstBuilder(Builder):
     def finish(self):  # noqa: D102
         def _copy_images():
             for src, dest in self.images.items():
-                copy_asset(src, dest)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                copy_asset_file(src, dest)
 
         _copy_images()
 
