@@ -144,11 +144,10 @@ class TypstPDFBuilder(TypstBuilder):
             raise SphinxError("Require 'typst' to run 'typstpdf' builder.")
         super().init()
 
-    def write_doc(self, document_settings: DocumentSettings) -> None:  # noqa: D102
-        # TODO: Implement it!
+    def finish(self):  # noqa: D102
         import typst
 
-        super().write_doc(document_settings)
-        src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
-        out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"
-        typst.compile(src, output=out)
+        for document_settings in self.config.typst_documents:
+            src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
+            out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"
+            typst.compile(src, output=out)
