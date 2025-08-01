@@ -7,6 +7,28 @@ from __future__ import annotations
 from ..base import Element
 
 
+class Admonition(Element):
+    LABEL = "admonition"
+    TEMPLATE = """\
+        #docutils.admonition(
+          "{{ title }}",
+          [
+            {%- for content in contents %}
+            {{ content | indent(4, first=False) }}
+            {%- endfor %}
+          ],
+        )
+    """
+
+    title: str
+
+    def to_text(self):
+        return self.get_template().render(
+            title=self.title,
+            contents=[c.to_text() for c in self.children],
+        )
+
+
 class Field(Element):
     LABEL = "fiield"
     TEMPLATE = """\

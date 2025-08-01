@@ -391,16 +391,6 @@ print(\"Hello\")
 """,
             id="block raw code",
         ),
-        pytest.param(
-            """
-.. hint:: Hello
-
-.. warning:: world
-""",
-            """
-""",
-            id="Admonitions",
-        ),
     ],
 )
 def test_syntax(app: SphinxTestApp, src: str, dest: str):
@@ -816,3 +806,69 @@ def test_raw_not_typst_source(app: SphinxTestApp):
     visitor = t.TypstTranslator(document, app.builder)
     document.walkabout(visitor)
     assert visitor.dom.to_text() == textwrap.dedent("")
+
+
+@pytest.mark.parametrize(
+    "src,dest",
+    [
+        pytest.param(
+            """
+.. danger:: This is main message.
+""",
+            """
+#docutils.admonition(
+  "Danger",
+  [
+    This is main message.
+  ],
+)
+""",
+            id="Danger",
+        ),
+        pytest.param(
+            """
+.. note:: This is main message.
+""",
+            """
+#docutils.admonition(
+  "Note",
+  [
+    This is main message.
+  ],
+)
+""",
+            id="Note",
+        ),
+        pytest.param(
+            """
+.. admonition:: Hello
+
+    This is main message.
+""",
+            """
+#docutils.admonition(
+  "Hello",
+  [
+    This is main message.
+  ],
+)
+""",
+            id="Generic",
+        ),
+    ],
+)
+def test_admonitions(app: SphinxTestApp, src: str, dest: str):
+    """Simple test for admonition syntax by Translator.
+
+    This includes test for all extended classes from admonition.
+    """
+    # NOTE: Keep debugging print
+    from anytree import RenderTree
+
+    document = publish_doctree(src.strip())
+    t.transport_footnotes(document)
+    document.settings.strict_visitor = False
+    visitor = t.TypstTranslator(document, app.builder)
+    document.walkabout(visitor)
+    print(RenderTree(visitor.dom))
+    assert visitor.dom.to_text().strip() == dest.strip()

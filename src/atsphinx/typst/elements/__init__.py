@@ -5,7 +5,7 @@ This module is entrypoint of importing core elements (written in submodules).
 # ruff: noqa: F401
 
 from .base import Element, Source, Text
-from .custom.docutils import Field, Section
+from .custom.docutils import Admonition, Field, Section
 from .foundations import Label
 from .model import (
     BulletList,

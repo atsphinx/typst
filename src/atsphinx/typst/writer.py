@@ -177,10 +177,19 @@ class TypstTranslator(SphinxTranslator):
 
     # : For docutils' elements
 
-    def visit_Admonition(self, node):
-        msg = "Currently, admonition-like directive is not supported."
-        logger.info(msg)
-        raise nodes.SkipNode()
+    def visit_Admonition(self, node: nodes.Admonition):
+        self._ptr = elements.Admonition(parent=self._ptr)
+
+    def depart_Admonition(self, node: nodes.Admonition):
+        self._ptr.title = node.__class__.__name__.capitalize()
+        children = []
+        for child in self._ptr.children:
+            if isinstance(child, elements.Heading):
+                self._ptr.title = child.children[0].to_text()
+                continue
+            children.append(child)
+        self._ptr.children = children
+        self._move_ptr_to_parent()
 
     def visit_attribution(self, node: nodes.attribution):
         if isinstance(node.parent, nodes.block_quote):
