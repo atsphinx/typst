@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 import textwrap
 from typing import TYPE_CHECKING
 
@@ -418,6 +419,7 @@ def test_syntax(app: SphinxTestApp, src: str, dest: str):
     assert visitor.dom.to_text().strip() == dest.strip()
 
 
+@pytest.mark.xfail(sys.platform == "win32", reason="Missmatch directory delimiter.")
 @pytest.mark.parametrize(
     "src,dest",
     [
