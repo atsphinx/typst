@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import re
 import textwrap
 from functools import lru_cache
 from typing import TYPE_CHECKING
@@ -68,6 +69,8 @@ class Text(Element):
     """Plain text element."""
 
     LABEL = "#text"
+    ESCAPE_TARGETS = re.compile(r"([@#$*_~<`\\])")
+    ESCAPE_HEADS = re.compile(r"^([=+-] )")
 
     content: str
     """Text content itself."""
@@ -77,4 +80,6 @@ class Text(Element):
         self.content = content
 
     def to_text(self):
-        return self.content
+        """Render plain text with escape some characters."""
+        text = re.sub(self.ESCAPE_TARGETS, lambda m: f"\\{m.group(1)}", self.content)
+        return re.sub(self.ESCAPE_HEADS, lambda m: f"\\{m.group(1)}", text)
