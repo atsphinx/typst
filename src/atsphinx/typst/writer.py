@@ -285,6 +285,10 @@ class TypstTranslator(SphinxTranslator):
 
     depart_title = _move_ptr_to_parent
 
+    # NOTE: Currently, skip sphinx.ext.autodoc features.
+    def visit_desc(self, node):
+        raise nodes.SkipNode()
+
 
 def transport_footnotes(doctree: nodes.document):
     """Move each footnotes into refered footnote_reference in doctree."""
