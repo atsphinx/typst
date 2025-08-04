@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import TYPE_CHECKING, TypedDict
+from typing import TYPE_CHECKING, Literal, TypedDict
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
     from sphinx.config import Config
+
+
+TOCTREE_ONLY_LITERAL = Literal["all", "exclude_hidden"]
 
 
 class DocumentSettings(TypedDict):
@@ -21,7 +24,7 @@ class DocumentSettings(TypedDict):
     """Title of document."""
     theme: str
     """Generate theme."""
-    toctree_only: bool
+    toctree_only: bool | TOCTREE_ONLY_LITERAL
     """When it is ``True``, builder only write contents of toctree from 'entrypoint'."""
 
 
