@@ -15,7 +15,7 @@ from sphinx.locale import _
 from sphinx.util.fileutil import copy_asset, copy_asset_file
 from sphinx.util.nodes import inline_all_toctrees
 
-from . import theming, writer
+from . import config, theming, writer
 
 if TYPE_CHECKING:
     from docutils import nodes
@@ -70,6 +70,8 @@ class TypstBuilder(Builder):
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
+        # from docutils.core import publish_from_doctree
+        # print(publish_from_doctree(doctree).decode())
         today_fmt = self.config.today_fmt or _("%b %d, %Y")
         context = theming.ThemeContext(
             title=document_settings["title"],
@@ -80,7 +82,9 @@ class TypstBuilder(Builder):
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
 
-    def assemble_doctree(self, docname: str, toctree_only: bool) -> nodes.document:
+    def assemble_doctree(
+        self, docname: str, toctree_only: bool | config.TOCTREE_ONLY_LITERAL
+    ) -> nodes.document:
         """Find toctree and merge children doctree into parent doctree.
 
         This method is to generate single Typst document.
@@ -93,6 +97,8 @@ class TypstBuilder(Builder):
         if toctree_only:
             root_section = nodes.section()
             for toctree in root.findall(addnodes.toctree):
+                if toctree_only == "exclude_hidden" and toctree["hidden"]:
+                    continue
                 root_section += toctree
             root = root.copy()
             root += root_section
