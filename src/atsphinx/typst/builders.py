@@ -76,6 +76,7 @@ class TypstBuilder(Builder):
         context = theming.ThemeContext(
             title=document_settings["title"],
             config=self.config,
+            settings=document_settings,
             date=date.today().strftime(today_fmt),
             body=visitor.dom.to_text(),
         )

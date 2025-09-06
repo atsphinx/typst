@@ -24,12 +24,15 @@ class DocumentSettings(TypedDict):
     """Title of document."""
     theme: str
     """Generate theme."""
+    font_set: str | None
+    """Default font name or family to use for building PDF."""
     toctree_only: bool | TOCTREE_ONLY_LITERAL
     """When it is ``True``, builder only write contents of toctree from 'entrypoint'."""
 
 
 DEFAULT_DOCUMENT_SETTINGS = {
     "theme": "manual",
+    "default_font": None,
     "toctree_only": False,
 }
 

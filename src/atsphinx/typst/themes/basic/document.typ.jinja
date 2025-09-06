@@ -35,6 +35,10 @@
 {%- endblock %}
 
 {%- block layout %}
+{% if settings.font_set %}
+#set text(font: "{{ settings.font_set }}")
+{% endif %}
+
 #let cleanPage(body) = {
   page(
     header: none,

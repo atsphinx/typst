@@ -22,6 +22,8 @@ Currently, you can configure behviors of atsphinx-typst by some values.
           * Document title that is used title page and PDF metadata.
         - * theme
           * Generating style.
+        - * font_set
+          * Default font name or family to use for building PDF.
         - * toctree_only
           * WHen it is ``True``, builder only writes contents of toctree from ``entrypoint``.
 

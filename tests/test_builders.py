@@ -33,6 +33,27 @@ class Test_TypstBuilder:
             tree = builder.assemble_doctree("index", "exclude_hidden")
             assert len(list(tree.findall(nodes.section))) == 1
 
+        @pytest.mark.sphinx(
+            "typst",
+            testroot="root",
+            confoverrides={
+                "typst_documents": [
+                    {
+                        "entrypoint": "index",
+                        "filename": "index",
+                        "theme": "manual",
+                        "font_set": "Noto Serif CJK JP",
+                        "title": "Test documentation",
+                    }
+                ]
+            },
+        )
+        def test__document_font(self, app: SphinxTestApp):
+            """Test to pass."""
+            app.build()
+            out = app.outdir / "index.typ"
+            assert '#set text(font: "Noto Serif CJK JP")' in out.read_text()
+
 
 class Test_TypstPDFBuilder:
     class Test_assemble_doctree:
