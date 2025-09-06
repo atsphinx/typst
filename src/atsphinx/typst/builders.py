@@ -74,6 +74,7 @@ class TypstBuilder(Builder):
         context = theming.ThemeContext(
             title=document_settings["title"],
             config=self.config,
+            settings=document_settings,
             date=date.today().strftime(today_fmt),
             body=visitor.dom.to_text(),
         )
@@ -161,7 +162,10 @@ class TypstPDFBuilder(TypstBuilder):
         import typst
 
         super().finish()
+        kwargs = {}
+        if self.config.typst_font_paths:
+            kwargs["font_paths"] = self.config.typst_font_paths
         for document_settings in self.config.typst_documents:
             src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
             out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"
-            typst.compile(src, output=out)
+            typst.compile(src, output=out, **kwargs)

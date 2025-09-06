@@ -22,6 +22,7 @@ Contents
 
    overview
    usage/index
+   tips/index
 
 .. toctree::
    :maxdepth: 2

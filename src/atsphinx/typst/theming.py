@@ -23,6 +23,7 @@ if TYPE_CHECKING:
     from sphinx.config import Config
 
     from .builders import TypstBuilder
+    from .config import DocumentSettings
 
     class _ThemeToml_Theme(TypedDict, total=False):
         inherit: str
@@ -105,6 +106,7 @@ class ThemeContext:
 
     title: str
     config: Config
+    settings: DocumentSettings
     date: str
     body: str
 

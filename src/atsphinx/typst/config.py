@@ -24,12 +24,15 @@ class DocumentSettings(TypedDict):
     """Title of document."""
     theme: str
     """Generate theme."""
+    font_set: str | None
+    """Default font name or family to use for building PDF."""
     toctree_only: bool | TOCTREE_ONLY_LITERAL
     """When it is ``True``, builder only write contents of toctree from 'entrypoint'."""
 
 
 DEFAULT_DOCUMENT_SETTINGS = {
     "theme": "manual",
+    "default_font": None,
     "toctree_only": False,
 }
 
@@ -64,4 +67,5 @@ def compute_configurations(app: Sphinx, config: Config):
 def setup(app: Sphinx):  # noqa: D103
     app.add_config_value("typst_documents", [], "env", list[dict])
     app.add_config_value("typst_static_path", [], "env", [list[str | Path]])
+    app.add_config_value("typst_font_paths", [], "env", [list[str | Path]])
     app.connect("config-inited", compute_configurations)
