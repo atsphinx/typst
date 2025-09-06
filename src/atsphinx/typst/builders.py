@@ -163,7 +163,10 @@ class TypstPDFBuilder(TypstBuilder):
         import typst
 
         super().finish()
+        kwargs = {}
+        if self.config.typst_font_paths:
+            kwargs["font_paths"] = self.config.typst_font_paths
         for document_settings in self.config.typst_documents:
             src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
             out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"
-            typst.compile(src, output=out)
+            typst.compile(src, output=out, **kwargs)

@@ -10,6 +10,7 @@ from docutils import nodes
 from atsphinx.typst import builders as t
 
 if TYPE_CHECKING:
+    from pytest_mock import MockFixture
     from sphinx.testing.util import SphinxTestApp
 
 
@@ -31,3 +32,22 @@ class Test_TypstBuilder:
             builder: t.TypstBuilder = app.builder
             tree = builder.assemble_doctree("index", "exclude_hidden")
             assert len(list(tree.findall(nodes.section))) == 1
+
+
+class Test_TypstPDFBuilder:
+    class Test_assemble_doctree:
+        @pytest.mark.sphinx(
+            "typstpdf",
+            testroot="root",
+            confoverrides={
+                "typst_font_paths": ["/tmp"],
+            },
+        )
+        def test__additional_fonts(self, app: SphinxTestApp, mocker: MockFixture):
+            """Test to pass."""
+            import typst
+
+            mocker.patch("typst.compile", return_value=None)
+            spy = mocker.spy(typst, "compile")
+            app.build()
+            assert "font_paths" in spy.call_args.kwargs

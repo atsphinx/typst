@@ -49,3 +49,9 @@ Currently, you can configure behviors of atsphinx-typst by some values.
     :default: ``[]``
 
     List of path for "Static assets".
+
+.. confval:: typst_font_paths
+    :type: list[str | Path]
+    :default: ``[]``
+
+    List of path stored additional fonts.

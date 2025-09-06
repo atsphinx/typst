@@ -64,4 +64,5 @@ def compute_configurations(app: Sphinx, config: Config):
 def setup(app: Sphinx):  # noqa: D103
     app.add_config_value("typst_documents", [], "env", list[dict])
     app.add_config_value("typst_static_path", [], "env", [list[str | Path]])
+    app.add_config_value("typst_font_paths", [], "env", [list[str | Path]])
     app.connect("config-inited", compute_configurations)
