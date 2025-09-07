@@ -5,4 +5,5 @@ Tips
     :maxdepth: 1
     :glob:
 
+    */index
     *
