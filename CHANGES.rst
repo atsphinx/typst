@@ -2,6 +2,23 @@
 Change logs
 ===========
 
+Version 0.0.5
+=============
+
+:date: 2025-09-07 (Asia/Tokyo)
+
+Features
+--------
+
+* Support ``admonition`` and inherited directives.
+* Support custom font.
+* Add "toctree_only" mode on document_settings.
+
+Fixes
+-----
+
+* Update escape rule.
+
 Version 0.0.4
 =============
 
