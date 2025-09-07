@@ -10,7 +10,7 @@ from ..base import Element
 class Admonition(Element):
     LABEL = "admonition"
     TEMPLATE = """\
-        #docutils.admonition(
+        #docutils-admonition(
           "{{ title }}",
           [
             {%- for content in contents %}

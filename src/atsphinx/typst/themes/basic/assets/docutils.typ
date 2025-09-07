@@ -1,7 +1,7 @@
 /*
 Render adomoition
 */
-#let admonition(title, content) = {
+#let docutils-admonition(title, content) = {
   pad(
     left: 5%,
     rect(

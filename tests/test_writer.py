@@ -816,7 +816,7 @@ def test_raw_not_typst_source(app: SphinxTestApp):
 .. danger:: This is main message.
 """,
             """
-#docutils.admonition(
+#docutils-admonition(
   "Danger",
   [
     This is main message.
@@ -830,7 +830,7 @@ def test_raw_not_typst_source(app: SphinxTestApp):
 .. note:: This is main message.
 """,
             """
-#docutils.admonition(
+#docutils-admonition(
   "Note",
   [
     This is main message.
@@ -846,7 +846,7 @@ def test_raw_not_typst_source(app: SphinxTestApp):
     This is main message.
 """,
             """
-#docutils.admonition(
+#docutils-admonition(
   "Hello",
   [
     This is main message.
