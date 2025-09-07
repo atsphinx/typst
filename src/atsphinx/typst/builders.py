@@ -70,8 +70,6 @@ class TypstBuilder(Builder):
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
-        # from docutils.core import publish_from_doctree
-        # print(publish_from_doctree(doctree).decode())
         today_fmt = self.config.today_fmt or _("%b %d, %Y")
         context = theming.ThemeContext(
             title=document_settings["title"],

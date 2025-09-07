@@ -1,0 +1,8 @@
+{%- extends '!document.typ.jinja' %}
+
+{%- block layout %}
+  {{ super() }}
+  #let docutils-admonition(title, content) = {
+    [#title, #content]
+  }
+{%- endblock %}

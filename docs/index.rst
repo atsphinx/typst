@@ -23,6 +23,11 @@ Contents
    overview
    usage/index
    tips/index
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+
    changes
 
 References
@@ -30,6 +35,7 @@ References
 
 .. toctree::
     :maxdepth: 2
+    :hidden:
 
     api/atsphinx.typst
 

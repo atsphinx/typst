@@ -72,3 +72,11 @@ class Test_TypstPDFBuilder:
             spy = mocker.spy(typst, "compile")
             app.build()
             assert "font_paths" in spy.call_args.kwargs
+
+    class Test_override_module:
+        @pytest.mark.sphinx("typstpdf", testroot="override-typst-module")
+        def test__document_font(self, app: SphinxTestApp):
+            """Test to pass."""
+            app.build()
+            assert (app.outdir / "index.typ").exists()
+            assert (app.outdir / "index.pdf").exists()
