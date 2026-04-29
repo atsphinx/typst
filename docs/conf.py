@@ -77,6 +77,9 @@ latex_documents = [
     ),
 ]
 
+# -- Options for Linkcheck
+linkcheck_ignore = [r"https://docutils.sourceforge.io/.*"]
+
 # -- Options for Typst outout
 typst_static_path = ["_static"]
 typst_documents = [
