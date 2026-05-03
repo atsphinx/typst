@@ -1,4 +1,2 @@
 [theme]
-imports = [
-    '"_themes/basic/docutils.typ": *',
-]
+imports = []
