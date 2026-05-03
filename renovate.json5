@@ -9,7 +9,7 @@
   "timezone": "Asia/Tokyo",
   "schedule": [
     // Run check at daytime on every weekend
-    "* 9-21 * * 0,6"
+    "* 9-12 * * 0,6"
   ],
   "automerge": true,
   "packageRules": [
