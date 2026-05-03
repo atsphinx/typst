@@ -9,6 +9,8 @@ includes:
       SPHINX_SOURCE_DIR: ''
       SPHINX_OUTPUT_DIR: '_build'
       SPHINX_DEFAULT_BUILDER: 'dirhtml'
+      SPHINX_APIDOC_EXTRA_OPTIONS: '--no-toc --implicit-namespaces'
+      SPHINX_APIDOC_PACKAGE_PATH: '../src/atsphinx'
 
   demo:
     taskfile: 'https://github.com/attakei/workspace-configs.git//projects/sphinx-doc/Taskfile.yaml?tag=v0.7.2'
