@@ -59,14 +59,14 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
 
     # TODO: It should separate transform and translate.
     def visit_container(self, node: nodes.container):
-        if "literal_block" in node and node["literal_block"]:
+        if node.get("literal_block"):
             self.body.append(f"{self._hi.prefix}#figure(\n")
             self._hi.push("  ")
             literal = node.children.pop()
             node.children.insert(0, literal)
 
     def depart_container(self, node: nodes.container):
-        if "literal_block" in node and node["literal_block"]:
+        if node.get("literal_block"):
             self._hi.pop()
             self.body.append(f"{self._hi.indent})\n")
 
