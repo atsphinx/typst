@@ -37,6 +37,7 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         "desc_name",
         "desc_signature",
         "index",
+        "legend",
         "pending_xref",
         "start_of_file",
         "todo_node",
@@ -80,9 +81,3 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         self.builder.images.setdefault(uri_path, uri_dest)
         node["uri"] = uri_map
         super().visit_image(node)
-
-    def visit_legend(self, node: nodes.legend):
-        pass
-
-    def depart_legend(self, node: nodes.legend):
-        pass
