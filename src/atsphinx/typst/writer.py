@@ -53,9 +53,9 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     # visit/departuer methods
     # ------
     def visit_title(self, node: nodes.title):
-        super().visit_title(node)
         if isinstance(node.parent, nodes.section) and self._section_level < 1:
             raise nodes.SkipNode
+        super().visit_title(node)
 
     # TODO: It should separate transform and translate.
     def visit_container(self, node: nodes.container):
