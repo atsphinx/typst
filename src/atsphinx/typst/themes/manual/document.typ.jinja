@@ -87,6 +87,14 @@
     it
   )
 }
+
+#show figure.where(kind: raw): it => {
+  set align(start)
+  block(width: auto, breakable: false)[
+    #show figure.caption: set align(center)
+    #it
+  ]
+}
 {%- endblock %}
 
 {%- block cover %}
