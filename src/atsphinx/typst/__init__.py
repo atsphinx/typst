@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 from rst2typst import transforms
 
-from . import builders, config
+from . import adapters, builders, config
 
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
@@ -21,6 +21,8 @@ def setup(app: Sphinx):  # noqa: D103
     app.add_transform(transforms.RemapFootnotes)
     # Configurations
     config.setup(app)
+    # Connect
+    app.connect("builder-inited", adapters.autoload_adapters)
     return {
         "version": __version__,
         "env_version": 1,
