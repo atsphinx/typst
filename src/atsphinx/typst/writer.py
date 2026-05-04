@@ -32,7 +32,14 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
 
     optional = [
         # Sphinx's nodes
+        "desc",
+        "desc_content",
+        "desc_name",
+        "desc_signature",
+        "index",
+        "pending_xref",
         "start_of_file",
+        "todo_node",
     ]
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
