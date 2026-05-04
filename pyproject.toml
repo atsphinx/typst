@@ -94,4 +94,5 @@ packages = ["src/atsphinx"]
 only-includes = ["src/atsphinx"]
 
 [tool.doc8]
+max-line-length = 119
 ignore = ["D004"]
