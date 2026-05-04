@@ -76,7 +76,9 @@ class TypstBuilder(Builder):
             config=self.config,
             settings=document_settings,
             date=date.today().strftime(today_fmt),
-            body=visitor.dom.to_text(),
+            body="".join(visitor.body),
+            head="\n".join([i.read_text() for i in visitor.includes]),
+            module_imports=[f'"{name}": {symbol}' for name, symbol in visitor.imports],
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
@@ -102,7 +104,6 @@ class TypstBuilder(Builder):
             root = root.copy()
             root += root_section
         tree = inline_all_toctrees(self, {docname}, docname, root, darkgreen, [docname])
-        writer.transport_footnotes(tree)
         return tree
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102

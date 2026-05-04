@@ -22,6 +22,10 @@
 {%- for imp in theme.module_imports %}
 #import {{ imp }}
 {% endfor %}
+{%- for imp in module_imports %}
+#import {{ imp }}
+{% endfor %}
+{{ head|safe }}
 
 {#- 
   To set PDF metadata.

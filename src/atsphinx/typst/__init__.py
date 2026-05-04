@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from rst2typst import transforms
+
 from . import builders, config
 
 if TYPE_CHECKING:
@@ -16,6 +18,7 @@ def setup(app: Sphinx):  # noqa: D103
     # Builders
     app.add_builder(builders.TypstBuilder)
     app.add_builder(builders.TypstPDFBuilder)
+    app.add_transform(transforms.RemapFootnotes)
     # Configurations
     config.setup(app)
     return {

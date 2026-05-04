@@ -108,7 +108,9 @@ class ThemeContext:
     config: Config
     settings: DocumentSettings
     date: str
+    head: str
     body: str
+    module_imports: list[str]
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
