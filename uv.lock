@@ -112,7 +112,7 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "anytree", specifier = ">=2.12.1" },
-    { name = "rst2typst", specifier = ">=0.3.1" },
+    { name = "rst2typst", specifier = ">=0.4.0" },
     { name = "sphinx", specifier = ">=8.1" },
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "typst", marker = "extra == 'pdf'", specifier = ">=0.13.2" },
@@ -492,11 +492,11 @@ wheels = [
 
 [[package]]
 name = "platformdirs"
-version = "4.3.8"
+version = "4.9.6"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/fe/8b/3c73abc9c759ecd3f1f7ceff6685840859e8070c4d947c93fae71f6a0bf2/platformdirs-4.3.8.tar.gz", hash = "sha256:3d512d96e16bcb959a814c9f348431070822a6496326a4be0911c40b5a74c2bc", size = 21362, upload-time = "2025-05-07T22:47:42.121Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/9f/4a/0883b8e3802965322523f0b200ecf33d31f10991d0401162f4b23c698b42/platformdirs-4.9.6.tar.gz", hash = "sha256:3bfa75b0ad0db84096ae777218481852c0ebc6c727b3168c1b9e0118e458cf0a", size = 29400, upload-time = "2026-04-09T00:04:10.812Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fe/39/979e8e21520d4e47a0bbe349e2713c0aac6f3d853d0e5b34d76206c439aa/platformdirs-4.3.8-py3-none-any.whl", hash = "sha256:ff7059bb7eb1179e2685604f4aaf157cfd9535242bd23742eadc3c13542139b4", size = 18567, upload-time = "2025-05-07T22:47:40.376Z" },
+    { url = "https://files.pythonhosted.org/packages/75/a6/a0a304dc33b49145b21f4808d763822111e67d1c3a32b524a1baf947b6e1/platformdirs-4.9.6-py3-none-any.whl", hash = "sha256:e61adb1d5e5cb3441b4b7710bea7e4c12250ca49439228cc1021c00dcfac0917", size = 21348, upload-time = "2026-04-09T00:04:09.463Z" },
 ]
 
 [[package]]
@@ -604,14 +604,15 @@ wheels = [
 
 [[package]]
 name = "rst2typst"
-version = "0.3.1"
+version = "0.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docutils" },
+    { name = "platformdirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/37/a6/abbfa6c7416e7d1891cfdb6717411f6a0cd7fdc6aed7fce18c4826f2da96/rst2typst-0.3.1.tar.gz", hash = "sha256:e8a3620764da55034f73bdc6150b7b4f12d429c3ca2a3da11bffd1e551a9f88c", size = 9351, upload-time = "2026-05-04T12:00:57.123Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fa/c1/0b69567cbbc8f64c0152ba19c8662c0a3af095dab743e3755299274927ad/rst2typst-0.4.0.tar.gz", hash = "sha256:19a0ef65d82074d991db4159a0550658c9e00db04fae5cca486da273fc5ed122", size = 10703, upload-time = "2026-05-05T17:40:39.963Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ae/08/d06c6b678c14b83bd0755c1484395d4ed673a718723dfc589294fe55cf56/rst2typst-0.3.1-py3-none-any.whl", hash = "sha256:46032ec9f21cd08247ff6eec976731536f715b290ebf6b738c4332d2a7a3dab3", size = 12360, upload-time = "2026-05-04T12:00:55.351Z" },
+    { url = "https://files.pythonhosted.org/packages/95/02/408fb985cef32951cc0adc650a51e1ca90b58508196ef2581f8d6fa14e1e/rst2typst-0.4.0-py3-none-any.whl", hash = "sha256:70866672fc4008146596e2674d674ff49e8131c3b9a1f0cf04368522e5ab4130", size = 14990, upload-time = "2026-05-05T17:40:38.634Z" },
 ]
 
 [[package]]

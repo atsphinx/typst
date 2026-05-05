@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from docutils import nodes
+from rst2typst.package import install_package
 from sphinx import addnodes
 from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
@@ -77,8 +78,8 @@ class TypstBuilder(Builder):
             settings=document_settings,
             date=date.today().strftime(today_fmt),
             body="".join(visitor.body),
-            head="\n".join([i.read_text() for i in visitor.includes]),
-            module_imports=[f'"{name}": {symbol}' for name, symbol in visitor.imports],
+            head="",
+            package_imports=visitor.imports.code,
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
@@ -163,6 +164,7 @@ class TypstPDFBuilder(TypstBuilder):
         import typst
 
         super().finish()
+        install_package()
         kwargs = {}
         if self.config.typst_font_paths:
             kwargs["font_paths"] = self.config.typst_font_paths

@@ -17,6 +17,7 @@ from typing import TYPE_CHECKING
 
 from docutils import nodes
 from rst2typst.writer import TypstTranslator as BaseTypstTranslator
+from sphinx import addnodes
 from sphinx.util.docutils import SphinxTranslator
 from sphinx.util.logging import getLogger
 
@@ -39,7 +40,6 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         "index",
         "legend",
         "pending_xref",
-        "start_of_file",
     ]
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
@@ -47,6 +47,7 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         super(BaseTypstTranslator, self).__init__(document)
         # Set to avoid rendering root hedering text.
         self._section_level = -1
+        self.document.settings.no_import_local_package = False
 
     # ------
     # visit/departuer methods
@@ -80,3 +81,12 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         self.builder.images.setdefault(uri_path, uri_dest)
         node["uri"] = uri_map
         super().visit_image(node)
+
+    # Implements for Sphinx's nodes
+    # =============================
+    def visit_start_of_file(self, node: addnodes.start_of_file):
+        # NOTE: Implement this when rendering anything as the "start of file."
+        pass
+
+    def depart_start_of_file(self, node: addnodes.start_of_file):
+        pass
