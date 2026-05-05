@@ -48,6 +48,7 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         super(BaseTypstTranslator, self).__init__(document)
         # Set to avoid rendering root hedering text.
         self._section_level = -1
+        self.document.settings.no_import_local_package = False
 
     # ------
     # visit/departuer methods

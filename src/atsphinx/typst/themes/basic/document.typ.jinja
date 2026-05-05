@@ -22,9 +22,7 @@
 {%- for imp in theme.module_imports %}
 #import {{ imp }}
 {% endfor %}
-{%- for imp in module_imports %}
-#import {{ imp }}
-{% endfor %}
+{{ package_imports }}
 {{ head|safe }}
 
 {#- 

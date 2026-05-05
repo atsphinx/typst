@@ -110,7 +110,7 @@ class ThemeContext:
     date: str
     head: str
     body: str
-    module_imports: list[str]
+    package_imports: str
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
