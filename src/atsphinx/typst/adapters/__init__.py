@@ -8,7 +8,7 @@ Each module is mapped to the same path as its corresponding Sphinx extension.
 
 from __future__ import annotations
 
-import importlib
+from importlib.util import find_spec
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -21,9 +21,10 @@ def autoload_adapters(app: Sphinx):
     for extname in app.extensions.keys():
         adapter_name = f"{__name__}.{extname}"
         try:
-            importlib.import_module(adapter_name)
-            adapters.append(adapter_name)
+            if find_spec(adapter_name):
+                adapters.append(adapter_name)
         except ModuleNotFoundError:
+            # This happens when this parent module does not exist.
             pass
     for extname in adapters:
         app.setup_extension(extname)
