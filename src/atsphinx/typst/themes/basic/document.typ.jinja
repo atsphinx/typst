@@ -32,44 +32,17 @@
 )
 {%- endblock %}
 
-{%- block layout %}
 {% if settings.font_set %}
 #set text(font: "{{ settings.font_set }}")
 {% endif %}
 
-#let cleanPage(body) = {
-  page(
-    header: none,
-    footer: none,
-    [
-      #body
-    ]
-  )
-}
-
-#let contentPage(body) = context {
-  page(
-    numbering: "1 / 1",
-    header: none,
-    [
-      #body
-    ]
-  )
-}
+{%- block layout %}
+{% include './layout.typ' %}
 {%- endblock %}
 
 {%- block content %}
   {%- block cover %}
-    #show: cleanPage
-    #align(center, [
-      #v(36pt)
-      #text(
-        weight: "bold",
-        size: 3em,
-        "{{ title }}",
-      )
-    ])
-    #pagebreak()
+    {% include './cover.typ' %}
   {% endblock %}
 
   {%- block outline %}
