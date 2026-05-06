@@ -116,7 +116,6 @@ class ThemeContext:
     config: Config
     settings: DocumentSettings
     date: str
-    head: str
     body: str
     packages: PackageRegistry
 

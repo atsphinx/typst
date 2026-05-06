@@ -78,7 +78,6 @@ class TypstBuilder(Builder):
             settings=document_settings,
             date=date.today().strftime(today_fmt),
             body="".join(visitor.body),
-            head="",
             packages=visitor.imports,
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
