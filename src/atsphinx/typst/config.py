@@ -20,8 +20,14 @@ class DocumentSettings(TypedDict):
     """Docname of entrypoint."""
     filename: str
     """Output filename (without ext)."""
+
     title: str
     """Title of document."""
+    author: str | None
+    """Author of document."""
+    release: str | None
+    """Release revision of document."""
+
     theme: str
     """Generate theme."""
     font_set: str | None
@@ -31,6 +37,8 @@ class DocumentSettings(TypedDict):
 
 
 DEFAULT_DOCUMENT_SETTINGS = {
+    "author": None,
+    "release": None,
     "theme": "manual",
     "default_font": None,
     "toctree_only": False,
@@ -47,6 +55,8 @@ def compute_configurations(app: Sphinx, config: Config):
                 "entrypoint": config.root_doc,
                 "filename": f"document-{config.language}",
                 "title": f"{config.project} Documentation [{config.language.upper()}]",
+                "author": config.author,
+                "release": config.release,
                 "theme": "manual",
             }
         )

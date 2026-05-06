@@ -6,10 +6,10 @@
 }
 #cleanPage(
   [
-    #titlepage("{{ title }}", size: 24pt, vt: 10%)
+    #titlepage("{{ document.title }}", size: 24pt, vt: 10%)
     #titlepage("{{ config.release }}", size: 16pt, vt: 0%)
     #titlepage("{{ config.author }}", size: 18pt, vt: 30%)
-    #titlepage("{{ date }}", size: 14pt, vt: 40%)
+    #titlepage("{{ date.strftime('%Y-%m-%d') }}", size: 14pt, vt: 40%)
     #pagebreak()
   ]
 )

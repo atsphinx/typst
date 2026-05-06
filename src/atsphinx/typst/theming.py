@@ -6,6 +6,7 @@ This module is inspired :py:mod:`sphinx.theming`, but it is impleemented simplif
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -110,12 +111,13 @@ class ThemeConfig:
 
 @dataclass
 class ThemeContext:
-    """Default context values for templating."""
+    """Context values for templating from document."""
 
-    title: str
+    # From builder
+    date: date
     config: Config
-    settings: DocumentSettings
-    date: str
+    # From document-settings
+    document: DocumentSettings
     body: str
     packages: PackageRegistry
 

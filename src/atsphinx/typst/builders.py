@@ -12,7 +12,6 @@ from sphinx import addnodes
 from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
 from sphinx.errors import SphinxError
-from sphinx.locale import _
 from sphinx.util.fileutil import copy_asset, copy_asset_file
 from sphinx.util.nodes import inline_all_toctrees
 
@@ -37,6 +36,7 @@ class TypstBuilder(Builder):
         super().__init__(app, env)
         self._static_dir = Path(self.outdir / "_static")
         self._images_dir = Path(self.outdir / "_images")
+        self._build_date = date.today()
 
     def init(self):  # noqa: D102
         super().init()
@@ -71,12 +71,10 @@ class TypstBuilder(Builder):
         doctree = self.assemble_doctree(docname, document_settings["toctree_only"])
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
-        today_fmt = self.config.today_fmt or _("%b %d, %Y")
         context = theming.ThemeContext(
-            title=document_settings["title"],
-            config=self.config,
-            settings=document_settings,
-            date=date.today().strftime(today_fmt),
+            date=self._build_date,
+            config=self.app.config,
+            document=document_settings,
             body="".join(visitor.body),
             packages=visitor.imports,
         )
