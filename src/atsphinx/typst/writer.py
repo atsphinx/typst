@@ -40,7 +40,6 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         "index",
         "legend",
         "pending_xref",
-        "todo_node",
     ]
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
