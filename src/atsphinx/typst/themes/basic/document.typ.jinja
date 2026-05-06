@@ -19,10 +19,7 @@
       Body of document that only display on paper.
 -#}
 {%- block meta %}
-{%- for imp in theme.module_imports %}
-#import {{ imp }}
-{% endfor %}
-{{ package_imports }}
+{{ packages.code }}
 {{ head|safe }}
 
 {#- 

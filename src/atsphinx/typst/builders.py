@@ -79,7 +79,7 @@ class TypstBuilder(Builder):
             date=date.today().strftime(today_fmt),
             body="".join(visitor.body),
             head="",
-            package_imports=visitor.imports.code,
+            packages=visitor.imports,
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)

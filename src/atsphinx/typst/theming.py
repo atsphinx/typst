@@ -9,6 +9,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from rst2typst.package import PackageRegistry
 from sphinx.errors import ThemeError
 from sphinx.jinja2glue import BuiltinTemplateLoader
 
@@ -64,6 +65,13 @@ class Theme:
 
     def write_doc(self, out: Path, context: ThemeContext):
         """Write content as document."""
+        for p in self._config.packages:
+            if isinstance(p, str):
+                context.packages.add(p)
+            elif isinstance(p, dict):
+                p_name = p["name"]
+                p_entries = p.get("entrypoints", None)
+                context.packages.add(p_name, p_entries)
         ctx = asdict(context) | {
             "theme": self._config,
         }
@@ -80,13 +88,13 @@ class ThemeConfig:
     """
 
     inherit: str | None
-    module_imports: list[str]
+    packages: list[str | dict[str, str | list[str]]]
     default_options: dict[str, Any]
 
     @classmethod
     def make_default(cls) -> ThemeConfig:
         """Create object of default configuration values of theme."""
-        return cls(inherit=None, module_imports=[], default_options={})
+        return cls(inherit=None, packages=[], default_options={})
 
     @classmethod
     def resolve(cls, configs: list[_ThemeToml]) -> ThemeConfig:
@@ -96,7 +104,7 @@ class ThemeConfig:
             if "inherit" in config["theme"]:
                 obj.inherit = config["theme"]["inherit"]
             obj.default_options = config.get("options", {})
-            obj.module_imports += config["theme"].get("imports", [])
+            obj.packages += config["theme"].get("packages", [])
         return obj
 
 
@@ -110,7 +118,7 @@ class ThemeContext:
     date: str
     head: str
     body: str
-    package_imports: str
+    packages: PackageRegistry
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
