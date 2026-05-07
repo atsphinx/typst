@@ -72,9 +72,13 @@ class TypstBuilder(Builder):
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         context = theming.ThemeContext(
-            date=self._build_date,
-            config=self.app.config,
-            document=document_settings,
+            project=self.app.config.project,
+            release=self.app.config.release,
+            date=self._build_date.strftime("%Y-%m-%d"),
+            title=document_settings["title"],
+            author=document_settings["author"],
+            edition=document_settings["edition"],
+            font=document_settings["font"],
             body="".join(visitor.body),
             packages=visitor.imports,
         )

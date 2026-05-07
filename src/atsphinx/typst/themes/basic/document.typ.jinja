@@ -27,13 +27,13 @@
   :ref: https://typst.app/docs/reference/model/document/
 #}
 #set document(
-  title: [{{ document.title }}],
-  author: "{{ document.author or config.author }}",
+  title: [{{ title }}],
+  author: "{{ author }}",
 )
 {%- endblock %}
 
-{% if document.font_set %}
-#set text(font: "{{ document.font_set }}")
+{% if font %}
+#set text(font: "{{ font }}")
 {% endif %}
 
 {%- block layout %}

@@ -1,7 +1,7 @@
 {% include '!basic/layout.typ' %}
 
 #let contentPage(body) = context {
-  let headerText = "{{ config.project }} {{ config.release }}"
+  let headerText = "{{ project }} {{ release }}"
   let pos(cur, total) = {
     if calc.odd(total - cur) and calc.odd(cur) {
       return left

@@ -25,12 +25,12 @@ class DocumentSettings(TypedDict):
     """Title of document."""
     author: str | None
     """Author of document."""
-    release: str | None
-    """Release revision of document."""
+    edition: str | None
+    """Publish edition of document."""
 
     theme: str
     """Generate theme."""
-    font_set: str | None
+    font: str | None
     """Default font name or family to use for building PDF."""
     toctree_only: bool | TOCTREE_ONLY_LITERAL
     """When it is ``True``, builder only write contents of toctree from 'entrypoint'."""
@@ -38,9 +38,9 @@ class DocumentSettings(TypedDict):
 
 DEFAULT_DOCUMENT_SETTINGS = {
     "author": None,
-    "release": None,
+    "edition": None,
     "theme": "manual",
-    "default_font": None,
+    "font": None,
     "toctree_only": False,
 }
 

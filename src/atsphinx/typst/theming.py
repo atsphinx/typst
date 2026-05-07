@@ -6,7 +6,6 @@ This module is inspired :py:mod:`sphinx.theming`, but it is impleemented simplif
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -22,10 +21,7 @@ except ImportError:
 if TYPE_CHECKING:
     from typing import Any, TypedDict
 
-    from sphinx.config import Config
-
     from .builders import TypstBuilder
-    from .config import DocumentSettings
 
     class _ThemeToml_Theme(TypedDict, total=False):
         inherit: str
@@ -111,21 +107,33 @@ class ThemeConfig:
 
 @dataclass
 class ThemeContext:
-    """Context values for templating from builder."""
+    """Context variables for templating.
 
-    # From builder
-    date: date
-    """Build date."""
-    config: Config
-    """Sphinx configuration."""
-    # From document-settings
-    document: DocumentSettings
-    """Document information. (current value is from ``document_settings``)"""
+    Many properties (dict keys) are to use directly.
+    """
+
+    # From Sphinx configuration
+    project: str
+    """The Name of project."""
+    release: str
+    """The versioning text of document."""
+
+    # From builder class
+    date: str
+
+    # From document settings
+    title: str
+    """The title of document."""
+    author: str | None
+    """The author text of document."""
+    edition: str | None
+    font: str | None
+
     # From translator
     body: str
     """Content body from doctree."""
     packages: PackageRegistry
-    """Package control."""
+    """Package management object."""
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
