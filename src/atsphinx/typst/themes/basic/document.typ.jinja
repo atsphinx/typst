@@ -28,7 +28,8 @@
 #}
 #set document(
   title: [{{ title }}],
-  author: "{{ author }}",
+  {# NOTE: Hack to use only current implements #}
+  author: {{ author|tojson }},
 )
 {%- endblock %}
 
