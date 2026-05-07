@@ -28,8 +28,10 @@
 #}
 #set document(
   title: [{{ title }}],
+  {% if author %}
   {# NOTE: Hack to use only current implements #}
   author: {{ author|tojson }},
+  {% endif %}
 )
 {%- endblock %}
 
