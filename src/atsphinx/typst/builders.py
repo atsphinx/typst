@@ -74,6 +74,7 @@ class TypstBuilder(Builder):
         context = theming.ThemeContext(
             project=self.app.config.project,
             release=self.app.config.release,
+            copyright=self.app.config.copyright,
             date=self._build_date.strftime("%Y-%m-%d"),
             title=document_settings["title"],
             author=document_settings["author"],

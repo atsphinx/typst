@@ -117,6 +117,7 @@ class ThemeContext:
     """The Name of project."""
     release: str
     """The versioning text of document."""
+    copyright: str
 
     # From builder class
     date: str
