@@ -56,7 +56,6 @@ def compute_configurations(app: Sphinx, config: Config):
                 "filename": f"document-{config.language}",
                 "title": f"{config.project} Documentation [{config.language.upper()}]",
                 "author": config.author,
-                "release": config.release,
                 "theme": "manual",
             }
         )
