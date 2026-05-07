@@ -111,15 +111,21 @@ class ThemeConfig:
 
 @dataclass
 class ThemeContext:
-    """Context values for templating from document."""
+    """Context values for templating from builder."""
 
     # From builder
     date: date
+    """Build date."""
     config: Config
+    """Sphinx configuration."""
     # From document-settings
     document: DocumentSettings
+    """Document information. (current value is from ``document_settings``)"""
+    # From translator
     body: str
+    """Content body from doctree."""
     packages: PackageRegistry
+    """Package control."""
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
