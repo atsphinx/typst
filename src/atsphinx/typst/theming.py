@@ -66,7 +66,9 @@ class Theme:
             if isinstance(p, str):
                 context.packages.add(p)
             elif isinstance(p, dict):
-                p_name = p["name"]
+                p_name = p.get("name")
+                if not p_name:
+                    raise ThemeError("Invalid theme package entry: missing 'name'")
                 p_entries = p.get("entrypoints", None)
                 context.packages.add(p_name, p_entries)
         ctx = asdict(context) | {
