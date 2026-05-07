@@ -14,6 +14,7 @@ on:
 env:
   UV_NO_SYNC: 1
   TASK_X_REMOTE_TASKFILES: 1
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   lint:
