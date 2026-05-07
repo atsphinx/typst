@@ -6,10 +6,10 @@
 }
 #cleanPage(
   [
-    #titlepage("{{ title }}", size: 24pt, vt: 10%)
-    #titlepage("{{ release }}", size: 16pt, vt: 0%)
-    #titlepage("{{ author }}", size: 18pt, vt: 30%)
-    #titlepage("{{ date }}", size: 14pt, vt: 40%)
+    #titlepage([{{ title }}], size: 24pt, vt: 10%)
+    #titlepage([{{ release }}], size: 16pt, vt: 0%)
+    #titlepage([{{ author }}], size: 18pt, vt: 30%)
+    #titlepage([{{ date }}], size: 14pt, vt: 40%)
     #pagebreak()
   ]
 )

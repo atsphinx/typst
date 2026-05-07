@@ -4,7 +4,7 @@
   #text(
     weight: "bold",
     size: 3em,
-    "{{ title }}",
+    [{{ title }}],
   )
 ])
 #pagebreak()
