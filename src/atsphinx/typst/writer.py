@@ -33,9 +33,6 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
 
     optional = [
         # Sphinx's nodes
-        "desc",
-        "desc_content",
-        "desc_name",
         "desc_signature",
         "index",
         "legend",
@@ -84,6 +81,37 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
 
     # Implements for Sphinx's nodes
     # =============================
+    def visit_desc(self, node: addnodes.desc):
+        self.body.append(f"{self._hi.prefix}#pad(left: 5%)[\n")
+        self._hi.push("  ")
+
+    def depart_desc(self, node: addnodes.desc):
+        self._hi.pop()
+        self.body.append(f"{self._hi.indent}]\n")
+
+    def visit_desc_signature(self, node: addnodes.desc_signature):
+        pass
+
+    def depart_desc_signature(self, node: addnodes.desc_signature):
+        # TODO: Resolve label
+        # self.body.append(f"<{node['ids'][0]}>")
+        self.body.append("\n")
+
+    def visit_desc_name(self, node: addnodes.desc_name):
+        self.body.append(f"{self._hi.indent}#strong(delta: 400)[")
+
+    def depart_desc_name(self, node: addnodes.desc_name):
+        self.body.append("]")
+
+    def visit_desc_content(self, node: addnodes.desc_content):
+        self.body.append(f"{self._hi.prefix}#pad(left: 5%)[#box(\n")
+        self.body.append(f"{self._hi.prefix}[\n")
+        self._hi.push("  ")
+
+    def depart_desc_content(self, node: addnodes.desc_content):
+        self._hi.pop()
+        self.body.append(f"{self._hi.indent}])]\n")
+
     def visit_start_of_file(self, node: addnodes.start_of_file):
         # NOTE: Implement this when rendering anything as the "start of file."
         pass
