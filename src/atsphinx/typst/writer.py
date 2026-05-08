@@ -79,6 +79,14 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         node["uri"] = uri_map
         super().visit_image(node)
 
+    def visit_reference(self, node):
+        # NOTE: It may be should implement in rst2typst.
+        if node.get("internal", False):
+            uri = node["refuri"][1:]
+            self.body.append(f"#link(<{uri}>)[")
+            return
+        super().visit_reference(node)
+
     # Implements for Sphinx's nodes
     # =============================
     def visit_desc(self, node: addnodes.desc):
@@ -93,8 +101,8 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         pass
 
     def depart_desc_signature(self, node: addnodes.desc_signature):
-        # TODO: Resolve label
-        # self.body.append(f"<{node['ids'][0]}>")
+        for id in node.get("ids", []):
+            self.body.append(f" <{id}>")
         self.body.append("\n")
 
     def visit_desc_name(self, node: addnodes.desc_name):

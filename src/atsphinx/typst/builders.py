@@ -107,6 +107,7 @@ class TypstBuilder(Builder):
             root = root.copy()
             root += root_section
         tree = inline_all_toctrees(self, {docname}, docname, root, darkgreen, [docname])
+        self.env.resolve_references(tree, root, self)
         return tree
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102
