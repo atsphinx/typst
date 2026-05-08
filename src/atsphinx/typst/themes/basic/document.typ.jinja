@@ -19,11 +19,7 @@
       Body of document that only display on paper.
 -#}
 {%- block meta %}
-{%- for imp in theme.module_imports %}
-#import {{ imp }}
-{% endfor %}
-{{ package_imports }}
-{{ head|safe }}
+{{ packages.code }}
 
 {#- 
   To set PDF metadata.
@@ -32,48 +28,24 @@
 #}
 #set document(
   title: [{{ title }}],
-  author: "{{ config.author }}",
+  {% if author %}
+  {# NOTE: Hack to use only current implements #}
+  author: {{ author|tojson }},
+  {% endif %}
 )
 {%- endblock %}
 
-{%- block layout %}
-{% if settings.font_set %}
-#set text(font: "{{ settings.font_set }}")
+{% if font %}
+#set text(font: "{{ font }}")
 {% endif %}
 
-#let cleanPage(body) = {
-  page(
-    header: none,
-    footer: none,
-    [
-      #body
-    ]
-  )
-}
-
-#let contentPage(body) = context {
-  page(
-    numbering: "1 / 1",
-    header: none,
-    [
-      #body
-    ]
-  )
-}
+{%- block layout %}
+{% include './layout.typ' %}
 {%- endblock %}
 
 {%- block content %}
   {%- block cover %}
-    #show: cleanPage
-    #align(center, [
-      #v(36pt)
-      #text(
-        weight: "bold",
-        size: 3em,
-        "{{ title }}",
-      )
-    ])
-    #pagebreak()
+    {% include './cover.typ' %}
   {% endblock %}
 
   {%- block outline %}
@@ -83,7 +55,8 @@
 
   {%- block document %}
     #show: contentPage
-    {{ body|safe }}
+
+{{ body|safe }}
   {% endblock %}
 
 {%- endblock %}

@@ -20,19 +20,27 @@ class DocumentSettings(TypedDict):
     """Docname of entrypoint."""
     filename: str
     """Output filename (without ext)."""
+
     title: str
     """Title of document."""
+    author: str | None
+    """Author of document."""
+    edition: str | None
+    """Publish edition of document."""
+
     theme: str
     """Generate theme."""
-    font_set: str | None
+    font: str | None
     """Default font name or family to use for building PDF."""
     toctree_only: bool | TOCTREE_ONLY_LITERAL
     """When it is ``True``, builder only write contents of toctree from 'entrypoint'."""
 
 
 DEFAULT_DOCUMENT_SETTINGS = {
+    "author": None,
+    "edition": None,
     "theme": "manual",
-    "default_font": None,
+    "font": None,
     "toctree_only": False,
 }
 
@@ -47,6 +55,7 @@ def compute_configurations(app: Sphinx, config: Config):
                 "entrypoint": config.root_doc,
                 "filename": f"document-{config.language}",
                 "title": f"{config.project} Documentation [{config.language.upper()}]",
+                "author": config.author,
                 "theme": "manual",
             }
         )

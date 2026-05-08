@@ -42,7 +42,7 @@ class Test_TypstBuilder:
                         "entrypoint": "index",
                         "filename": "index",
                         "theme": "manual",
-                        "font_set": "Noto Serif CJK JP",
+                        "font": "Noto Serif CJK JP",
                         "title": "Test documentation",
                     }
                 ]
