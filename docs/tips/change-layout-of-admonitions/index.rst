@@ -2,6 +2,8 @@
 Change layout of admonitions
 ============================
 
+.. todo:: TBD
+
 atsphinx-typst renders admonitions using box layout.
 
 .. figure:: ./default-admonition-layout.png

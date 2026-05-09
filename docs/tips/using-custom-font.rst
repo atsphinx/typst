@@ -33,7 +33,7 @@ Set font into your document setting
             "filename": "Document",
             "theme": "manual",
             "title": "My document",
-            "font_set": "Noto Serif CJK JP",  # Write it
+            "font": "Noto Serif CJK JP",  # Write it
             "toctree_only": True,
         }
     ]
@@ -54,7 +54,7 @@ Override template to set other font.
 
     {%- extends '!document.typ.jinja' %}
 
-    {%- block layout %}
+    {%- block preamble %}
       {{ super() }}
       #show heading: it => text(font: "Noto Sans CJK JP", it.body)
     {%- endblock %}

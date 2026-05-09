@@ -82,6 +82,4 @@ For v1.0.0
 
 On this version, it should be able to generate full-featured PDF of major Sphinx documentations.
 
-* Sphinx
-
-.. todo:: It is plan.
+* Sphinx (**It is plan**)
