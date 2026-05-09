@@ -171,7 +171,7 @@ class TypstPDFBuilder(TypstBuilder):
 
         super().finish()
         install_package(rst2typst_package_dir, "rst2typst")
-        install_package(typst_package_dir, "atsphinx-typst", force=True)
+        install_package(typst_package_dir, "atsphinx-typst")
         kwargs = {}
         if self.config.typst_font_paths:
             kwargs["font_paths"] = self.config.typst_font_paths
