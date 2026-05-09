@@ -4,4 +4,4 @@ version = "0.0.5"
 entrypoint = "lib.typ"
 authors = ["Kazuya Takei"]
 license = "Apache-2.0"
-description = "Render custom layoout for atsphinx-typst."
+description = "Render custom layout for atsphinx-typst."
