@@ -20,6 +20,7 @@ from docutils import nodes
 from rst2typst.writer import TypstTranslator as BaseTypstTranslator
 from sphinx import addnodes
 from sphinx.util.docutils import SphinxTranslator
+from sphinx.util.index_entries import split_index_msg
 from sphinx.util.logging import getLogger
 
 if TYPE_CHECKING:
@@ -42,7 +43,6 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     optional = [
         # Sphinx's nodes
         "desc_signature",
-        "index",
         "legend",
         "pending_xref",
     ]
@@ -53,6 +53,9 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         # Set to avoid rendering root hedering text.
         self._section_level = -1
         self.document.settings.no_import_local_package = False
+        self.context = {
+            "has_index": False,
+        }
 
     # ------
     # visit/departuer methods
@@ -129,6 +132,23 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     def depart_desc_content(self, node: addnodes.desc_content):
         self._hi.pop()
         self.body.append(f"{self._hi.indent}],\n")
+
+    def visit_index(self, node: addnodes.index):
+        # NOTE: This is very simple implementation.
+        #   There may be a more correct implementation.
+        # TODO: Implement other cases.
+        self.packages.add("@preview/in-dexter:0.7.2")
+        self.context["has_index"] = True
+        for entry in node.get("entries", []):
+            entrytype, entryname, target, ignored, key = entry
+            parts = split_index_msg(entrytype, entryname)
+            index_name, index_group = parts
+            self.body.append(
+                f'#index("{index_group}","{index_name}", apply-casing: false)'
+            )
+
+    def depart_index(self, node: addnodes.index):
+        pass
 
     def visit_start_of_file(self, node: addnodes.start_of_file):
         # NOTE: Implement this when rendering anything as the "start of file."
