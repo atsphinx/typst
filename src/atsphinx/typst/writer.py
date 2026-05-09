@@ -137,15 +137,18 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         # NOTE: This is very simple implementation.
         #   There may be a more correct implementation.
         # TODO: Implement other cases.
+
+        def _escape(txt: str) -> str:
+            return txt.replace("\\", "\\\\").replace('"', '\\"')
+
         self.packages.add("@preview/in-dexter:0.7.2")
         self.context["has_index"] = True
         for entry in node.get("entries", []):
             entrytype, entryname, _target, _ignored, _key = entry
             parts = split_index_msg(entrytype, entryname)
             index_name, index_group = parts
-            self.body.append(
-                f'#index("{index_group}","{index_name}", apply-casing: false)'
-            )
+            index_path = f'"{_escape(index_group)}", "{_escape(index_name)}"'
+            self.body.append(f"#index({index_path}, apply-casing: false)")
 
     def depart_index(self, node: addnodes.index):
         pass
