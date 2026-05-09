@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from docutils import nodes
 from rst2typst.package import install_package
+from rst2typst.package import package_dir as rst2typst_package_dir
 from sphinx import addnodes
 from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
@@ -81,7 +82,7 @@ class TypstBuilder(Builder):
             edition=document_settings["edition"],
             font=document_settings["font"],
             body="".join(visitor.body),
-            packages=visitor.imports,
+            packages=visitor.packages,
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
@@ -167,7 +168,7 @@ class TypstPDFBuilder(TypstBuilder):
         import typst
 
         super().finish()
-        install_package()
+        install_package(rst2typst_package_dir, "rst2typst")
         kwargs = {}
         if self.config.typst_font_paths:
             kwargs["font_paths"] = self.config.typst_font_paths

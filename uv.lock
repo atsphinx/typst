@@ -112,7 +112,7 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "anytree", specifier = ">=2.12.1" },
-    { name = "rst2typst", specifier = ">=0.4.0" },
+    { name = "rst2typst", specifier = ">=0.5.1" },
     { name = "sphinx", specifier = ">=8.1" },
     { name = "tomli", marker = "python_full_version < '3.11'", specifier = ">=2.2.1" },
     { name = "typst", marker = "extra == 'pdf'", specifier = ">=0.13.2" },
@@ -604,15 +604,15 @@ wheels = [
 
 [[package]]
 name = "rst2typst"
-version = "0.4.0"
+version = "0.5.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docutils" },
     { name = "platformdirs" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fa/c1/0b69567cbbc8f64c0152ba19c8662c0a3af095dab743e3755299274927ad/rst2typst-0.4.0.tar.gz", hash = "sha256:19a0ef65d82074d991db4159a0550658c9e00db04fae5cca486da273fc5ed122", size = 10703, upload-time = "2026-05-05T17:40:39.963Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2e/85/823830fe44d473e01e0b5f37ce82107eeda7a3e83cc5996ca7612496e60f/rst2typst-0.5.1.tar.gz", hash = "sha256:a309150b01f7bf273f8062cd7727d9e73d021271d76dac72d64c67f44eb48fa5", size = 10964, upload-time = "2026-05-09T03:50:01.946Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/95/02/408fb985cef32951cc0adc650a51e1ca90b58508196ef2581f8d6fa14e1e/rst2typst-0.4.0-py3-none-any.whl", hash = "sha256:70866672fc4008146596e2674d674ff49e8131c3b9a1f0cf04368522e5ab4130", size = 14990, upload-time = "2026-05-05T17:40:38.634Z" },
+    { url = "https://files.pythonhosted.org/packages/72/94/fffcf335bd5eee9d44d860accbf17c3407f941355b30c26f2b79bb831e5f/rst2typst-0.5.1-py3-none-any.whl", hash = "sha256:d630cab624ad3b3d87552f1ee2d10a6062fc72c8fdd8493659efd10065601665", size = 15267, upload-time = "2026-05-09T03:50:00.736Z" },
 ]
 
 [[package]]
