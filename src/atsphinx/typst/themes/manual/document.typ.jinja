@@ -1,10 +1,11 @@
-{#-
+{#
   Sphinx-doc like manual theme
   ============================
--#}
-{%- extends 'basic/document.typ.jinja' %}
+#}
+{% extends 'basic/document.typ.jinja' %}
 
-{%- block document %}
+{% block main %}
+  {# To skip front-matter for page counts. #}
   #counter(page).update(1);
   {{ super() }}
-{%- endblock %}
+{% endblock %}

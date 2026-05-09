@@ -4,6 +4,7 @@
   v(vt)
   body
 }
+
 #cleanPage(
   [
     #titlepage([{{ title }}], size: 24pt, vt: 10%)
