@@ -25,6 +25,8 @@ if TYPE_CHECKING:
 
     from .config import DocumentSettings
 
+typst_package_dir = Path(__file__).parent / "package"
+
 
 class TypstBuilder(Builder):
     """Custom builder to generate Typst source from doctree."""
@@ -169,6 +171,7 @@ class TypstPDFBuilder(TypstBuilder):
 
         super().finish()
         install_package(rst2typst_package_dir, "rst2typst")
+        install_package(typst_package_dir, "atsphinx-typst", force=True)
         kwargs = {}
         if self.config.typst_font_paths:
             kwargs["font_paths"] = self.config.typst_font_paths
