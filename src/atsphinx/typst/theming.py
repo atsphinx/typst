@@ -122,7 +122,7 @@ class ThemeContext:
     copyright: str
 
     # From builder class
-    date: str
+    build_date: str
 
     # From document settings
     title: str
