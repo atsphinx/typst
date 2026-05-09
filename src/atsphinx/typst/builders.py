@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from docutils import nodes
 from rst2typst.package import install_package
+from rst2typst.package import package_dir as rst2typst_package_dir
 from sphinx import addnodes
 from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
@@ -23,6 +24,8 @@ if TYPE_CHECKING:
     from sphinx.environment import BuildEnvironment
 
     from .config import DocumentSettings
+
+typst_package_dir = Path(__file__).parent / "package"
 
 
 class TypstBuilder(Builder):
@@ -81,7 +84,7 @@ class TypstBuilder(Builder):
             edition=document_settings["edition"],
             font=document_settings["font"],
             body="".join(visitor.body),
-            packages=visitor.imports,
+            packages=visitor.packages,
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
@@ -107,6 +110,7 @@ class TypstBuilder(Builder):
             root = root.copy()
             root += root_section
         tree = inline_all_toctrees(self, {docname}, docname, root, darkgreen, [docname])
+        self.env.resolve_references(tree, docname, self)
         return tree
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102
@@ -166,7 +170,8 @@ class TypstPDFBuilder(TypstBuilder):
         import typst
 
         super().finish()
-        install_package()
+        install_package(rst2typst_package_dir, "rst2typst")
+        install_package(typst_package_dir, "atsphinx-typst")
         kwargs = {}
         if self.config.typst_font_paths:
             kwargs["font_paths"] = self.config.typst_font_paths

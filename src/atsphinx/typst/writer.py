@@ -12,6 +12,7 @@ Order of definitions.
 
 from __future__ import annotations
 
+from importlib import metadata
 from pathlib import Path
 from typing import TYPE_CHECKING
 
@@ -28,14 +29,18 @@ if TYPE_CHECKING:
 logger = getLogger(__name__)
 
 
+# TODO: It should be defined in rst2typst.
+def _typst_local_package_fullname(name: str, version: str | None = None) -> str:
+    if version is None:
+        version = metadata.version(name)
+    return f"@local/{name}:{version}"
+
+
 class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
     optional = [
         # Sphinx's nodes
-        "desc",
-        "desc_content",
-        "desc_name",
         "desc_signature",
         "index",
         "legend",
@@ -82,8 +87,49 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         node["uri"] = uri_map
         super().visit_image(node)
 
+    def visit_reference(self, node):
+        # NOTE: It may be should implement in rst2typst.
+        if node.get("internal", False):
+            uri = node["refuri"][1:]
+            self.body.append(f"#link(<{uri}>)[")
+            return
+        super().visit_reference(node)
+
     # Implements for Sphinx's nodes
     # =============================
+    def visit_desc(self, node: addnodes.desc):
+        self.packages.add(_typst_local_package_fullname("atsphinx-typst"), "desc")
+        self.body.append(f"{self._hi.prefix}#desc(\n")
+        self._hi.push("  ")
+
+    def depart_desc(self, node: addnodes.desc):
+        self._hi.pop()
+        self.body.append(f"{self._hi.indent})\n")
+
+    def visit_desc_signature(self, node: addnodes.desc_signature):
+        self.body.append(f"{self._hi.prefix}[\n")
+        self._hi.push("  ")
+
+    def depart_desc_signature(self, node: addnodes.desc_signature):
+        for id in node.get("ids", []):
+            self.body.append(f" <{id}>")
+        self._hi.pop()
+        self.body.append(f"{self._hi.prefix}],\n")
+
+    def visit_desc_name(self, node: addnodes.desc_name):
+        self.body.append(f"{self._hi.indent}#strong(delta: 400)[")
+
+    def depart_desc_name(self, node: addnodes.desc_name):
+        self.body.append("]")
+
+    def visit_desc_content(self, node: addnodes.desc_content):
+        self.body.append(f"{self._hi.prefix}[\n")
+        self._hi.push("  ")
+
+    def depart_desc_content(self, node: addnodes.desc_content):
+        self._hi.pop()
+        self.body.append(f"{self._hi.indent}],\n")
+
     def visit_start_of_file(self, node: addnodes.start_of_file):
         # NOTE: Implement this when rendering anything as the "start of file."
         pass
