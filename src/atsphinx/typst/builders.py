@@ -85,6 +85,7 @@ class TypstBuilder(Builder):
             font=document_settings["font"],
             body="".join(visitor.body),
             packages=visitor.packages,
+            translated=visitor.context,
         )
         out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)

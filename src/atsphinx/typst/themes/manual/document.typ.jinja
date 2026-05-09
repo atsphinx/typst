@@ -9,3 +9,14 @@
   #counter(page).update(1);
   {{ super() }}
 {% endblock %}
+
+{% block back_matter %}
+
+{% if translated.has_index %}
+= Index
+#columns(2)[
+  #make-index(title: none)
+]
+{% endif %}
+
+{% endblock %}

@@ -137,6 +137,8 @@ class ThemeContext:
     """Content body from doctree."""
     packages: PackageRegistry
     """Package management object."""
+    translated: dict[str, Any]
+    """Translated state."""
 
 
 def _verify_theme_path(theme_dir: Path) -> bool:
