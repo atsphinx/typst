@@ -40,9 +40,10 @@ def _typst_local_package_fullname(name: str, version: str | None = None) -> str:
 class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
+    # NOTE: If you found ``NotImplementedError`` for node visitor/departure,
+    #   add node name into ``optional`` and implement after.
     optional = [
-        # Sphinx's nodes
-        "legend",
+        # "legend",  # Alredy added, but translator does not find.
     ]
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
