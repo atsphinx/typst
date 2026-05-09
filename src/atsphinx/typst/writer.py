@@ -44,6 +44,15 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     #   add node name into ``optional`` and implement after.
     optional = [
         # "legend",  # Alredy added, but translator does not find.
+        # TODO: Require implements to support apidoc.
+        "desc_addname",
+        "desc_annotation",
+        "desc_sig_space",
+        "desc_sig_name",
+        "desc_parameter",
+        "desc_parameterlist",
+        "desc_returns",
+        "desc_sig_punctuation",
     ]
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
