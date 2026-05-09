@@ -1,4 +1,4 @@
-{#-
+{#
   Base theme of atsphinx-typst
   ============================
 
@@ -9,19 +9,20 @@
   * Outline of contents.
   * Contents with page number on footer layout.
 
-  This is designed by 3 blocks of Jinja.
+  This is designed by 5 blocks of Jinja.
 
-  meta
-      Manage PDF metadata, page size and settings overall Typst document.
-  layout
-      Layout settings of page and components.
-  content
-      Body of document that only display on paper.
--#}
-{%- block meta %}
+  .. todo:: More cleanly lines and spaces
+#}
+
+{#
+  Preamble section
+  ----------------
+#}
+{% block preamble %}
+{# Import statements #}
 {{ packages.code }}
 
-{#- 
+{#
   To set PDF metadata.
 
   :ref: https://typst.app/docs/reference/model/document/
@@ -33,30 +34,53 @@
   author: {{ author|tojson }},
   {% endif %}
 )
-{%- endblock %}
 
+{# Font configuration #}
 {% if font %}
 #set text(font: "{{ font }}")
 {% endif %}
 
-{%- block layout %}
-{% include './layout.typ' %}
-{%- endblock %}
+{# Layout definitions #}
+{% include 'layout.typ' %}
+{% endblock %}
 
-{%- block content %}
-  {%- block cover %}
-    {% include './cover.typ' %}
-  {% endblock %}
+{#
+  Front-matter section
+  --------------------
+  
+  This section is to render cover, credit and items that author wants audience to see first.
+#}
+{% block front_matter %}
+{# Render cover #}
+{% block cover %}
+  {% include 'cover.typ' %}
+{% endblock %}
 
-  {%- block outline %}
-    #show: cleanPage
-    #outline()
-  {% endblock %}
+{# Render outline #}
+{% block outline %}
+  #show: cleanPage
+  #outline()
+{% endblock %}
 
-  {%- block document %}
-    #show: contentPage
+{% endblock %}
+
+{#
+  Main body section
+  -----------------
+
+  This section is to render ``body`` translated by Sphinx.
+#}
+{% block main %}
+#show: contentPage
 
 {{ body|safe }}
-  {% endblock %}
+{% endblock %}
 
-{%- endblock %}
+{#
+  Back-matter section
+  -------------------
+
+  This section is to render glossary, index, impressum and items for useful to read detailedly.
+#}
+{% block back_matter %}
+{% endblock %}

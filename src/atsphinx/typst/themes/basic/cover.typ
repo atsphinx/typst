@@ -1,4 +1,5 @@
 #show: cleanPage
+
 #align(center, [
   #v(36pt)
   #text(
@@ -7,4 +8,5 @@
     [{{ title }}],
   )
 ])
+
 #pagebreak()
