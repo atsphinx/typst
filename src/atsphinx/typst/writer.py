@@ -140,7 +140,7 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         self.packages.add("@preview/in-dexter:0.7.2")
         self.context["has_index"] = True
         for entry in node.get("entries", []):
-            entrytype, entryname, target, ignored, key = entry
+            entrytype, entryname, _target, _ignored, _key = entry
             parts = split_index_msg(entrytype, entryname)
             index_name, index_group = parts
             self.body.append(
