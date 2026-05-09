@@ -145,6 +145,10 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         self.context["has_index"] = True
         for entry in node.get("entries", []):
             entrytype, entryname, _target, _ignored, _key = entry
+            if entrytype != "pair":
+                logger.info("Currently, it only suports 'pair' typed entries.")
+                continue
+
             parts = split_index_msg(entrytype, entryname)
             index_name, index_group = parts
             index_path = f'"{_escape(index_group)}", "{_escape(index_name)}"'
