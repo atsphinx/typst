@@ -4,10 +4,8 @@ Installation
 Install from PyPI
 -----------------
 
-It is published on PyPI.
+This package is published on PyPI.
 You can install it by pip or other package management tools.
-
-.. note:: Currently, it is not published yet.
 
 .. code-block:: console
 

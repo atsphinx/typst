@@ -1,7 +1,7 @@
 Configuration
 =============
 
-Currently, you can configure behviors of atsphinx-typst by some values.
+You can configure behviors of atsphinx-typst by some values.
 
 .. confval:: typst_documents
     :type: list[dict]
