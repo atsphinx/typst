@@ -1,15 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2025, Kazuya Takei
+# Japanese translations for atsphinx-typst.
+# Copyright (C) 2026, Kazuya Takei
 # This file is distributed under the same license as the atsphinx-typst
 # package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: atsphinx-typst 0.0.0\n"
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-11 02:21+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -25,47 +24,38 @@ msgid "atsphinx-typst"
 msgstr ""
 
 #: ../../index.rst:6
-msgid "This is ALPHA-stage product."
-msgstr ""
+msgid "Quickstart"
+msgstr "クイックスタート"
 
 #: ../../index.rst:8
-msgid ""
-"We implement basic features to work for us, but you may encounter missing"
-" features or malfunctions when using it."
-msgstr ""
-
-#: ../../index.rst:12
-msgid "Quickstart"
-msgstr ""
-
-#: ../../index.rst:14
 msgid ""
 "Add ``atsphinx-typst[pdf]`` into your project as documentation "
 "dependencies."
 msgstr ""
 
-#: ../../index.rst:15
+#: ../../index.rst:9
 msgid "Run ``make typstpdf`` on your document."
-msgstr ""
+msgstr "ドキュメント上で ``make typstpdf`` を実行してください。"
 
-#: ../../index.rst:16
+#: ../../index.rst:10
 msgid "You can open ``typstpdf/document.pdf`` on your document's build directory."
-msgstr ""
+msgstr "ドキュメントのビルド出力先ディレクトリにある ``typstpdf/document.pdf`` を開けるようになります。"
 
-#: ../../index.rst:19
-msgid "Refs"
-msgstr ""
+#: ../../index.rst:13
+msgid "Contents"
+msgstr "コンテンツ"
 
-#: ../../index.rst:21
+#: ../../index.rst:29
+msgid "References"
+msgstr "リファレンス"
+
+#: ../../index.rst:37
 msgid "`Typst reference <https://typst.app/docs/reference/>`_."
 msgstr ""
 
-#~ msgid "Overview"
-#~ msgstr ""
-
-#~ msgid "Todo"
-#~ msgstr ""
-
-#~ msgid "Write it"
+#~ msgid ""
+#~ "ドキュメント管理に関する依存ライブラリに ``atsphinx-typst[pdf]`` "
+#~ "を追加してください。Add ``atsphinx-typst[pdf]`` into "
+#~ "your project as documentation dependencies."
 #~ msgstr ""
 

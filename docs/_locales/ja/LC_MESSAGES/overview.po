@@ -1,15 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2025, Kazuya Takei
+# Japanese translations for atsphinx-typst.
+# Copyright (C) 2026, Kazuya Takei
 # This file is distributed under the same license as the atsphinx-typst
 # package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: atsphinx-typst 0.0.0\n"
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -44,8 +44,8 @@ msgstr ""
 
 #: ../../overview.rst:16
 msgid ""
-"Typst is a new markup-based typesetting system for the sciences. [#1]_ It"
-" has easy syntax to learn and lightweight builder to generate PDF."
+"Typst is a new markup-based typesetting system for the sciences. [#]_ It "
+"has easy syntax to learn and lightweight builder to generate PDF."
 msgstr ""
 
 #: ../../overview.rst:19
@@ -57,106 +57,121 @@ msgid "https://typst.app/docs/"
 msgstr ""
 
 #: ../../overview.rst:24
-msgid "Motivation"
+msgid "Providing features"
 msgstr ""
 
 #: ../../overview.rst:26
-msgid "I publish \"Tech-ZINE\" [#2]_ using Sphinx and ``latexpdf`` builder."
+msgid ""
+"Role of atsphinx-typst is that **provides custom builders** using Typst. "
+"There are some internal modules and packages, but they are for providers."
 msgstr ""
 
-#: ../../overview.rst:28
-msgid "It means non-commercial publications about engineerings."
+#: ../../overview.rst:29
+msgid "``typst`` builder generate Typst document from Sphinx document."
 msgstr ""
 
 #: ../../overview.rst:30
+msgid ""
+"``typstpdf`` builder generate Typst document from Sphinx document too. "
+"After generatating Typst document, it generate PDF document from Typst "
+"document using compiler."
+msgstr ""
+
+#: ../../overview.rst:38
+msgid "Supporting range of atsphinx-typst in Sphinx build process."
+msgstr ""
+
+#: ../../overview.rst:41
+msgid "Motivation"
+msgstr ""
+
+#: ../../overview.rst:43
+msgid "I publish \"Tech-ZINE\" [#]_ using Sphinx and ``latexpdf`` builder."
+msgstr ""
+
+#: ../../overview.rst:45
+msgid "It means non-commercial publications about engineerings."
+msgstr ""
+
+#: ../../overview.rst:47
 msgid ""
 "Currently, Sphinx can create PDF document easily because it provides "
 "official docker image. But, I think that it has some problems."
 msgstr ""
 
-#: ../../overview.rst:33
+#: ../../overview.rst:50
 msgid "Image size is too large."
 msgstr ""
 
-#: ../../overview.rst:34
+#: ../../overview.rst:51
 msgid "It is little hard to use image with other extensions."
 msgstr ""
 
-#: ../../overview.rst:35
+#: ../../overview.rst:52
 msgid "It is very hard to build without using docker image."
 msgstr ""
 
-#: ../../overview.rst:37
+#: ../../overview.rst:54
 msgid ""
 "I want to create PDF as easy and low-layer as possible. So, I try to "
 "adopt Typst as PDF builder that can run without container layer."
 msgstr ""
 
-#: ../../overview.rst:41
+#: ../../overview.rst:58
 msgid "Goal"
 msgstr ""
 
-#: ../../overview.rst:43
+#: ../../overview.rst:60
 msgid ""
 "As above, this is personal project from private motivation. But, I think "
 "that it should have goal of project."
 msgstr ""
 
-#: ../../overview.rst:46
+#: ../../overview.rst:63
 msgid "I set three goals as milestone."
 msgstr ""
 
-#: ../../overview.rst:49
-msgid "For v0.0.1"
-msgstr ""
-
-#: ../../overview.rst:51
-msgid ""
-"On this version, it should be able to generate full-featured PDF of this "
-"project."
-msgstr ""
-
-#: ../../overview.rst:54
+#: ../../overview.rst:66
 msgid "For v0.1.0"
 msgstr ""
 
-#: ../../overview.rst:56
-msgid ""
-"On this version, it should be able to generate full-featured PDF of any "
-"own projects."
+#: ../../overview.rst:68 ../../overview.rst:77
+msgid "In this version:"
 msgstr ""
 
-#: ../../overview.rst:58
-msgid "Example:"
+#: ../../overview.rst:70
+msgid "We can use to generate Tech-ZINE PDF file."
 msgstr ""
 
-#: ../../overview.rst:60
-msgid "sphinx-revealjs"
+#: ../../overview.rst:71
+msgid "We can use to generate PDF file of some Python project."
 msgstr ""
 
-#: ../../overview.rst:61
-msgid "oEmbedPy"
+#: ../../overview.rst:72
+msgid "I can use to generate simple PDF file of this project. (disabled apidoc)"
 msgstr ""
 
-#: ../../overview.rst:64
+#: ../../overview.rst:75
 msgid "For v1.0.0"
 msgstr ""
 
-#: ../../overview.rst:66
+#: ../../overview.rst:79
 msgid ""
-"On this version, it should be able to generate full-featured PDF of major"
-" Sphinx documentations."
+"We can use to generate PDF file supported all Sphinx core features and "
+"bundle extensions."
 msgstr ""
 
-#: ../../overview.rst:68
-msgid "Sphinx"
+#: ../../overview.rst:80
+msgid ""
+"I can replace from ``latexpdf`` build for some my projects published on "
+"readthedocs."
 msgstr ""
 
-#: ../../overview.rst:70
-msgid "Todo"
+#: ../../overview.rst:82
+msgid "sphinx-revealjs"
 msgstr ""
 
-#: ../../overview.rst:70
-msgid "It is plan."
+#: ../../overview.rst:83
+msgid "oEmbedPy"
 msgstr ""
 

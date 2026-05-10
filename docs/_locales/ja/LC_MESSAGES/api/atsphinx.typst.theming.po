@@ -1,0 +1,141 @@
+# Japanese translations for atsphinx-typst.
+# Copyright (C) 2026, Kazuya Takei
+# This file is distributed under the same license as the atsphinx-typst
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../api/atsphinx.typst.theming.rst:2
+msgid "atsphinx.typst.theming module"
+msgstr ""
+
+#: atsphinx.typst.theming:1 of
+msgid "Theming support for Typst builders."
+msgstr ""
+
+#: atsphinx.typst.theming:3 of
+msgid ""
+"This module is inspired :py:mod:`sphinx.theming`, but it is impleemented "
+"simplify."
+msgstr ""
+
+#: atsphinx.typst.theming.Theme:1 atsphinx.typst.theming.ThemeConfig:1
+#: atsphinx.typst.theming.ThemeContext:1 of
+msgid "Bases: :py:class:`object`"
+msgstr ""
+
+#: atsphinx.typst.theming.Theme:1 of
+msgid "Typst templating assets and configurations."
+msgstr ""
+
+#: atsphinx.typst.theming.Theme.get_parent_theme:1 of
+msgid "Retrieve parent theme name if it is exists."
+msgstr ""
+
+#: atsphinx.typst.theming.Theme.get_theme_dir:1 of
+msgid "Retrieve base directory of theme."
+msgstr ""
+
+#: atsphinx.typst.theming.Theme.write_doc:1 of
+msgid "Write content as document."
+msgstr ""
+
+#: atsphinx.typst.theming.ThemeConfig:1 of
+msgid "Resolved configuration of theme."
+msgstr ""
+
+#: atsphinx.typst.theming.ThemeConfig:3 of
+msgid "This provides behavior that how dow theme work on builder."
+msgstr ""
+
+#: atsphinx.typst.theming.ThemeConfig.make_default:1 of
+msgid "Create object of default configuration values of theme."
+msgstr ""
+
+#: atsphinx.typst.theming.ThemeConfig.resolve:1 of
+msgid "Merge all configurations of TOML's values."
+msgstr ""
+
+#: atsphinx.typst.theming.ThemeContext:1 of
+msgid "Context variables for templating."
+msgstr ""
+
+#: atsphinx.typst.theming.ThemeContext:3 of
+msgid "Many properties (dict keys) are to use directly."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.author:1 of
+msgid "The author text of document."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.body:1 of
+msgid "Content body from doctree."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.packages:1 of
+msgid "Package management object."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.project:1 of
+msgid "The Name of project."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.release:1 of
+msgid "The versioning text of document."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.title:1 of
+msgid "The title of document."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.theming.ThemeContext.translated:1 of
+msgid "Translated state."
+msgstr ""
+
+#: atsphinx.typst.theming.load_theme:1 of
+msgid "Find theme directory and load as theme object."
+msgstr ""
+
+#: atsphinx.typst.theming.load_theme:3 of
+msgid "If it is not found, raise error."
+msgstr ""
+
+#: ../../api/atsphinx.typst.theming.rst
+msgid "Parameters"
+msgstr ""
+
+#: atsphinx.typst.theming.load_theme:5 of
+msgid "Target theme name."
+msgstr ""
+
+#: ../../api/atsphinx.typst.theming.rst
+msgid "Returns"
+msgstr ""
+
+#: atsphinx.typst.theming.load_theme:6 of
+msgid "Theme object."
+msgstr ""
+
+#: atsphinx.typst.theming.load_theme of
+msgid "raises"
+msgstr ""
+
+#: atsphinx.typst.theming.load_theme:7 of
+msgid "ThemeError if argumented name or ihnerit name is not theme."
+msgstr ""
+

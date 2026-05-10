@@ -1,15 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2025, Kazuya Takei
+# Japanese translations for atsphinx-typst.
+# Copyright (C) 2026, Kazuya Takei
 # This file is distributed under the same license as the atsphinx-typst
 # package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: atsphinx-typst 0.0.0\n"
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-11 02:41+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -22,15 +21,23 @@ msgstr ""
 
 #: ../../usage/build-document.rst:2
 msgid "Build document"
-msgstr ""
+msgstr "ドキュメントのビルド"
 
 #: ../../usage/build-document.rst:4
 msgid ""
 "You can run ``typst`` builder without editing your ``conf.py`` after "
-"install."
-msgstr ""
+"install. [#fn]_"
+msgstr "``typst`` ビルダーの実行には、インストール後に ``conf.py`` の編集を必要としません。 [#fn]_"
 
-#: ../../usage/build-document.rst:13
-msgid "When you call ``typst`` builder, it generate ``BUILD_DIR/typst``."
-msgstr ""
+#: ../../usage/build-document.rst:6
+msgid ""
+"Sphinx can search builder automately because it registers module of "
+"builder into entrypoint."
+msgstr "Sphinxは、実行時に必要に応じて自動でモジュールを登録します。"
+
+#: ../../usage/build-document.rst:15
+msgid ""
+"When you call ``typst`` builder, it generates files into "
+"``BUILD_DIR/typst``."
+msgstr "``typst`` ビルダーを実行すると、ファイルを ``BUILD_DIR/typst`` に生成します。"
 

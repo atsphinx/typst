@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Kazuya Takei
+# This file is distributed under the same license as the atsphinx-typst
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../api/atsphinx.typst.builders.rst:2
+msgid "atsphinx.typst.builders module"
+msgstr ""
+
+#: atsphinx.typst.builders:1 of
+msgid "Custom builders."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder:1 of
+msgid "Bases: :py:class:`~sphinx.builders.Builder`"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder:1 of
+msgid "Custom builder to generate Typst source from doctree."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.assemble_doctree:1 of
+msgid "Find toctree and merge children doctree into parent doctree."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.assemble_doctree:3 of
+msgid "This method is to generate single Typst document."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.assemble_doctree:5 of
+msgid "Todo"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.assemble_doctree:7 of
+msgid "We must see how does inline_all_toctrees work."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.copy_assets:1 of
+msgid "Where assets (images, static files, etc) are copied before writing"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.finish:1
+#: atsphinx.typst.builders.TypstPDFBuilder.finish:1 of
+msgid "Finish the building process."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.finish:3
+#: atsphinx.typst.builders.TypstPDFBuilder.finish:3 of
+msgid "The default implementation does nothing."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.builders.TypstBuilder.format:1
+#: atsphinx.typst.builders.TypstPDFBuilder.format:1 of
+msgid ""
+"The builder's output format, or '' if no document output is produced. "
+"This is commonly the file extension, e.g. \"html\", though any string "
+"value is accepted. The builder's format string can be used by various "
+"components such as :class:`.SphinxPostTransform` or extensions to "
+"determine their compatibility with the builder."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.get_outdated_docs:1 of
+msgid ""
+"Return an iterable of output files that are outdated, or a string "
+"describing what an update build will build."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.get_outdated_docs:4 of
+msgid ""
+"If the builder does not output individual files corresponding to source "
+"files, return a string here.  If it does, return an iterable of those "
+"files that need to be written."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.get_target_uri:1 of
+msgid "Return the target URI for a document name."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.get_target_uri:3 of
+msgid ""
+"*typ* can be used to qualify the link characteristic for individual "
+"builders."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.init:1 of
+msgid ""
+"Load necessary templates and perform initialization.  The default "
+"implementation does nothing."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.builders.TypstBuilder.name:1
+#: atsphinx.typst.builders.TypstPDFBuilder.name:1 of
+msgid ""
+"The builder's name. This is the value used to select builders on the "
+"command line."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.prepare_writing:1 of
+msgid "A place where you can add logic before :meth:`write_doc` is run"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_doc:1 of
+msgid "Write the output file for the document"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_doc of
+msgid "Parameters"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_doc:3 of
+msgid "the :term:`docname <document name>`."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_doc:4 of
+msgid "defines the content to be written."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_doc:6 of
+msgid ""
+"The output filename must be determined within this method, typically by "
+"calling :meth:`~.Builder.get_target_uri` or "
+":meth:`~.Builder.get_relative_uri`."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_documents:1 of
+msgid "Write all documents in *docnames*."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstBuilder.write_documents:3 of
+msgid ""
+"This method can be overridden if a builder does not create output files "
+"for each document."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstPDFBuilder:1 of
+msgid "Bases: :py:class:`~atsphinx.typst.builders.TypstBuilder`"
+msgstr ""
+
+#: atsphinx.typst.builders.TypstPDFBuilder:1 of
+msgid "PDF creation builder from doctree."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstPDFBuilder:3 of
+msgid ""
+"This is similar to the relationship between the latexpdf builder and the "
+"latex builder."
+msgstr ""
+
+#: atsphinx.typst.builders.TypstPDFBuilder.init:1 of
+msgid "Check that python env has typst package."
+msgstr ""
+
