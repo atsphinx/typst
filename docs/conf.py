@@ -86,8 +86,9 @@ typst_documents = [
     {
         "entrypoint": "index",
         "filename": "document",
-        "theme": "manual",
         "title": f"{project} Documentation",
+        "author": author,
+        "theme": "manual",
         "toctree_only": "exclude_hidden",
     }
 ]
