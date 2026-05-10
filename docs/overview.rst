@@ -62,24 +62,23 @@ But, I think that it should have goal of project.
 
 I set three goals as milestone.
 
-For v0.0.1
-----------
-
-On this version, it should be able to generate full-featured PDF of this project.
-
 For v0.1.0
 ----------
 
-On this version, it should be able to generate full-featured PDF of any own projects.
+In this version:
 
-Example:
-
-* sphinx-revealjs
-* oEmbedPy
+* We can use to generate Tech-ZINE PDF file.
+* We can use to generate PDF file of some Python project.
+* I can use to generate simple PDF file of this project. (disabled apidoc)
 
 For v1.0.0
 ----------
 
-On this version, it should be able to generate full-featured PDF of major Sphinx documentations.
+In this version:
 
-* Sphinx (**It is plan**)
+* We can use to generate PDF file supported all Sphinx core features and bundle extensions.
+* I can replace from ``latexpdf`` build for some my projects published on readthedocs.
+
+  * sphinx-revealjs
+  * oEmbedPy
+

@@ -11,8 +11,15 @@ Step
 Download custom font
 --------------------
 
+At first, you should find TTF font and download it.
+
 Configure Sphinx document
 -------------------------
+
+If the downloaded fonts are installed on your system,
+``atsphinx-typst`` can use them without any additional configuration.
+If you prefer to use them without installing,
+you need to specify the path to the font files in :confval:`typst_font_paths`.
 
 .. code-block:: python
     :caption: conf.py
@@ -23,6 +30,11 @@ Configure Sphinx document
 
 Set font into your document setting
 -----------------------------------
+
+Set the :confval:`font <typst_documents[].font>` option
+in your :confval:`typst_documents` configuration to the desired font name [#]_, then run the build.
+
+.. [#] This should be the font name, not the font filename.
 
 .. code-block:: python
     :caption: conf.py
@@ -37,9 +49,6 @@ Set font into your document setting
             "toctree_only": True,
         }
     ]
-
-Build it!
----------
 
 Extras
 ======
