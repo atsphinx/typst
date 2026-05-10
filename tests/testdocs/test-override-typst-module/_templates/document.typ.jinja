@@ -1,8 +1,8 @@
 {%- extends '!document.typ.jinja' %}
 
-{%- block layout %}
+{%- block preamble %}
   {{ super() }}
-  #let docutils-admonition(title, content) = {
-    [#title, #content]
+  #let admonition(type, title, content) = {
+    // Write your design.
   }
 {%- endblock %}

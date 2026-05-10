@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -20,7 +20,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ../../usage/index.rst:2
-msgid "Usage"
+#: ../../api/atsphinx.typst.adapters.sphinx.ext.rst:2
+msgid "atsphinx.typst.adapters.sphinx.ext package"
+msgstr ""
+
+#: ../../api/atsphinx.typst.adapters.sphinx.ext.rst:5
+msgid "Submodules"
+msgstr ""
+
+#: ../../api/atsphinx.typst.adapters.sphinx.ext.rst:13
+msgid "Module contents"
 msgstr ""
 

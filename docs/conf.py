@@ -86,8 +86,9 @@ typst_documents = [
     {
         "entrypoint": "index",
         "filename": "document",
-        "theme": "manual",
         "title": f"{project} Documentation",
+        "author": author,
+        "theme": "manual",
         "toctree_only": "exclude_hidden",
     }
 ]
@@ -95,6 +96,7 @@ typst_documents = [
 # -- Options for extensions
 # sphinx.ext.intersphinx
 intersphinx_mapping = {
+    "python": ("https://docs.python.org/3.10", None),
     "sphinx": ("https://www.sphinx-doc.org/en/master", None),
 }
 # sphinx.ext.todo

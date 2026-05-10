@@ -1,4 +1,4 @@
-# SOME DESCRIPTIVE TITLE.
+# Japanese translations for atsphinx-typst.
 # Copyright (C) 2026, Kazuya Takei
 # This file is distributed under the same license as the atsphinx-typst
 # package.
@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -20,7 +20,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ../../usage/index.rst:2
-msgid "Usage"
+#: ../../api/atsphinx.typst.adapters.sphinx.rst:2
+msgid "atsphinx.typst.adapters.sphinx package"
+msgstr ""
+
+#: ../../api/atsphinx.typst.adapters.sphinx.rst:5
+msgid "Subpackages"
+msgstr ""
+
+#: ../../api/atsphinx.typst.adapters.sphinx.rst:13
+msgid "Module contents"
 msgstr ""
 

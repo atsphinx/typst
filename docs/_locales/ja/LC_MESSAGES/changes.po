@@ -1,15 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2025, Kazuya Takei
+# Japanese translations for atsphinx-typst.
+# Copyright (C) 2026, Kazuya Takei
 # This file is distributed under the same license as the atsphinx-typst
 # package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: atsphinx-typst 0.0.0\n"
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -22,50 +22,169 @@ msgstr ""
 
 #: ../../../CHANGES.rst:3
 msgid "Change logs"
-msgstr ""
+msgstr "更新履歴"
 
 #: ../../../CHANGES.rst:6
-msgid "Version 0.0.1"
+msgid "Version 0.0.5"
 msgstr ""
 
 #: ../../../CHANGES.rst
-msgid "Release date"
+msgid "date"
 msgstr ""
 
 #: ../../../CHANGES.rst:8
-msgid "2025-07-21 (Asia/Tokyo)"
+msgid "2025-09-07 (Asia/Tokyo)"
 msgstr ""
 
-#: ../../../CHANGES.rst:10
-msgid "First published release."
-msgstr ""
-
-#: ../../../CHANGES.rst:13
+#: ../../../CHANGES.rst:11 ../../../CHANGES.rst:31 ../../../CHANGES.rst:64
+#: ../../../CHANGES.rst:99
 msgid "Features"
 msgstr ""
 
-#: ../../../CHANGES.rst:15
-msgid "Add builders."
+#: ../../../CHANGES.rst:13
+msgid "Support ``admonition`` and inherited directives."
 msgstr ""
 
-#: ../../../CHANGES.rst:18
-msgid "Version 0.0.0"
+#: ../../../CHANGES.rst:14
+msgid "Support custom font."
+msgstr ""
+
+#: ../../../CHANGES.rst:15
+msgid "Add \"toctree_only\" mode on document_settings."
+msgstr ""
+
+#: ../../../CHANGES.rst:18 ../../../CHANGES.rst:40 ../../../CHANGES.rst:71
+#: ../../../CHANGES.rst:82
+msgid "Fixes"
 msgstr ""
 
 #: ../../../CHANGES.rst:20
+msgid "Update escape rule."
+msgstr ""
+
+#: ../../../CHANGES.rst:23
+msgid "Version 0.0.4"
+msgstr ""
+
+#: ../../../CHANGES.rst:25
+msgid "2025-07-29 (Asia/Tokyo)"
+msgstr ""
+
+#: ../../../CHANGES.rst:28 ../../../CHANGES.rst:58
+msgid "Breaking changes"
+msgstr ""
+
+#: ../../../CHANGES.rst:33
+msgid ""
+"Copy ``static_path`` assets. and add ``typst_static_path`` as "
+"configuration."
+msgstr ""
+
+#: ../../../CHANGES.rst:35
+msgid "Copy document assets (e.g. image files)."
+msgstr ""
+
+#: ../../../CHANGES.rst:36
+msgid "Ignore comment nodes of docutils."
+msgstr ""
+
+#: ../../../CHANGES.rst:37
+msgid "Enable footnotes."
+msgstr ""
+
+#: ../../../CHANGES.rst:42
+msgid "Remove hash from ``image`` call wrapped by ``figure``."
+msgstr ""
+
+#: ../../../CHANGES.rst:45 ../../../CHANGES.rst:74 ../../../CHANGES.rst:87
+msgid "Others"
+msgstr ""
+
+#: ../../../CHANGES.rst:47
+msgid "Restructure element classes."
+msgstr ""
+
+#: ../../../CHANGES.rst:48
+msgid "Sort visitor/departure methods of translator."
+msgstr ""
+
+#: ../../../CHANGES.rst:49
+msgid "Experimental support Japanese document."
+msgstr ""
+
+#: ../../../CHANGES.rst:50
+msgid "Update workspace environment."
+msgstr ""
+
+#: ../../../CHANGES.rst:53
+msgid "Version 0.0.3"
+msgstr ""
+
+#: ../../../CHANGES.rst:55
+msgid "2025-07-26 (Asia/Tokyo)"
+msgstr ""
+
+#: ../../../CHANGES.rst:60
+msgid "Change key of ``typst_documents`` from ``'entry'`` to ``'entrypoint'``."
+msgstr ""
+
+#: ../../../CHANGES.rst:61
+msgid "Change template name of theme."
+msgstr ""
+
+#: ../../../CHANGES.rst:66
+msgid "Update structure of theme."
+msgstr ""
+
+#: ../../../CHANGES.rst:67
+msgid "Add theme 'basic' and split some features from 'manual'."
+msgstr ""
+
+#: ../../../CHANGES.rst:68
+msgid "Theme can pass assets (include any inherited themes)"
+msgstr ""
+
+#: ../../../CHANGES.rst:77
+msgid "Version 0.0.2"
+msgstr ""
+
+#: ../../../CHANGES.rst:79
+msgid "2025-07-23 (Asia/Tokyo)"
+msgstr ""
+
+#: ../../../CHANGES.rst:84
+msgid "Controle version using import-metadata."
+msgstr ""
+
+#: ../../../CHANGES.rst:89
+msgid "Restructure modules."
+msgstr ""
+
+#: ../../../CHANGES.rst:92
+msgid "Version 0.0.1"
+msgstr ""
+
+#: ../../../CHANGES.rst:94
+msgid "2025-07-21 (Asia/Tokyo)"
+msgstr ""
+
+#: ../../../CHANGES.rst:96
+msgid "First published release."
+msgstr ""
+
+#: ../../../CHANGES.rst:101
+msgid "Add builders."
+msgstr ""
+
+#: ../../../CHANGES.rst:104
+msgid "Version 0.0.0"
+msgstr ""
+
+#: ../../../CHANGES.rst:106
 msgid "2025-06-13 (Asia/Tokyo)"
 msgstr ""
 
-#: ../../../CHANGES.rst:22
+#: ../../../CHANGES.rst:108
 msgid "Initial commit."
 msgstr ""
-
-#~ msgid "Changelogs"
-#~ msgstr ""
-
-#~ msgid "v0.0.0"
-#~ msgstr ""
-
-#~ msgid "date"
-#~ msgstr ""
 

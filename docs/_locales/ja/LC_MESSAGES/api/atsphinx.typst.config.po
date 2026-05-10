@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, Kazuya Takei
+# This file is distributed under the same license as the atsphinx-typst
+# package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-10 16:03+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ja\n"
+"Language-Team: ja <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ../../api/atsphinx.typst.config.rst:2
+msgid "atsphinx.typst.config module"
+msgstr ""
+
+#: atsphinx.typst.config:1 of
+msgid "Configuration."
+msgstr ""
+
+#: atsphinx.typst.config.DocumentSettings:1 of
+msgid "Bases: :py:class:`~typing.TypedDict`"
+msgstr ""
+
+#: atsphinx.typst.config.DocumentSettings:1 of
+msgid "Build settings each documets."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.author:1 of
+msgid "Author of document."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.edition:1 of
+msgid "Publish edition of document."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.entrypoint:1 of
+msgid "Docname of entrypoint."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.filename:1 of
+msgid "Output filename (without ext)."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.font:1 of
+msgid "Default font name or family to use for building PDF."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.theme:1 of
+msgid "Generate theme."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.title:1 of
+msgid "Title of document."
+msgstr ""
+
+#: ../../docstring atsphinx.typst.config.DocumentSettings.toctree_only:1 of
+msgid ""
+"When it is ``True``, builder only write contents of toctree from "
+"'entrypoint'."
+msgstr ""
+
+#: atsphinx.typst.config.compute_configurations:1 of
+msgid "Clean up configurations for this extensions."
+msgstr ""
+

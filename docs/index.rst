@@ -2,11 +2,6 @@
 atsphinx-typst
 ==============
 
-.. note:: This is ALPHA-stage product.
-
-    We implement basic features to work for us,
-    but you may encounter missing features or malfunctions when using it.
-
 Quickstart
 ==========
 

@@ -1,7 +1,7 @@
 Configuration
 =============
 
-Currently, you can configure behviors of atsphinx-typst by some values.
+You can configure behviors of atsphinx-typst by some values.
 
 .. confval:: typst_documents
     :type: list[dict]
@@ -12,20 +12,45 @@ Currently, you can configure behviors of atsphinx-typst by some values.
 
     Dict keys:
 
-    .. list-table::
+    .. confval:: typst_documents[].entrypoint
+       :type: ``str``
 
-        - * entrypoint
-          * Docname for generating document.
-        - * filename
-          * Output filename (excluded extension).
-        - * title
-          * Document title that is used title page and PDF metadata.
-        - * theme
-          * Generating style.
-        - * font_set
-          * Default font name or family to use for building PDF.
-        - * toctree_only
-          * WHen it is ``True``, builder only writes contents of toctree from ``entrypoint``.
+       Docname for generating document.
+
+    .. confval:: typst_documents[].filename
+       :type: ``str``
+
+       Output filename (excluded extension).
+
+    .. confval:: typst_documents[].title
+       :type: ``str``
+
+       The title of document. It is used title page and PDF metadata.
+
+    .. confval:: typst_documents[].author
+       :type: ``str``
+
+       The author text of document. It is used title page and PDF metadata.
+
+    .. confval:: typst_documents[].edition
+       :type: ``str``
+
+       The publishing edition of document. It is used title page.
+
+    .. confval:: typst_documents[].theme
+       :type: ``str``
+
+       Generating style.
+
+    .. confval:: typst_documents[].font
+       :type: ``str``
+
+       Default font name or family to use for building PDF.
+
+    .. confval:: typst_documents[].toctree_only
+       :type: ``bool`` | ``atsphinx.typst.config.TOCTREE_ONLY_LITERAL``
+
+       When it is ``True``, builder only writes contents of toctree from :confval:`entrypoint <typst_documents[].entrypoint>`.
 
     You can write out multiple layout documents from same project.
 

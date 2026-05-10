@@ -1,15 +1,15 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2025, Kazuya Takei
+# Japanese translations for atsphinx-typst.
+# Copyright (C) 2026, Kazuya Takei
 # This file is distributed under the same license as the atsphinx-typst
 # package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: atsphinx-typst 0.0.0\n"
+"Project-Id-Version: atsphinx-typst 0.0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-21 16:48+0900\n"
+"POT-Creation-Date: 2026-05-11 02:42+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -22,73 +22,75 @@ msgstr ""
 
 #: ../../usage/configuration.rst:2
 msgid "Configuration"
-msgstr ""
+msgstr "設定"
 
 #: ../../usage/configuration.rst:4
-msgid "Currently, you can configure behviors of atsphinx-typst by some values."
-msgstr ""
+msgid "You can configure behviors of atsphinx-typst by some values."
+msgstr "atsphinx-typst の動作設定用に幾つかの値を指定できます。"
 
 #: ../../usage/configuration.rst
 msgid "Type"
-msgstr ""
+msgstr "型"
 
 #: ../../usage/configuration.rst
 msgid "Default"
-msgstr ""
+msgstr "デフォルト値"
 
 #: ../../usage/configuration.rst:10
 msgid ""
 "List of documents that you want to create as Typst format. You must set "
 "it as list having \"Document Settings\" dict objects."
 msgstr ""
+"Typstフォーマットで出力したいドキュメントのリスト。"
+"\"ドキュメント設定\"のdictオブジェクトをリスト形式で設定する必要があります。"
 
 #: ../../usage/configuration.rst:13
 msgid "Dict keys:"
-msgstr ""
-
-#: ../../usage/configuration.rst:17
-msgid "entrypoint"
-msgstr ""
+msgstr "dictオブジェクトのキー一覧:"
 
 #: ../../usage/configuration.rst:18
 msgid "Docname for generating document."
-msgstr ""
-
-#: ../../usage/configuration.rst:19
-msgid "filename"
-msgstr ""
-
-#: ../../usage/configuration.rst:20
-msgid "Output filename (excluded extension)."
-msgstr ""
-
-#: ../../usage/configuration.rst:21
-msgid "title"
-msgstr ""
-
-#: ../../usage/configuration.rst:22
-msgid "Document title that is used title page and PDF metadata."
-msgstr ""
+msgstr "生成対象のdocname"
 
 #: ../../usage/configuration.rst:23
-msgid "theme"
-msgstr ""
-
-#: ../../usage/configuration.rst:24
-msgid "Generating style."
-msgstr ""
-
-#: ../../usage/configuration.rst:25
-msgid "toctree_only"
-msgstr ""
-
-#: ../../usage/configuration.rst:26
-msgid ""
-"WHen it is ``True``, builder only writes contents of toctree from "
-"``entrypoint``."
-msgstr ""
+msgid "Output filename (excluded extension)."
+msgstr "出力時のファイル名(拡張子は除く)"
 
 #: ../../usage/configuration.rst:28
-msgid "You can write out multiple layout documents from same project."
-msgstr ""
+msgid "The title of document. It is used title page and PDF metadata."
+msgstr "ドキュメントのタイトル。タイトルページやPDFのメタ情報に使用します。"
 
+#: ../../usage/configuration.rst:33
+msgid "The author text of document. It is used title page and PDF metadata."
+msgstr "ドキュメントの著者名。タイトルページやPDFのメタ情報に使用します。"
+
+#: ../../usage/configuration.rst:38
+msgid "The publishing edition of document. It is used title page."
+msgstr "出版時の版数等の情報。タイトルページなどに使用します。"
+
+#: ../../usage/configuration.rst:43
+msgid "Generating style."
+msgstr "出力時の形式。"
+
+#: ../../usage/configuration.rst:48
+msgid "Default font name or family to use for building PDF."
+msgstr "PDF生成時のフォント名(フォントファミリー)"
+
+#: ../../usage/configuration.rst:53
+msgid ""
+"When it is ``True``, builder only writes contents of toctree from "
+":confval:`entrypoint <typst_documents[].entrypoint>`."
+msgstr "``True`` が設定されていると、ビルダーは "
+":confval:`entrypoint <typst_documents[].entrypoint>` で指定したファイルの TocTree のみを出力します。"
+
+#: ../../usage/configuration.rst:55
+msgid "You can write out multiple layout documents from same project."
+msgstr "同じプロジェクトから複数の形式のドキュメントを生成することも出来ます。"
+
+#: ../../usage/configuration.rst:78
+msgid "List of path for \"Static assets\"."
+msgstr "\"静的ファイル\"があるパスのリスト。"
+
+#: ../../usage/configuration.rst:84
+msgid "List of path stored additional fonts."
+msgstr "追加利用するフォントが保存されているパスのリスト。"

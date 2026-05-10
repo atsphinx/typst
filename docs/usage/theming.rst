@@ -2,7 +2,7 @@
 Theming
 =======
 
-Item of :confval:`typst_documents` has `theme` property.
+Item of :confval:`typst_documents` has :confval:`theme <typst_documents[].theme>` property.
 It controls some behaviors of document likely HTML theming (using :confval:`html_theme`).
 
 Example
