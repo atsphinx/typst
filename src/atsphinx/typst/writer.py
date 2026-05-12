@@ -19,6 +19,7 @@ from typing import TYPE_CHECKING
 from docutils import nodes
 from rst2typst.writer import TypstTranslator as BaseTypstTranslator
 from sphinx import addnodes
+from sphinx.errors import ExtensionError
 from sphinx.util.docutils import SphinxTranslator
 from sphinx.util.index_entries import split_index_msg
 from sphinx.util.logging import getLogger
@@ -104,8 +105,10 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
             return super().visit_reference(node)
         if "refuri" in node:
             uri = node["refuri"][1:]
-        if "refid" in node:
+        elif "refid" in node:
             uri = node["refid"]
+        else:
+            raise ExtensionError("<reference> requires 'refuri' or 'refid' attribute")
         return self.body.append(f"#link(<{uri}>)[")
 
     # Implements for Sphinx's nodes
