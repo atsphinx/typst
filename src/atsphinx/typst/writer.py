@@ -100,11 +100,13 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
 
     def visit_reference(self, node):
         # NOTE: It may be should implement in rst2typst.
-        if node.get("internal", False):
+        if not node.get("internal", False):
+            return super().visit_reference(node)
+        if "refuri" in node:
             uri = node["refuri"][1:]
-            self.body.append(f"#link(<{uri}>)[")
-            return
-        super().visit_reference(node)
+        if "refid" in node:
+            uri = node["refid"]
+        return self.body.append(f"#link(<{uri}>)[")
 
     # Implements for Sphinx's nodes
     # =============================
