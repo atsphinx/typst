@@ -121,11 +121,10 @@ def setup(app: Sphinx):
     def _bind_pdf_url(
         app: Sphinx,
         pagename: str,
-        tmplatename: str,
+        templatename: str,
         context: dict[str, Any],
         doctree: nodes.document | None,
     ):
         context["pdf_url"] = f"{mini18n_basepath}/_pdf/document.pdf"
 
     app.connect("html-page-context", _bind_pdf_url)
-    pass
