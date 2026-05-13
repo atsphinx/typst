@@ -55,3 +55,11 @@ tasks:
         --implicit-namespaces
         --output-dir=api/
         ../src/atsphinx
+  docs-pages:
+    desc: 'Build all assets for GitHub Pages'
+    cmds:
+      - task: 'docs:build-typstpdf'
+      - task: 'docs:build-mini18n-dirhtml'
+      - |
+        mkdir -p docs/_build/mini18n-dirhtml/_pdf/
+        cp docs/_build/typstpdf/document.pdf docs/_build/mini18n-dirhtml/_pdf/

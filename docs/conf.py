@@ -1,6 +1,15 @@
+from typing import TYPE_CHECKING
+
 from atsphinx.mini18n import get_template_dir as get_mini18n_template_dir
 
 from atsphinx.typst import __version__ as version
+
+if TYPE_CHECKING:
+    from typing import Any
+
+    from docutils import nodes
+    from sphinx.application import Sphinx
+
 
 # -- Project information
 project = "atsphinx-typst"
@@ -58,6 +67,7 @@ html_sidebars = {
         "sidebar/scroll-start.html",
         "sidebar/brand.html",
         "mini18n/snippets/select-lang.html",
+        "pdf-link.html",
         "sidebar/search.html",
         "sidebar/navigation.html",
         "sidebar/ethical-ads.html",
@@ -105,3 +115,16 @@ todo_include_todos = True
 mini18n_default_language = "en"
 mini18n_support_languages = ["en", "ja"]
 mini18n_basepath = "/typst/"
+
+
+def setup(app: Sphinx):
+    def _bind_pdf_url(
+        app: Sphinx,
+        pagename: str,
+        templatename: str,
+        context: dict[str, Any],
+        doctree: nodes.document | None,
+    ):
+        context["pdf_url"] = f"{mini18n_basepath}/_pdf/document.pdf"
+
+    app.connect("html-page-context", _bind_pdf_url)
