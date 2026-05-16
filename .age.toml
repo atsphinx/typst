@@ -53,3 +53,9 @@ replace = "Release atsphinx-typst v{{ new_version }}"
 path = ".github/release-body.md"
 search = "- Changelog is https://github.com/atsphinx/typst/blob/v{{ current_version }}/CHANGES.rst"
 replace = "- Changelog is https://github.com/atsphinx/typst/blob/v{{ new_version }}/CHANGES.rst"
+
+[[files]]
+path = "src/atsphinx/typst/package/typst.toml"
+
+search = "version = \"{{current_version}}\""
+replace = "version = \"{{new_version}}\""
