@@ -46,7 +46,6 @@ jobs:
   publish-pypi:
     needs: [build-package]
     runs-on: ubuntu-latest
-    if: success() && ${{ needs.prepare.outputs.is-release }}
     environment:
       name: 'pypi'
       url: 'https://pypi.org/p/atsphinx-typst'
@@ -63,5 +62,6 @@ jobs:
     needs: [publish-pypi]
     uses: ./.github/workflows/deploy-docs.yaml
     permissions:
+      contents: read
       pages: write
       id-token: write
