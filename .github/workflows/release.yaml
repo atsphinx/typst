@@ -60,26 +60,8 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
   deploy-docs:
-    needs: [build-package]
-    runs-on: ubuntu-latest
+    needs: [publish-pypi]
+    uses: ./.github/workflows/deploy-docs.yaml
     permissions:
       pages: write
       id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v6
-      - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
-        with:
-          aqua_version: v2.58.1
-      - name: 'Configure dependencies'
-        run: |
-          task --yes setup docs:build-mini18n-dirhtml
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: docs/_build/mini18n-dirhtml
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
