@@ -10,7 +10,7 @@
   pad(5%)[
     #signature
     #pad(left: 5%)[
-      #box()[
+      #block()[
         #content
       ]
     ]
