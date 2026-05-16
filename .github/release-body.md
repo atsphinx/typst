@@ -1,3 +1,3 @@
-Release atsphinx-typst v0.0.5
+Release atsphinx-typst v0.1.0
 
-- Changelog is https://github.com/atsphinx/typst/blob/v0.0.5/CHANGES.rst
+- Changelog is https://github.com/atsphinx/typst/blob/v0.1.0/CHANGES.rst

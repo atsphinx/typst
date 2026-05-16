@@ -11,7 +11,7 @@ from . import adapters, builders, config
 if TYPE_CHECKING:
     from sphinx.application import Sphinx
 
-__version__ = "0.0.5"
+__version__ = "0.1.0"
 
 
 def setup(app: Sphinx):  # noqa: D103

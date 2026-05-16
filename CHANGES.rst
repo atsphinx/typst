@@ -2,6 +2,50 @@
 Change logs
 ===========
 
+Version 0.1.0
+=============
+
+:date: 2026-05-16 (Asia/Tokyo)
+
+Breaking changes
+----------------
+
+* Restructure context variables for templates. [ `#44`_ ]
+
+  * Flat context variable structure.
+  * Drop ``head`` from template context.
+
+* Restructure writing context. [ `#44`_ ]
+* Use Typst package registry for rendering instead of bundled module.
+  [ `#44`_ ]
+
+Features
+--------
+
+* Convert internal implements to use ``rst2typst`` library. [ `#40`_ ]
+* Define autoloader to setup adapter extensions from registered extensions.
+  [ `#43`_ ]
+* Add support for ``todo`` directive via adapter extension.
+* Add visitor/departure for desc nodes (function/class signatures). [ `#47`_ ]
+* Restructure block of templates. [ `#48`_ ]
+* Add index of confval entry support. [ `#49`_ ]
+* Resolve and link cross-references.
+* Separate render function into Typst package.
+
+Fixes
+-----
+
+* Guard case that author is not set.
+* Set full-width into raw content wrapped by figure.
+* Update optional nodes to avoid errors.
+
+.. _#40: https://github.com/atsphinx/typst/pull/40
+.. _#43: https://github.com/atsphinx/typst/pull/43
+.. _#44: https://github.com/atsphinx/typst/pull/44
+.. _#47: https://github.com/atsphinx/typst/pull/47
+.. _#48: https://github.com/atsphinx/typst/pull/48
+.. _#49: https://github.com/atsphinx/typst/pull/49
+
 Version 0.0.5
 =============
 
