@@ -2,6 +2,16 @@
 Change logs
 ===========
 
+Version 0.1.1
+=============
+
+:date: 2026-05-17 (Asia/Tokyo)
+
+Fixes
+-----
+
+* Align bundled Typst package version with Python package version.
+
 Version 0.1.0
 =============
 
