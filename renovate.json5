@@ -4,7 +4,7 @@
     "config:recommended",
     "github>attakei/workspace-configs//renovate/lefthook",
     "github>attakei/workspace-configs//renovate/taskfile",
-    "github>aquaproj/aqua-renovate-config#2.12.0",
+    "github>aquaproj/aqua-renovate-config#2.12.1",
   ],
   "timezone": "Asia/Tokyo",
   "schedule": [
