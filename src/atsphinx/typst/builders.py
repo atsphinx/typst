@@ -180,4 +180,7 @@ class TypstPDFBuilder(TypstBuilder):
         for document_settings in self.config.typst_documents:
             src = Path(self.outdir) / f"{document_settings['filename']}.typ"
             out = Path(self.outdir) / f"{document_settings['filename']}.pdf"
-            typst.compile(src, output=out, **kwargs)
+            try:
+                typst.compile(src, output=out, **kwargs)
+            except typst.TypstError as e:
+                raise SphinxError(f"Typst compilation failed for {str(src)!r}: {e.diagnostic}") from e
