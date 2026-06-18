@@ -75,9 +75,9 @@ class TypstBuilder(Builder):
         visitor: writer.TypstTranslator = self.create_translator(doctree, self)  # type: ignore[assignment]
         doctree.walkabout(visitor)
         context = theming.ThemeContext(
-            project=self.app.config.project,
-            release=self.app.config.release,
-            copyright=self.app.config.copyright,
+            project=self.config.project,
+            release=self.config.release,
+            copyright=self.config.copyright,
             # TODO: Support user custm format.
             build_date=self._build_date.strftime("%Y-%m-%d"),
             title=document_settings["title"],
@@ -88,7 +88,7 @@ class TypstBuilder(Builder):
             packages=visitor.packages,
             translated=visitor.context,
         )
-        out = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
+        out = Path(self.outdir) / f"{document_settings['filename']}.typ"
         theme.write_doc(out, context)
 
     def assemble_doctree(
@@ -122,7 +122,7 @@ class TypstBuilder(Builder):
     def copy_assets(self):  # noqa: D102
         # Copying all theme assets.
         def _copy_theme_assets():
-            base_dir = self.app.outdir / "_themes"
+            base_dir = self.outdir / "_themes"
             for name, theme in self._themes.items():
                 assets_outdir = base_dir / name
                 assets_srcdir = theme.get_theme_dir() / "assets"
@@ -178,6 +178,6 @@ class TypstPDFBuilder(TypstBuilder):
         if self.config.typst_font_paths:
             kwargs["font_paths"] = self.config.typst_font_paths
         for document_settings in self.config.typst_documents:
-            src = Path(self.app.outdir) / f"{document_settings['filename']}.typ"
-            out = Path(self.app.outdir) / f"{document_settings['filename']}.pdf"
+            src = Path(self.outdir) / f"{document_settings['filename']}.typ"
+            out = Path(self.outdir) / f"{document_settings['filename']}.pdf"
             typst.compile(src, output=out, **kwargs)
