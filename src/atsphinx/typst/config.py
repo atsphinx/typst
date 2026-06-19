@@ -63,20 +63,20 @@ def compute_configurations(app: Sphinx, config: Config):
         document_settings[idx] = DEFAULT_DOCUMENT_SETTINGS | user_value
     config.typst_documents = document_settings
 
-    # 2. Cast string path to Path object.
+    # 2. Cast string path to Path object for static_paths
     typst_static_path = []
     for p in config.typst_static_path:
         if isinstance(p, Path):
-            typst_static_path.append(p)
+            typst_static_path.append(p if p.is_absolute() else app.confdir / p)
             continue
         typst_static_path.append(app.confdir / p)
     config.typst_static_path = typst_static_path
 
-    # 3. Cast string path to Path object and register custom theme directories.
+    # 3. Cast string path to Path object for themes_paths
     typst_themes_path = []
     for p in config.typst_themes_path:
         if isinstance(p, Path):
-            typst_themes_path.append(p)
+            typst_themes_path.append(p if p.is_absolute() else app.confdir / p)
         else:
             typst_themes_path.append(app.confdir / p)
     config.typst_themes_path = typst_themes_path
