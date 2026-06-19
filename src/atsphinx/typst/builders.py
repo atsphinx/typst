@@ -54,7 +54,9 @@ class TypstBuilder(Builder):
             if name in self._themes:
                 return
 
-            theme = theming.load_theme(name)
+            theme = theming.load_theme(
+                name, typst_themes_path=self.config.typst_themes_path
+            )
             theme.init(self)
             self._themes[name] = theme
             parent = theme.get_parent_theme()
