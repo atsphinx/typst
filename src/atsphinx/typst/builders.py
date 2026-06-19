@@ -49,6 +49,11 @@ class TypstBuilder(Builder):
         return "all targets"
 
     def prepare_writing(self, docnames: set[str]) -> None:  # noqa: D102
+        """
+           Preload themes to copy assets before write_documents.
+           args:
+            docnames: set[str] unused parameter
+        """
         # Preload themes to copy assets before write_documents.
         def _load_theme(name: str) -> theming.Theme | None:
             if name in self._themes:

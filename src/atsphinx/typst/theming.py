@@ -164,6 +164,7 @@ def load_theme(name: str, typst_themes_path: list[Path] = []) -> Theme:
 
     def _find_theme_path(name: str) -> Path:
         """Search theme path in order to rules.
+        Searches custom theme directories first, then built-in themes.
 
         When it does not found, it raises ThemeError.
         """

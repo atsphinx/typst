@@ -82,7 +82,12 @@ def compute_configurations(app: Sphinx, config: Config):
     config.typst_themes_path = typst_themes_path
 
 
-def setup(app: Sphinx):  # noqa: D103
+def setup(app: Sphinx):
+    """Register configuration values and connect event handlers.
+
+    Args:
+        app: Sphinx application instance
+    """
     app.add_config_value("typst_documents", [], "env", list[dict])
     app.add_config_value("typst_static_path", [], "env", [list[str | Path]])
     app.add_config_value("typst_themes_path", [], "env", [list[str | Path]])
