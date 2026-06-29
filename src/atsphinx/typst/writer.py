@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from importlib import metadata
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 from docutils import nodes
 from rst2typst.writer import TypstTranslator as BaseTypstTranslator
@@ -37,7 +37,6 @@ def _typst_local_package_fullname(name: str, version: str | None = None) -> str:
         version = metadata.version(name)
     return f"@local/{name}:{version}"
 
-
 class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
@@ -54,6 +53,7 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         "desc_parameterlist",
         "desc_returns",
         "desc_sig_punctuation",
+        "mermaid",  # Optional mermaid support
     ]
 
     def __init__(self, document: nodes.document, builder: Builder) -> None:
@@ -168,6 +168,84 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
             self.body.append(f"#index({index_path}, apply-casing: false)")
 
     def depart_index(self, node: addnodes.index):
+        pass
+
+
+    def mermaid_render_to_svg(self, code: str, mermaid_options: Any, mermaid_cmd:str) -> tuple[Any | None, Any | None]:
+        from sphinxcontrib.mermaid import render_mm # may throw ImportError
+
+        builder: Builder = self.builder
+
+        confdir = Path(builder.app.confdir)
+        # Temporarily set mermaid_cmd to absolute path if it is relative path
+        if isinstance(mermaid_cmd, str) and not Path(mermaid_cmd).is_absolute():
+            mermaid_cmd_path = Path(mermaid_cmd)
+            confdir_cmd = confdir / mermaid_cmd_path
+            static_cmd = confdir / "_static" / mermaid_cmd_path
+
+            if confdir_cmd.exists():
+                builder.config.mermaid_cmd = str(confdir_cmd)
+            elif static_cmd.exists():
+                builder.config.mermaid_cmd = str(static_cmd)
+            else:
+                builder.config.mermaid_cmd = str(confdir_cmd)
+
+        # Temporarily set imagedir using builder's _images_dir so render_mm creates files there
+        original_imagedir = getattr(builder, 'imagedir', None)
+        original_imgpath = getattr(builder, 'imgpath', None)
+        images_dir_name = builder._images_dir.name
+        builder.imagedir = images_dir_name
+        builder.imgpath = images_dir_name
+
+        try:
+            relfn, outfn = render_mm(self, code, mermaid_options, _fmt='svg', prefix='mermaid')
+        except:
+            logger.exception("Mermaid code block failed to render")
+            relfn, outfn = None, None
+        finally:
+            builder.config.mermaid_cmd = mermaid_cmd
+            # Restore original values
+            if original_imagedir is not None:
+                builder.imagedir = original_imagedir
+            else:
+                delattr(builder, 'imagedir')
+            if original_imgpath is not None:
+                builder.imgpath = original_imgpath
+            else:
+                delattr(builder, 'imgpath')
+        return relfn, outfn
+
+
+
+    def visit_mermaid(self, node):
+        """Handle mermaid node - render to SVG using sphinxcontrib.mermaid."""
+        try:
+            code = node['code']
+            options = node.get('options', {})
+            mermaid_cmd = self.builder.config.mermaid_cmd
+
+
+            relative_filename, output_filename = self.mermaid_render_to_svg(code, options, mermaid_cmd)
+
+            if relative_filename and output_filename:
+                # render_mm created file directly in _images_dir
+                # No need to register for copying - file is already in final location
+                img_node = nodes.image()
+                img_node['uri'] = relative_filename  # Already points to images_dir/filename.svg
+                img_node['alt'] = node.get('alt', 'Mermaid diagram')
+                if 'align' in node:
+                    img_node['align'] = node['align']
+                # Use parent class to render (skip our visit_image path processing)
+                super(TypstTranslator, self).visit_image(img_node)
+                super(TypstTranslator, self).depart_image(img_node)
+        except ImportError:
+            logger.warning("sphinxcontrib.mermaid not installed. Skipping mermaid diagram.")
+        except Exception as e:
+            logger.warning(f"Mermaid rendering failed: {e}. Skipping diagram.")
+
+        raise nodes.SkipNode
+
+    def depart_mermaid(self, node):
         pass
 
     def visit_start_of_file(self, node: addnodes.start_of_file):
