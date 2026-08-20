@@ -80,3 +80,15 @@ class Test_TypstPDFBuilder:
             app.build()
             assert (app.outdir / "index.typ").exists()
             assert (app.outdir / "index.pdf").exists()
+
+    class Test_compile_error:
+        @pytest.mark.sphinx("typstpdf", testroot="typst-compile-error")
+        def test__typst_compile_error_handling(self, app: SphinxTestApp):
+            """Test that TypstError is caught and rethrown with diagnostics."""
+            from sphinx.errors import SphinxError
+
+            with pytest.raises(SphinxError, match="unclosed delimiter"):
+                app.build()
+
+            # Verify PDF was not created due to compilation failure.
+            assert not (app.outdir / "index.pdf").exists()
