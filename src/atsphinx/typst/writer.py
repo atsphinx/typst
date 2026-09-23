@@ -38,6 +38,12 @@ def _typst_local_package_fullname(name: str, version: str | None = None) -> str:
     return f"@local/{name}:{version}"
 
 
+def _doc_label(docname: str) -> str:
+    # Merged into one Typst file, so labels need a per-document namespace
+    # to avoid id collisions (e.g. two "Installation" sections).
+    return docname.replace("/", ":")
+
+
 class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
     """Custom translator that has converter from dotctree to Typst syntax."""
 
@@ -65,14 +71,43 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         self.context = {
             "has_index": False,
         }
+        # Current document, for namespacing labels (like LaTeX's curfilestack).
+        self.curfilestack = [document["docname"]]
 
     # ------
     # visit/departuer methods
     # ------
+    def visit_document(self, node: nodes.document):
+        super().visit_document(node)
+        self._write_anchor(_doc_label(self.curfilestack[-1]))
+
     def visit_title(self, node: nodes.title):
         if isinstance(node.parent, nodes.section) and self._section_level < 1:
             raise nodes.SkipNode
+
+        # ids[0] (the heading's own slug) is anchored inline in depart_title;
+        # ids[1:] (explicit labels above the heading) anchor here, before
+        # the heading, so a :ref: lands at the section's top.
+        if isinstance(node.parent, nodes.section):
+            docname = _doc_label(self.curfilestack[-1])
+            for node_id in node.parent.get("ids", [])[1:]:
+                self._write_anchor(f"{docname}:{node_id}")
+
         super().visit_title(node)
+
+    def depart_title(self, node: nodes.title):
+        """Add a label to section titles for cross-referencing."""
+        docname = _doc_label(self.curfilestack[-1])
+        if isinstance(node.parent, nodes.section):
+            ids = node.parent.get("ids", [])
+        else:
+            ids = []
+
+        if ids:
+            # Label goes after the title text, before the newline: == Title <label>
+            self.body.append(f" <{docname}:{ids[0]}>")
+
+        super().depart_title(node)
 
     # TODO: It should separate transform and translate.
     def visit_container(self, node: nodes.container):
@@ -99,20 +134,68 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         node["uri"] = uri_map
         super().visit_image(node)
 
-    def visit_reference(self, node):
+    def visit_reference(self, node: nodes.reference):
         # NOTE: It may be should implement in rst2typst.
-        if not node.get("internal", False):
-            return super().visit_reference(node)
-        if "refuri" in node:
-            uri = node["refuri"][1:]
-        elif "refid" in node:
-            uri = node["refid"]
+        # Key off refid/refuri directly (like Sphinx's LaTeX writer), not
+        # ``internal``: plain anchor refs (RST `Title`_, MyST #anchor) get
+        # refid without Sphinx ever setting ``internal``.
+        if "refid" in node:
+            uri = f"{_doc_label(self.curfilestack[-1])}:{node['refid']}"
+        elif node.get("internal", False):
+            # Sphinx-resolved cross-doc reference, shaped "docname" or
+            # "docname#labelid".
+            if "refuri" not in node:
+                raise ExtensionError(
+                    "<reference> requires 'refuri' or 'refid' attribute"
+                )
+            docname, _, labelid = node["refuri"].partition("#")
+            uri = _doc_label(docname)
+            if labelid:
+                uri += f":{labelid}"
         else:
-            raise ExtensionError("<reference> requires 'refuri' or 'refid' attribute")
+            # Plain external hyperlink - nothing to namespace.
+            return super().visit_reference(node)
         return self.body.append(f"#link(<{uri}>)[")
+
+    def visit_target(self, node: nodes.target) -> None:
+        docname = _doc_label(self.curfilestack[-1])
+
+        if not node.get("ids") and node.get("refid"):
+            # PropagateTargets forwarded this target's id onto whatever
+            # followed it (section, paragraph, desc, ...), clearing our
+            # own ids. Walk past chained targets to find that node, like
+            # LaTeX's visit_target does.
+            next_node = node.next_node(ascend=True)
+            while isinstance(next_node, nodes.target):
+                next_node = next_node.next_node(ascend=True)
+
+            if isinstance(next_node, nodes.section):
+                # Already anchored by visit_title/depart_title's ids loop.
+                raise nodes.SkipNode
+
+            # Forwarded onto a node with no id-handling of its own (e.g. a
+            # paragraph, or a desc - depart_desc_signature only anchors the
+            # signature's own ids). Nothing else emits this, so do it here.
+            self._write_anchor(f"{docname}:{node['refid']}")
+            raise nodes.SkipNode
+
+        # A standalone target PropagateTargets left untouched (e.g. one at
+        # the end of a document) - anchor it directly, like ids[1:] above.
+        target_id = node["ids"][0] if node.get("ids") else None
+        if target_id:
+            self._write_anchor(f"{docname}:{target_id}")
+        raise nodes.SkipNode
 
     # Implements for Sphinx's nodes
     # =============================
+    def visit_pending_xref(self, node: addnodes.pending_xref):
+        # resolve_references() already replaced resolvable pending_xrefs
+        # with plain reference nodes; only unresolved ones reach here.
+        pass
+
+    def depart_pending_xref(self, node: addnodes.pending_xref):
+        pass
+
     def visit_desc(self, node: addnodes.desc):
         self.packages.add(_typst_local_package_fullname("atsphinx-typst"), "desc")
         self.body.append(f"{self._hi.prefix}#desc(\n")
@@ -127,10 +210,15 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         self._hi.push("  ")
 
     def depart_desc_signature(self, node: addnodes.desc_signature):
-        for id in node.get("ids", []):
-            self.body.append(f" <{id}>")
+        # Namespaced like section headings, see depart_title().
+        docname = _doc_label(self.curfilestack[-1])
+        ids = node.get("ids", [])
+        if ids:
+            self.body.append(f" <{docname}:{ids[0]}>")
         self._hi.pop()
         self.body.append(f"{self._hi.prefix}],\n")
+        for node_id in ids[1:]:
+            self._write_anchor(f"{docname}:{node_id}")
 
     def visit_desc_name(self, node: addnodes.desc_name):
         self.body.append(f"{self._hi.indent}#strong(delta: 400)[")
@@ -171,8 +259,15 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         pass
 
     def visit_start_of_file(self, node: addnodes.start_of_file):
-        # NOTE: Implement this when rendering anything as the "start of file."
-        pass
+        docname = node["docname"]
+        self.curfilestack.append(docname)
+        self._write_anchor(_doc_label(docname))
 
     def depart_start_of_file(self, node: addnodes.start_of_file):
-        pass
+        self.curfilestack.pop()
+
+    def _write_anchor(self, label: str) -> None:
+        # An invisible label not attached to any visible content - for
+        # document-level anchors and for ids that can't share a heading's
+        # own label (see depart_title()).
+        self.body.append(f"#metadata(none) <{label}>\n")
