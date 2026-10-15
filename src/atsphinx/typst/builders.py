@@ -12,7 +12,7 @@ from rst2typst.package import package_dir as rst2typst_package_dir
 from sphinx import addnodes
 from sphinx._cli.util.colour import darkgreen
 from sphinx.builders import Builder
-from sphinx.errors import SphinxError
+from sphinx.errors import NoUri, SphinxError
 from sphinx.util.fileutil import copy_asset, copy_asset_file
 from sphinx.util.nodes import inline_all_toctrees
 
@@ -40,6 +40,10 @@ class TypstBuilder(Builder):
         self._static_dir = Path(self.outdir / "_static")
         self._images_dir = Path(self.outdir / "_images")
         self._build_date = date.today()
+        # Docnames merged into the document currently being written, like
+        # the LaTeX builder's ``self.docnames``. Populated by
+        # ``assemble_doctree()`` before it resolves references.
+        self.docnames: set[str] = set()
 
     def init(self):  # noqa: D102
         super().init()
@@ -111,13 +115,29 @@ class TypstBuilder(Builder):
                 root_section += toctree
             root = root.copy()
             root += root_section
-        tree = inline_all_toctrees(self, {docname}, docname, root, darkgreen, [docname])
+        self.docnames = {docname}
+        tree = inline_all_toctrees(
+            self, self.docnames, docname, root, darkgreen, [docname]
+        )
+        tree["docname"] = docname
+        # Like the LaTeX builder, resolve references right after merging so
+        # that Sphinx's own domains (:doc:, :ref:, :confval:, intersphinx,
+        # ...) do the resolution; see get_target_uri()/get_relative_uri()
+        # for how that maps onto the single merged Typst document.
         self.env.resolve_references(tree, docname, self)
         return tree
 
     def get_target_uri(self, docname, typ=None):  # noqa: D102
-        # TODO: Implement it!
-        return ""
+        if docname not in self.docnames:
+            raise NoUri(docname, typ)
+        # All documents are merged into one, so the docname itself is
+        # enough; the writer turns it into the appropriate Typst label.
+        return docname
+
+    def get_relative_uri(self, from_, to, typ=None):  # noqa: D102
+        # Ignore source path: there's only one output file, so there is no
+        # relative path to compute (cf. the LaTeX builder).
+        return self.get_target_uri(to, typ)
 
     def copy_assets(self):  # noqa: D102
         # Copying all theme assets.
