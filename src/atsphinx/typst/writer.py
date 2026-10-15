@@ -92,7 +92,7 @@ class TypstTranslator(SphinxTranslator, BaseTypstTranslator):
         source = Path(self.document["source"])
         uri_path = source.parent / uri
         uri_dest = self.builder._images_dir / uri_path.relative_to(
-            self.builder.app.srcdir
+            self.builder.srcdir
         )
         uri_map = uri_dest.relative_to(self.builder.outdir)
         self.builder.images.setdefault(uri_path, uri_dest)
