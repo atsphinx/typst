@@ -56,25 +56,40 @@ def compute_configurations(app: Sphinx, config: Config):
                 "filename": f"document-{config.language}",
                 "title": f"{config.project} Documentation [{config.language.upper()}]",
                 "author": config.author,
-                "theme": "manual",
+                "theme": config.theme,
             }
         )
     for idx, user_value in enumerate(document_settings):
         document_settings[idx] = DEFAULT_DOCUMENT_SETTINGS | user_value
     config.typst_documents = document_settings
 
-    # 2. Cast string path to Path object.
+    # 2. Cast string path to Path object for static_paths
     typst_static_path = []
     for p in config.typst_static_path:
         if isinstance(p, Path):
-            typst_static_path.append(p)
+            typst_static_path.append(p if p.is_absolute() else app.confdir / p)
             continue
         typst_static_path.append(app.confdir / p)
     config.typst_static_path = typst_static_path
 
+    # 3. Cast string path to Path object for themes_paths
+    typst_themes_path = []
+    for p in config.typst_themes_path:
+        if isinstance(p, Path):
+            typst_themes_path.append(p if p.is_absolute() else app.confdir / p)
+        else:
+            typst_themes_path.append(app.confdir / p)
+    config.typst_themes_path = typst_themes_path
 
-def setup(app: Sphinx):  # noqa: D103
+
+def setup(app: Sphinx):
+    """Register configuration values and connect event handlers.
+
+    Args:
+        app: Sphinx application instance
+    """
     app.add_config_value("typst_documents", [], "env", list[dict])
     app.add_config_value("typst_static_path", [], "env", [list[str | Path]])
+    app.add_config_value("typst_themes_path", [], "env", [list[str | Path]])
     app.add_config_value("typst_font_paths", [], "env", [list[str | Path]])
     app.connect("config-inited", compute_configurations)
